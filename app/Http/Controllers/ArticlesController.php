@@ -13,6 +13,11 @@ use App\Models\Article;
 
 class ArticlesController extends Controller
 {
+
+    public function article_list($id){
+
+    }
+
     public function detail($id){
         \Log::debug(Article::find($id));
         return '123';

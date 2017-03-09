@@ -9,6 +9,11 @@ class Article extends Model
 {
     protected $table = 'articles';
 
+    public function catalog()
+    {
+        $this->belongsTo(Catalog::class,'catalog_id');
+    }
+
     public function setOptionsAttribute($options)
     {
         if (is_array($options)) {

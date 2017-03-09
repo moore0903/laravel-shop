@@ -81,8 +81,8 @@ class ArticlesController extends Controller
 
             $grid->id('ID')->sortable();
             $grid->title('标题')->editable();
-            $grid->author('作者')->editable();
-            $grid->browse('浏览量')->editable();
+            $grid->catalog('分类')->title();   //TODO 分类显示NULL
+
             $grid->img('图片')->image('',80,80);
 
             $states = [
@@ -97,6 +97,9 @@ class ArticlesController extends Controller
             $grid->column('是否显示')->switchGroup([
                 'is_display' => '显示'
             ],$states);
+
+            $grid->author('作者')->editable();
+            $grid->browse('浏览量')->editable();
 
             $grid->created_at('创建时间');
             $grid->updated_at('修改时间');
@@ -113,20 +116,20 @@ class ArticlesController extends Controller
         return Admin::form(Article::class, function (Form $form) {
 
             $form->display('id', 'ID');
+            $form->select('catalog_id','分类')->options(Catalog::selectOptions());
             $form->text('title', '标题');
-            $form->text('author','作者');
-            $form->number('browse', '浏览量');
             $form->editor('content', '内容')->attribute(['style' => 'height:400px;max-height:500px;']);
 
             $form->image('img', '图片');
             $form->select('content_tpl', '内容模板')->options(Catalog::dirToArray());
-            $form->switch('is_display','是否显示');
 
+            $form->text('author','作者')->default('本站');
+            $form->number('browse', '浏览量');
             $form->switch('recommend','推荐');
             $form->switch('hot','热门');
             $form->switch('new','最新');
 
-            $form->switch('is_display','显示');
+            $form->switch('is_display','显示')->default(true);
 
             $form->display('created_at', '创建时间');
             $form->display('updated_at', '修改时间');

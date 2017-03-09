@@ -53,7 +53,7 @@ return [
             'file'   => 'file',
         ],
 
-        'host' => 'http://admin.laravel.com/upload/',
+        'host' => env('APP_UPLOAD_HOST','http://zjeccc.moore.com/upload/'),
     ],
 
     /*

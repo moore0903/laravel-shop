@@ -13,8 +13,10 @@ class Catalog extends Model
 
     protected $table = 'catalogs';
 
-
-
+    public function article()
+    {
+        $this->hasMany(Article::class);
+    }
 
     /**
      * 读取活动的模板文件
