@@ -12,8 +12,28 @@ class Catalog extends Model
     use ModelTree, AdminBuilder;
 
     protected $table = 'catalogs';
-    
 
+
+
+
+    /**
+     * 读取活动的模板文件
+     * @param $dir
+     * @return array
+     */
+    static public function dirToArray() {
+        $result = array();
+        $cdir = scandir(resource_path("views/theme/"));
+        foreach ($cdir as $key => $value)
+        {
+            if (!in_array($value,array(".","..")))
+            {
+                $filename = explode('.',$value);
+                $result['theme/'.$filename[0]] = $value;
+            }
+        }
+        return $result;
+    }
     
 
     

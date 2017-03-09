@@ -6,12 +6,10 @@
  * Time: 20:23
  */
 
-namespace App\Admin\Exceptions;
+namespace App\Admin\Extensions;
 
 
 use Encore\Admin\Form\Field;
-use Illuminate\Contracts\Logging\Log;
-use Symfony\Component\Debug\Debug;
 
 class WangEditor extends Field
 {

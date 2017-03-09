@@ -4,12 +4,14 @@ namespace App\Admin\Controllers;
 
 use App\Models\Article;
 
+use App\Models\Catalog;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
+use Illuminate\Http\Request;
 
 class ArticlesController extends Controller
 {
@@ -59,6 +61,10 @@ class ArticlesController extends Controller
 
             $content->header('文章添加');
             $content->description('文章添加');
+//            $form1 = new Form();
+//            $form1->action('example');
+//            $form1->editor('content', '内容')->attribute(['style' => 'height:400px;max-height:500px;']);
+//            $content->->attribute(['style' => 'height:400px;max-height:500px;'])
 
             $content->body($this->form());
         });
@@ -74,10 +80,23 @@ class ArticlesController extends Controller
         return Admin::grid(Article::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
-            $grid->title('标题');
-            $grid->author('作者');
-            $grid->browse('浏览量');
-            $grid->img('图片')->image('',30,30);
+            $grid->title('标题')->editable();
+            $grid->author('作者')->editable();
+            $grid->browse('浏览量')->editable();
+            $grid->img('图片')->image('',80,80);
+
+            $states = [
+                'on' => ['text' => 'YES'],
+                'off' => ['text' => 'NO'],
+            ];
+
+            $grid->column('推荐')->switchGroup([
+                'recommend' => '推荐', 'hot' => '热门', 'new' => '最新'
+            ], $states);
+
+            $grid->column('是否显示')->switchGroup([
+                'is_display' => '显示'
+            ],$states);
 
             $grid->created_at('创建时间');
             $grid->updated_at('修改时间');
@@ -98,10 +117,19 @@ class ArticlesController extends Controller
             $form->text('author','作者');
             $form->number('browse', '浏览量');
             $form->editor('content', '内容')->attribute(['style' => 'height:400px;max-height:500px;']);
-            $form->image('img', '图片');
 
-            $form->display('created_at', 'Created At');
-            $form->display('updated_at', 'Updated At');
+            $form->image('img', '图片');
+            $form->select('content_tpl', '内容模板')->options(Catalog::dirToArray());
+            $form->switch('is_display','是否显示');
+
+            $form->switch('recommend','推荐');
+            $form->switch('hot','热门');
+            $form->switch('new','最新');
+
+            $form->switch('is_display','显示');
+
+            $form->display('created_at', '创建时间');
+            $form->display('updated_at', '修改时间');
         });
     }
 }

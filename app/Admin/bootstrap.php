@@ -18,7 +18,7 @@
  *
  */
 
-use App\Admin\Exceptions\WangEditor;
+use App\Admin\Extensions\WangEditor;
 use Encore\Admin\Form;
 
 Form::forget('map');

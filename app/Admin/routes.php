@@ -12,10 +12,12 @@ Route::group([
 
     $router->get('/', 'HomeController@index');
 
+
     $router->resource('catalog', CatalogsController::class);
 
     $router->resource('article', ArticlesController::class);
 
     $router->resource('page', PagesController::class);
+
 
 });
