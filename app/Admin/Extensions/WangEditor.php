@@ -1,0 +1,40 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: home
+ * Date: 2017/3/8
+ * Time: 20:23
+ */
+
+namespace App\Admin\Exceptions;
+
+
+use Encore\Admin\Form\Field;
+use Illuminate\Contracts\Logging\Log;
+use Symfony\Component\Debug\Debug;
+
+class WangEditor extends Field
+{
+    protected $view = 'admin::form.editor';
+
+    protected static $css = [
+        '/packages/wangEditor-2.1.23/dist/css/wangEditor.min.css',
+    ];
+
+    protected static $js = [
+        '/packages/wangEditor-2.1.23/dist/js/wangEditor.min.js',
+    ];
+
+    public function render()
+    {
+        $this->script = <<<EOT
+
+var editor = new wangEditor('{$this->id}');
+    editor.create();
+
+EOT;
+        return parent::render();
+
+    }
+
+}
