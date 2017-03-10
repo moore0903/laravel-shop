@@ -15,7 +15,7 @@ class Catalog extends Model
 
     public function article()
     {
-        $this->hasMany(Article::class);
+        $this->hasMany(Article::class,'catalog_id');
     }
 
     /**

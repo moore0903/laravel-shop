@@ -78,10 +78,10 @@ class ArticlesController extends Controller
     protected function grid()
     {
         return Admin::grid(Article::class, function (Grid $grid) {
-
             $grid->id('ID')->sortable();
             $grid->title('标题')->editable();
-            $grid->catalog('分类')->title();   //TODO 分类显示NULL
+            $grid->column('catalog.title','分类');
+//            $grid->catalogs()->title('分类');   //TODO 分类显示NULL
 
             $grid->img('图片')->image('',80,80);
 
