@@ -15,12 +15,11 @@ class Catalog extends Model
 
     public function article()
     {
-        $this->hasMany(Article::class,'catalog_id');
+        return $this->hasMany(Article::class,'catalog_id');
     }
 
     /**
      * 读取活动的模板文件
-     * @param $dir
      * @return array
      */
     static public function dirToArray() {

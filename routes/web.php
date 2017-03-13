@@ -11,8 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
 
 Route::get('/article/{id}', 'ArticlesController@detail');
+
+Route::get('/oauth/github', 'AuthController@redirectToProvider');
+Route::get('/oauth/github/callback', 'AuthController@handleProviderCallback');

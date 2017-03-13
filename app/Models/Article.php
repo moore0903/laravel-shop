@@ -11,7 +11,7 @@ class Article extends Model
 
     public function catalog()
     {
-        $this->belongsTo(Catalog::class,'catalog_id');
+        return $this->belongsTo(Catalog::class,'catalog_id');
     }
 
     public function setOptionsAttribute($options)

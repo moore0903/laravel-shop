@@ -80,8 +80,7 @@ class ArticlesController extends Controller
         return Admin::grid(Article::class, function (Grid $grid) {
             $grid->id('ID')->sortable();
             $grid->title('标题')->editable();
-            $grid->column('catalog.title','分类');
-//            $grid->catalogs()->title('分类');   //TODO 分类显示NULL
+            $grid->catalog()->title('分类');
 
             $grid->img('图片')->image('',80,80);
 

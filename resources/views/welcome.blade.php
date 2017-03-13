@@ -71,11 +71,15 @@
                     @if (Auth::check())
                         <a href="{{ url('/home') }}">Home</a>
                     @else
+                        <a href="{{ url('/oauth/github') }}">GitHub登录</a>
                         <a href="{{ url('/login') }}">Login</a>
                         <a href="{{ url('/register') }}">Register</a>
                     @endif
                 </div>
             @endif
+                <div class="top-right links">
+                    <a href="{{ url('/oauth/github') }}">GitHub登录</a>
+                </div>
 
             <div class="content">
                 <div class="title m-b-md">
