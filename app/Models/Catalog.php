@@ -18,6 +18,11 @@ class Catalog extends Model
         return $this->hasMany(Article::class,'catalog_id');
     }
 
+    public function shopitem()
+    {
+        return $this->hasMany(ShopItem::class,'catalog_id');
+    }
+
     /**
      * 读取活动的模板文件
      * @return array

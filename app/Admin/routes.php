@@ -19,5 +19,7 @@ Route::group([
 
     $router->resource('page', PagesController::class);
 
+    $router->resource('shopitem', ShopItemController::class);
+
 
 });
