@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "7d5a25b129f37efab418fccf993cbb98",
+    "content-hash": "b1ad634b3459df614bbd487b2b6b12d8",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -351,12 +351,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/z-song/laravel-admin.git",
-                "reference": "5eb46aa689ceef647d6ceebd02aaa5a20aed85b3"
+                "reference": "2ca2948b1927ddb7774a43e8eb43689eed419d5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/z-song/laravel-admin/zipball/5eb46aa689ceef647d6ceebd02aaa5a20aed85b3",
-                "reference": "5eb46aa689ceef647d6ceebd02aaa5a20aed85b3",
+                "url": "https://files.phpcomposer.com/files/z-song/laravel-admin/2ca2948b1927ddb7774a43e8eb43689eed419d5b.zip",
+                "reference": "2ca2948b1927ddb7774a43e8eb43689eed419d5b",
                 "shasum": ""
             },
             "require": {
@@ -403,7 +403,7 @@
                 "grid",
                 "laravel"
             ],
-            "time": "2017-03-11T05:29:32+00:00"
+            "time": "2017-03-15T03:20:32+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -1268,6 +1268,52 @@
                 "php"
             ],
             "time": "2017-03-05T18:23:57+00:00"
+        },
+        {
+            "name": "overtrue/laravel-shopping-cart",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/overtrue/laravel-shopping-cart.git",
+                "reference": "c17af56e765dfe79a08f71eb283febebe90af39d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/overtrue/laravel-shopping-cart/c17af56e765dfe79a08f71eb283febebe90af39d.zip",
+                "reference": "c17af56e765dfe79a08f71eb283febebe90af39d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "illuminate/session": "5.0.*",
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Overtrue\\LaravelShoppingCart\\": "src/LaravelShoppingCart/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "overtrue",
+                    "email": "anzhengchao@gmail.com"
+                }
+            ],
+            "description": "Shopping cart for Laravel Application.",
+            "keywords": [
+                "laravel",
+                "shopping",
+                "shopping cart"
+            ],
+            "time": "2017-01-29T11:51:51+00:00"
         },
         {
             "name": "overtrue/laravel-socialite",

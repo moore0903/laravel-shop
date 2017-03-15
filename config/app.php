@@ -182,6 +182,7 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Overtrue\LaravelSocialite\ServiceProvider::class,
+        Overtrue\LaravelShoppingCart\ServiceProvider::class,
 
     ],
 
@@ -232,6 +233,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Socialite' => Overtrue\LaravelSocialite\Socialite::class,
+        'Cart'      => Overtrue\LaravelShoppingCart\Facade::class,
 
     ],
 

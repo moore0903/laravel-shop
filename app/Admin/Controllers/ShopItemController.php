@@ -113,7 +113,7 @@ class ShopItemController extends Controller
             $form->currency('original_price', '原价')->symbol('￥');
             $form->currency('price', '现价')->symbol('￥');
             $form->currency('shipping', '运费')->symbol('￥')->default('0.00');
-            $form->image('image', '图片');
+            $form->image('img', '图片');
             $form->editor('detail', '内容')->attribute(['style' => 'height:400px;max-height:500px;']);
 
             $form->number('sort', '排序')->default(100);

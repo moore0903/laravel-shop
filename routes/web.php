@@ -11,9 +11,16 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
 
 Route::get('/article/{id}', 'ArticlesController@detail');
 
-Route::get('/oauth/github', 'AuthController@redirectToProvider');
-Route::get('/oauth/github/callback', 'AuthController@handleProviderCallback');
+Route::get('/oauth/github', 'Auth\LoginController@redirectToGitHub');
+Route::get('/oauth/github/callback', 'Auth\LoginController@handleGitHubCallback');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+
+Route::group(['middleware'=>'auth'],function (){
+
+});

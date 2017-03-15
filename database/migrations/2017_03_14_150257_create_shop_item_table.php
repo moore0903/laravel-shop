@@ -19,7 +19,7 @@ class CreateShopItemTable extends Migration
             $table->integer('catalog_id')->comment('分类ID');
             $table->integer('count')->default('100')->comment('库存');
             $table->decimal('price')->comment('价格');
-            $table->string('image')->comment('预览图');
+            $table->string('img')->comment('预览图')->nullable();
             $table->string('short_title')->comment('短标题')->nullable();
             $table->integer('show')->default('1')->comment('是否显示');
             $table->text('detail')->comment('详情')->nullable();
