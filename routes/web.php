@@ -11,6 +11,9 @@
 |
 */
 
+Route::get('/home', 'HomeController@index');
+
+Route::get('/', 'HomeController@index');
 
 Route::get('/article/{id}', 'ArticlesController@detail');
 
@@ -19,7 +22,6 @@ Route::get('/oauth/github/callback', 'OAuthController@handleGitHubCallback');
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index');
 
 Route::group(['middleware'=>'auth'],function (){
 

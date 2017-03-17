@@ -9,6 +9,9 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\ThirdUser;
+use Overtrue\LaravelSocialite\Socialite;
+
 class OAuthController extends Controller
 {
 
@@ -31,6 +34,7 @@ class OAuthController extends Controller
     {
         $user = Socialite::driver('github')->user();
         $this->authHandle('github',$user->getId(),$user->getName(),$user->getNickname(),$user->getAvatar(),$user->getOriginal());
+        return \Redirect::intended(\Session::pull('url.intended', '/'));
     }
 
     public function authHandle($platform,$standardId,$nickName,$name,$avatar,$extdata){
@@ -39,7 +43,7 @@ class OAuthController extends Controller
             $thirdUser->nick_name = $nickName;
             $thirdUser->name = $name;
             $thirdUser->avatar = $avatar;
-            $thirdUser->extdata = $extdata;
+            $thirdUser->extdata = json_encode($extdata);
             $thirdUser->save();
             // 登录并且「记住」用户
             \Auth::loginUsingId($thirdUser->user_id, true);
@@ -63,7 +67,6 @@ class OAuthController extends Controller
             \Auth::loginUsingId($user->id, true);
         }
 
-        return \Redirect::intended(\Session::pull('url.intended', '/'));
     }
 
 }

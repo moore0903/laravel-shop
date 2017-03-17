@@ -24,4 +24,12 @@ class ShopItem extends Model
     {
         return json_decode($images, true);
     }
+
+    public static function shopItemList($catalog_id=0){
+        if(!$catalog_id){
+            return ShopItem::paginate(15);
+        }else{
+            return ShopItem::where('catalog_id','=',$catalog_id)->paginate(15);
+        }
+    }
 }
