@@ -23,7 +23,7 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers{
-        login as _traint_login;
+        login as _login;
     }
 
     /**
@@ -31,7 +31,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -43,7 +43,15 @@ class LoginController extends Controller
         $this->middleware('guest', ['except' => 'logout']);
     }
 
+    public function showLoginForm(){
+        if(isset($_REQUEST['intend'])) {
+            session()->put('url.intended', $_REQUEST['intend']);
+        }
+        return view('auth.login',['route'=>'login']);
+    }
+
     public function login(Request $request){
+        $this->redirectTo = \Session::pull('url.intended', '/');
         if(preg_match("/^\d{11,11}$/",$request['username'])) {
             $this->username = 'phone';
         }
@@ -51,52 +59,7 @@ class LoginController extends Controller
             $this->username = 'email';
         }
         $request[$this->username] = $request['username'];
-        return $this->_traint_login($request);
+        return $this->_login($request);
     }
 
-    /**
-     * Redirect the user to the GitHub authentication page.
-     *
-     * @return Response
-     */
-    public function redirectToGitHub()
-    {
-        return Socialite::driver('github')->redirect();
-    }
-
-    /**
-     * Obtain the user information from GitHub.
-     *
-     * @return Response
-     */
-    public function handleGitHubCallback()
-    {
-        $user = Socialite::driver('github')->user();
-        \Log::debug($user->getOriginal());
-        \Log::debug($user->getId());
-        \Log::debug($user->getNickname());
-        \Log::debug($user->getName());
-        \Log::debug($user->getEmail());
-        echo '123';
-    }
-
-    public function authHandle($provider,$platform,$socialiteId,$nickName,$name,$avatar,$extdata){
-        $thirdUser = ThirdUser::where('socialite_id','=',$socialiteId)->where('platform','=',$platform)->find();
-        if(isset($thirdUser)){
-            $thirdUser->nick_name = $nickName;
-            $thirdUser->name = $name;
-            $thirdUser->avatar = $avatar;
-            $thirdUser->extdata = $extdata;
-            $thirdUser->save();
-            // 登录并且「记住」用户
-            \Auth::loginUsingId($thirdUser->user_id, true);
-        }else{
-            User::create([
-                'name' => $name,
-                'email' => $platform.$socialiteId,
-                'password' => bcrypt('123456'),
-                'headimage' => $avatar,
-            ]);///TODO 未完成
-        }
-    }
 }

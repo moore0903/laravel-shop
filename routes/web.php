@@ -14,12 +14,12 @@
 
 Route::get('/article/{id}', 'ArticlesController@detail');
 
-Route::get('/oauth/github', 'Auth\LoginController@redirectToGitHub');
-Route::get('/oauth/github/callback', 'Auth\LoginController@handleGitHubCallback');
+Route::get('/oauth/github', 'OAuthController@redirectToGitHub');
+Route::get('/oauth/github/callback', 'OAuthController@handleGitHubCallback');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/', 'HomeController@index');
 
 Route::group(['middleware'=>'auth'],function (){
 

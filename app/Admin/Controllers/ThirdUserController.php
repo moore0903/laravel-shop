@@ -11,7 +11,7 @@ use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 
-class ThirdUser extends Controller
+class ThirdUserController extends Controller
 {
     use ModelForm;
 
