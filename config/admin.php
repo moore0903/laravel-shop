@@ -53,7 +53,7 @@ return [
             'file'   => 'file',
         ],
 
-        'host' => env('APP_UPLOAD_HOST','http://zjeccc.moore.com/upload/'),
+        'host' => env('APP_UPLOAD_HOST','http://admin.moore.com/upload/'),
     ],
 
     /*
