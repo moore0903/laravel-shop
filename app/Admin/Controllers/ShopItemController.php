@@ -89,6 +89,10 @@ class ShopItemController extends Controller
                 'show' => '显示'
             ],$states);
 
+            $grid->column('是否推荐')->switchGroup([
+                'recommend' => '推荐'
+            ],$states);
+
             $grid->sort('排序号')->editable();
 
             $grid->created_at('添加时间');
@@ -107,17 +111,21 @@ class ShopItemController extends Controller
 
             $form->display('id', 'ID');
             $form->text('title', '标题');
-            $form->text('short_title', '短标题');
+            $form->text('short_title', '简短介绍');
             $form->select('catalog_id','分类')->options(Catalog::selectOptions());
             $form->number('count', '库存')->default('100');
 //            $form->currency('original_price', '原价')->symbol('￥');
             $form->currency('price', '现价')->symbol('￥');
+            $form->number('unit_number','单位数量');
+            $form->select('units','计量单位')->options(ShopItem::$units);
 //            $form->currency('shipping', '运费')->symbol('￥')->default('0.00');
             $form->image('img', '图片');
             $form->editor('detail', '内容')->attribute(['style' => 'height:400px;max-height:500px;']);
 
             $form->number('sort', '排序')->default(100);
-            $form->multipleImage('images', '图片集合');
+//            $form->multipleImage('images', '图片集合');
+
+            $form->switch('recommend','推荐')->default(false);
 
             $form->switch('show','显示')->default(true);
 
