@@ -34,7 +34,7 @@ class ShopItem extends Model
      * @return mixed
      */
     public static function shopItemList($catalog_id=0,$recommend='all',$is_page=false,$page=15){
-        
+
         $shopItemQuery = ShopItem::where('show','=',true);
 
         //根据栏目ID查询

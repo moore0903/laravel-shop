@@ -27,7 +27,7 @@
 
     @yield('banner')
 
-    @include('layouts.menu');
+    @yield('search')
 
     @yield('content')
 
@@ -41,6 +41,7 @@
 <script type="text/javascript" src="{{ asset('theme/common/ciads.js') }}"></script>
 <script type="text/javascript" src="{{ asset('theme/common/tab.js') }}"></script>
 <script type="text/javascript" src="{{ asset('theme/common/jquery.flexslider.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/vue.js') }}"></script>
 <script type="text/javascript">
     $(window).load(function(){
         $('.flexslider').flexslider({

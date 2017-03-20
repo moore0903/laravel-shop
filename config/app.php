@@ -183,6 +183,7 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Overtrue\LaravelSocialite\ServiceProvider::class,
         Overtrue\LaravelShoppingCart\ServiceProvider::class,
+        Vinkla\Hashids\HashidsServiceProvider::class
 
     ],
 
@@ -234,6 +235,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Socialite' => Overtrue\LaravelSocialite\Socialite::class,
         'Cart'      => Overtrue\LaravelShoppingCart\Facade::class,
+        'Hashids' => Vinkla\Hashids\Facades\Hashids::class
 
     ],
 
