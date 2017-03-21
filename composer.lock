@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "35359b88ca7635f14a92089c1f5d958f",
-    "content-hash": "68ca71031af19a79cf113baf88b402ca",
+    "hash": "000b81ec8d41d45e904e9703169124cb",
+    "content-hash": "8d0afa847092dea41e241307a15a7b4e",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -622,16 +622,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "1.4.1",
+            "version": "1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "0d6c7ca039329247e4f0f8f8f6506810e8248855"
+                "reference": "f5b8a8512e2b58b0071a7280e39f14f72e05d87c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/guzzle/psr7/0d6c7ca039329247e4f0f8f8f6506810e8248855.zip",
-                "reference": "0d6c7ca039329247e4f0f8f8f6506810e8248855",
+                "url": "https://files.phpcomposer.com/files/guzzle/psr7/f5b8a8512e2b58b0071a7280e39f14f72e05d87c.zip",
+                "reference": "f5b8a8512e2b58b0071a7280e39f14f72e05d87c",
                 "shasum": ""
             },
             "require": {
@@ -683,7 +683,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2017-02-27 10:51:17"
+            "time": "2017-03-20 17:10:46"
         },
         {
             "name": "hashids/hashids",
@@ -1394,7 +1394,7 @@
         },
         {
             "name": "overtrue/laravel-shopping-cart",
-            "version": "1.0.5",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/overtrue/laravel-shopping-cart.git",
@@ -4855,6 +4855,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "encore/laravel-admin": 20,
+        "overtrue/laravel-shopping-cart": 20,
         "overtrue/laravel-socialite": 20
     },
     "prefer-stable": false,

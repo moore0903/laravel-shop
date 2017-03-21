@@ -22,9 +22,13 @@ Route::get('/oauth/github/callback', 'OAuthController@handleGitHubCallback');
 
 Route::get('/shopItem/detail/{has_id}','HomeController@detail');
 
+
 Auth::routes();
 
 
-Route::group(['middleware'=>'auth'],function (){
-
-});
+Route::group(
+    ['middleware'=>'auth'],
+    function (){
+        Route::get('cart/add','CartController@addCart');
+    }
+);
