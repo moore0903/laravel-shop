@@ -27,8 +27,15 @@ Auth::routes();
 
 
 Route::group(
-    ['middleware'=>'auth'],
+    ['middleware'=>['web', 'wechat.oauth']],
     function (){
+
+        Route::group(['prefix'=>'wechat'],function(){
+            Route::any('/serve', 'WechatController@serve');
+            Route::get('/profile', 'WechatController@profile');
+
+        });
+
         Route::get('cart/add','CartController@addCart');
     }
 );
