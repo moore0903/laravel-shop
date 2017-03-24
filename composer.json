@@ -11,9 +11,12 @@
         "encore/laravel-admin": "1.4.x-dev",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
-        "overtrue/laravel-shopping-cart": "1.0.*",
+        "overtrue/laravel-shopping-cart": "dev-master",
         "overtrue/laravel-socialite": "dev-master",
-        "overtrue/wechat": "^3.2"
+        "overtrue/laravel-wechat": "~3.0",
+        "overtrue/wechat": "^3.2",
+        "predis/predis": "~1.0",
+        "vinkla/hashids": "^3.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
