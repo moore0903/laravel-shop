@@ -20,9 +20,22 @@ Route::get('/article/{id}', 'ArticlesController@detail');
 Route::get('/oauth/github', 'OAuthController@redirectToGitHub');
 Route::get('/oauth/github/callback', 'OAuthController@handleGitHubCallback');
 
+Route::get('/shopItem/detail/{has_id}','HomeController@detail');
+
+
 Auth::routes();
 
 
-Route::group(['middleware'=>'auth'],function (){
+Route::group(
+    ['middleware'=>['web', 'wechat.oauth']],
+    function (){
 
-});
+        Route::group(['prefix'=>'wechat'],function(){
+            Route::any('/serve', 'WechatController@serve');
+            Route::get('/profile', 'WechatController@profile');
+
+        });
+
+        Route::get('cart/add','CartController@addCart');
+    }
+);
