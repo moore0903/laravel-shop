@@ -185,6 +185,7 @@ return [
         Overtrue\LaravelShoppingCart\ServiceProvider::class,
         Vinkla\Hashids\HashidsServiceProvider::class,
         Overtrue\LaravelWechat\ServiceProvider::class,
+        Overtrue\LaravelPinyin\ServiceProvider::class,
 
     ],
 
@@ -238,6 +239,7 @@ return [
         'Cart'      => Overtrue\LaravelShoppingCart\Facade::class,
         'Hashids' => Vinkla\Hashids\Facades\Hashids::class,
         'EasyWeChat' => Overtrue\LaravelWechat\Facade::class,
+        'Pinyin' => Overtrue\LaravelPinyin\Facades\Pinyin::class,
 
     ],
 

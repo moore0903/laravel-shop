@@ -31,7 +31,7 @@
                 <input class="add" name="" type="button" value="+"/>
             </div>
             <p class="jrgwc fr">
-                <input name="" v-on:click="cartAdd()" type="button" value="加入购物车">
+                <input name="" @click="cartAdd" type="button" value="加入购物车">
             </p>
         </div>
         <div class="sqdetail">
@@ -55,7 +55,8 @@
                         data: "qty="+qty+"&has_id="+has_id,
                         success: function(data){
                             if(data.stat == 1){
-                                vue_cart.cart_count = data.qty;
+                                vue_cart.cart_count = data.cart_count;
+                                vue_shop_item_cart.cart_price_count = data.cart_price_count;
                             }else{
                                 alert('添加购物车失败');
                             }

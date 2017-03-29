@@ -14,11 +14,11 @@ $(function($){
 		$(this).addClass("on").siblings().removeClass("on");
   })
 
-	$('#sidebar ul li').click(function(){
-		$(this).addClass('active').siblings().removeClass('active');
-        var index = $(this).index();
-		$('.j-content').eq(index).toggle().siblings('.j-content').hide();
-	})
+	// $('#sidebar ul li').click(function(){
+	// 	$(this).addClass('active').siblings().removeClass('active');
+     //    var index = $(this).index();
+	// 	$('.j-content').eq(index).toggle().siblings('.j-content').hide();
+	// })
     
 	$(".add").click(function(){ 
 	var t=$(this).parent().find('input[class*=text_box]'); 

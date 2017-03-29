@@ -7,7 +7,7 @@
  */
 ?>
 <ul class="footer fmyh lifl clear" id="vue_cart">
-    <li class="f01"><a href="#">
+    <li class="f01"><a href="{{ url('/good_list') }}">
             <p class="tu"></p>
             <p class="name">选菜点菜</p>
         </a></li>
@@ -15,7 +15,7 @@
             <p class="tu"></p>
             <p class="name">购物车<span v-if="cart_count > 0">(@{{ cart_count }})</span></p>
         </a></li>
-    <li class="f03"><a href="#">
+    <li class="f03"><a href="{{ url('/') }}">
             <p class="tu"></p>
             <p class="name">首页</p>
         </a></li>
@@ -29,8 +29,5 @@
         data:{
             cart_count : {!! \Cart::count() !!}
         },
-//    methods: {
-//
-//    }
     });
 </script>

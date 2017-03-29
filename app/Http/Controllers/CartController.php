@@ -24,6 +24,6 @@ class CartController extends Controller
             $row = \Cart::add($shopItem->id,$shopItem->title,$request['qty'],$shopItem->price,[]);
             $stat = 1;
         }
-        return ['stat'=>$stat,'qty'=>$row->qty];
+        return ['stat'=>$stat,'qty'=>$row->qty,'cart_count'=>\Cart::count(),'cart_price_count'=>\Cart::total()];
     }
 }

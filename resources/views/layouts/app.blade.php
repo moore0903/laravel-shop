@@ -29,7 +29,7 @@
 
 <body>
 <div class="wrap">
-    @include('layouts.header');
+    @include('layouts.header')
 
     @yield('banner')
 
