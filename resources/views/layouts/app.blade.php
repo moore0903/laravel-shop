@@ -37,7 +37,7 @@
 
     @yield('content')
 
-    @yield('layouts.bottom_bar')
+    @yield('bottom_bar')
 
     <div class="fbottom"></div>
 </div>
