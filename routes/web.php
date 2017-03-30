@@ -42,5 +42,6 @@ Route::group(
 
 
 Route::get('cart/add','CartController@addCart');
+Route::get('cart/update','CartController@updateCart');
 
 Route::get('good_list','HomeController@good_list');

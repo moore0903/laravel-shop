@@ -29,7 +29,7 @@
 
 <body>
 <div class="wrap">
-    @include('layouts.header')
+    @yield('header')
 
     @yield('banner')
 
@@ -37,7 +37,7 @@
 
     @yield('content')
 
-    @include('layouts.bottom_bar')
+    @yield('layouts.bottom_bar')
 
     <div class="fbottom"></div>
 </div>

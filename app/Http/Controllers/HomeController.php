@@ -36,8 +36,18 @@ class HomeController extends Controller
             $value->attr = Catalog::where('parent_id','=',$value->id)->get();
             return $value;
         });
+        $shopItem = ShopItem::all();
+
+        $shopItem = $shopItem->map(function($value){
+            $value->hashid = \Hashids::encode($value->id);
+            $row = \Cart::search(['id'=>$value->id]);
+            $row = $row->first();
+            $value->rows = $row??'';
+            return $value;
+        });
         return view('good_list',[
-            'catalogs' => $catalogs
+            'catalogs' => $catalogs,
+            'shopItem' => $shopItem,
         ]);
     }
 

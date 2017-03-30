@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('header')
+
+@endsection
+
 @section('banner')
 
 @endsection
@@ -18,147 +22,41 @@
 @endsection
 
 @section('content')
-    <div class="cpkuai clear">
-        <div class="cpfl fmyh" id="sidebar">
+    <div class="cpkuai clear" id="sidebar">
+        <div class="cpfl fmyh">
             <div class="cpside scrollbar-none">
-                <ul v-for="cata in catalogs" class="fmyh lifl clear">
-                    <li :class="'top_catalogs _cata_'+cata.hashid">
+                <ul class="fmyh lifl clear">
+                    <li v-for="cata in catalogs" :class="'top_catalogs _cata_'+cata.hashid">
                         <p class="name" @click="sidebar(cata.hashid)">@{{ cata.title }}</p>
                     </li>
                 </ul>
             </div>
-            <div v-for="catalog in catalogs">
-                <dl :class="'j-content lifl clear _catalog_'+catalog.hashid" v-for="attr in catalog.attr">
-                    <dd><a href="#">@{{ attr.title }}</a></dd>
-                </dl>
-            </div>
+            <dl v-for="catalog in catalogs" :class="'j-content lifl clear _catalog_'+catalog.hashid">
+                <dd v-for="attr in catalog.attr"><a href="#">@{{ attr.title }}</a></dd>
+            </dl>
         </div>
         <div class="cpmain">
             <ul class="cplist fmyh lifl clear">
-                <li><a href="#">
-                        <p class="tu fl"><img src="images/img1.jpg"></p>
-                        <p class="name">鱼香肉丝</p>
-                        <p class="nr">湖北省政府的可信数据交易市场立足湖北，辐射全国，开启"数据消费经</p>
-                        <p class="time">价格:<span>￥2.2元/500g</span></p>
+                <li v-for="item in shopItem">
+                    <a href="#">
+                        <p class="tu fl"><img :src="'{{asset('upload/').'/'}}'+item.img"></p>
+                        <p class="name">@{{ item.title }}</p>
+                        <p class="nr">@{{ item.short_title }}</p>
+                        <p class="time">价格:<span>￥@{{ item.price }}元/@{{ item.unit_number }}@{{ item.units }}</span></p>
                     </a>
                     <div class="sla">
                         <p class="name fl">选择数量：</p>
                         <div class="gwsl fl">
-                            <input class="min" name="" type="button" value="-"/>
-                            <input class="text_box" name="" type="text" value="1"/>
-                            <input class="add" name="" type="button" value="+"/>
-                        </div>
-                    </div>
-                </li>
-                <li><a href="#">
-                        <p class="tu fl"><img src="images/img1.jpg"></p>
-                        <p class="name">鱼香肉丝</p>
-                        <p class="nr">湖北省政府的可信数据交易市场立足湖北，辐射全国，开启"数据消费经</p>
-                        <p class="time">价格:<span>￥2.2元/500g</span></p>
-                    </a>
-                    <div class="sla">
-                        <p class="name fl">选择数量：</p>
-                        <div class="gwsl fl">
-                            <input class="min" name="" type="button" value="-"/>
-                            <input class="text_box" name="" type="text" value="1"/>
-                            <input class="add" name="" type="button" value="+"/>
-                        </div>
-                    </div>
-                </li>
-                <li><a href="#">
-                        <p class="tu fl"><img src="images/img1.jpg"></p>
-                        <p class="name">鱼香肉丝</p>
-                        <p class="nr">湖北省政府的可信数据交易市场立足湖北，辐射全国，开启"数据消费经</p>
-                        <p class="time">价格:<span>￥2.2元/500g</span></p>
-                    </a>
-                    <div class="sla">
-                        <p class="name fl">选择数量：</p>
-                        <div class="gwsl fl">
-                            <input class="min" name="" type="button" value="-"/>
-                            <input class="text_box" name="" type="text" value="1"/>
-                            <input class="add" name="" type="button" value="+"/>
-                        </div>
-                    </div>
-                </li>
-                <li><a href="#">
-                        <p class="tu fl"><img src="images/img1.jpg"></p>
-                        <p class="name">鱼香肉丝</p>
-                        <p class="nr">湖北省政府的可信数据交易市场立足湖北，辐射全国，开启"数据消费经</p>
-                        <p class="time">价格:<span>￥2.2元/500g</span></p>
-                    </a>
-                    <div class="sla">
-                        <p class="name fl">选择数量：</p>
-                        <div class="gwsl fl">
-                            <input class="min" name="" type="button" value="-"/>
-                            <input class="text_box" name="" type="text" value="1"/>
-                            <input class="add" name="" type="button" value="+"/>
-                        </div>
-                    </div>
-                </li>
-                <li><a href="#">
-                        <p class="tu fl"><img src="images/img1.jpg"></p>
-                        <p class="name">鱼香肉丝</p>
-                        <p class="nr">湖北省政府的可信数据交易市场立足湖北，辐射全国，开启"数据消费经</p>
-                        <p class="time">价格:<span>￥2.2元/500g</span></p>
-                    </a>
-                    <div class="sla">
-                        <p class="name fl">选择数量：</p>
-                        <div class="gwsl fl">
-                            <input class="min" name="" type="button" value="-"/>
-                            <input class="text_box" name="" type="text" value="1"/>
-                            <input class="add" name="" type="button" value="+"/>
-                        </div>
-                    </div>
-                </li>
-                <li><a href="#">
-                        <p class="tu fl"><img src="images/img1.jpg"></p>
-                        <p class="name">鱼香肉丝</p>
-                        <p class="nr">湖北省政府的可信数据交易市场立足湖北，辐射全国，开启"数据消费经</p>
-                        <p class="time">价格:<span>￥2.2元/500g</span></p>
-                    </a>
-                    <div class="sla">
-                        <p class="name fl">选择数量：</p>
-                        <div class="gwsl fl">
-                            <input class="min" name="" type="button" value="-"/>
-                            <input class="text_box" name="" type="text" value="1"/>
-                            <input class="add" name="" type="button" value="+"/>
-                        </div>
-                    </div>
-                </li>
-                <li><a href="#">
-                        <p class="tu fl"><img src="images/img1.jpg"></p>
-                        <p class="name">鱼香肉丝</p>
-                        <p class="nr">湖北省政府的可信数据交易市场立足湖北，辐射全国，开启"数据消费经</p>
-                        <p class="time">价格:<span>￥2.2元/500g</span></p>
-                    </a>
-                    <div class="sla">
-                        <p class="name fl">选择数量：</p>
-                        <div class="gwsl fl">
-                            <input class="min" name="" type="button" value="-"/>
-                            <input class="text_box" name="" type="text" value="1"/>
-                            <input class="add" name="" type="button" value="+"/>
-                        </div>
-                    </div>
-                </li>
-                <li><a href="#">
-                        <p class="tu fl"><img src="images/img1.jpg"></p>
-                        <p class="name">鱼香肉丝</p>
-                        <p class="nr">湖北省政府的可信数据交易市场立足湖北，辐射全国，开启"数据消费经</p>
-                        <p class="time">价格:<span>￥2.2元/500g</span></p>
-                    </a>
-                    <div class="sla">
-                        <p class="name fl">选择数量：</p>
-                        <div class="gwsl fl">
-                            <input class="min" name="" type="button" value="-"/>
-                            <input class="text_box" name="" type="text" value="1"/>
-                            <input class="add" name="" type="button" value="+"/>
+                            <input class="min" @click="delCart(item.rows.__raw_id?item.rows.__raw_id:'')" name="" type="button" value="-"/>
+                            <input class="text_box" name="" type="text" :value="item.rows.qty?item.rows.qty:'0'"/>
+                            <input class="add" @click="addCart(item.hashid)" name="" type="button" value="+"/>
                         </div>
                     </div>
                 </li>
             </ul>
         </div>
     </div>
-    <div class="cpanniu fmyh clear" id="shop_item_cart"> 合计：<i>100</i>元
+    <div class="cpanniu fmyh clear" id="shop_item_cart"> 合计：<i>@{{ cart_price_count }}</i>元
         <p class="anniu fr">
             <input name="" type="button" value="选好了">
         </p>
@@ -167,14 +65,43 @@
         var catalog_sidebar = new Vue({
             el:'#sidebar',
             data:{
-                'catalogs':{!! $catalogs??'{}' !!}
+                'catalogs':{!! $catalogs??'{}' !!},
+                'shopItem':{!! $shopItem??'{}' !!}
             },
             methods:{
                 sidebar:function(hashid){
-                    $('.top_catalogs').removeClass('active');
-                    $('.j-content').hide();
-                    $('._cata_'+hashid).addClass('active');
-                    $('._catalog_'+hashid).show();
+                    $('._cata_'+hashid).addClass('active').siblings('.top_catalogs').removeClass('active');
+                    $('._catalog_'+hashid).toggle().siblings('.j-content').hide();
+                },
+                addCart:function(hashid){
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ url('cart/add') }}",
+                        data: "qty=1&has_id="+hashid,
+                        success: function(data){
+                            if(data.stat == 1){
+                                vue_shop_item_cart.cart_price_count = data.cart_price_count;
+
+                            }else{
+                                alert('添加购物车失败');
+                            }
+                        }
+                    });
+                },
+                delCart:function(__raw_id){
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ url('cart/update') }}",
+                        data: "type=minus&row_id="+__raw_id,
+                        success: function(data){
+                            if(data.stat == 1){
+                                vue_shop_item_cart.cart_price_count = data.cart_price_count;
+
+                            }else{
+                                alert('修改购物车失败');
+                            }
+                        }
+                    });
                 }
             }
         });
@@ -182,7 +109,7 @@
         var vue_shop_item_cart = new Vue({  //用于列表页的价钱显示
             el:'#shop_item_cart',
             data:{
-                cart_count_price : {!! \Cart::total() !!}
+                cart_price_count : {!! \Cart::totalPrice() !!}
             },
         });
 
@@ -190,4 +117,8 @@
 
         });
     </script>
+@endsection
+
+@section('bottom_bar')
+
 @endsection
