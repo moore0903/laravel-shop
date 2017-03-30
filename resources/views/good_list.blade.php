@@ -158,7 +158,7 @@
             </ul>
         </div>
     </div>
-    <div class="cpanniu fmyh clear" id="shop_item_cart"> 合计：<i>100</i>元
+    <div class="cpanniu fmyh clear" id="shop_item_cart"> 合计：<i>@{{ cart_price_count }}</i>元
         <p class="anniu fr">
             <input name="" type="button" value="选好了">
         </p>
@@ -182,7 +182,7 @@
         var vue_shop_item_cart = new Vue({  //用于列表页的价钱显示
             el:'#shop_item_cart',
             data:{
-                cart_count_price : {!! \Cart::total() !!}
+                cart_price_count : {!! \Cart::total() !!}
             },
         });
 
