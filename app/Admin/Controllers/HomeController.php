@@ -112,4 +112,22 @@ class HomeController extends Controller
             $content->row((new Box('Table', new Table($headers, $rows)))->style('info')->solid());
         });
     }
+
+    public function updateSite() {
+        return Admin::content(function (Content $content) {
+
+            $content->header('代码更新');
+            $content->description('代码更新');
+
+            $headers = ['记录'];
+            $out = [];
+            $stat = null;
+            $s = DIRECTORY_SEPARATOR=="\\"? 'cmd /c "'.base_path('update.bat').'"' : 'sudo -u root "'.base_path('update.sh').'"';
+            $last = exec($s,$out,$stat);
+
+            $rows = $out;
+
+            $content->row((new Box('Table', new Table($headers, $rows)))->style('info')->solid());
+        });
+    }
 }

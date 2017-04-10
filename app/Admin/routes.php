@@ -22,4 +22,7 @@ Route::group([
     $router->resource('shopitem', ShopItemController::class);
 
 
+    $router->get('updateSite', 'HomeController@updateSite');
+
+
 });
