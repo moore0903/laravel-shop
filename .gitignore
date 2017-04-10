@@ -11,3 +11,4 @@ Homestead.yaml
 .up-rewrite.conf
 .uini
 composer.lock
+/composer.lock
