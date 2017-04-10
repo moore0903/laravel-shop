@@ -20,6 +20,10 @@ class HomeController extends Controller
         return view('home');
     }
 
+    public function welcome(){
+        return view('welcome');
+    }
+
     public function detail($has_id){
         $id = Hashids::decode($has_id);
         $shopItem = ShopItem::where('id','=',$id)->first();
