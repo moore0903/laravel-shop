@@ -11,4 +11,10 @@ return [
         'client_secret' => '066e1ffab0bfd7b77a7963cef0922ccfbe225bce',
         'redirect'      => 'http://admin.laravel.com/oauth/github/callback',
     ],
+
+    'wechat' => [
+        'client_id'     => 'wx7e08c5f3bd7817ba',
+        'client_secret' => 'c31e1d3b3ce6f91d49740c124b598e50',
+        'redirect'      => 'http://admin.laravel.com/oauth/wechat/callback',
+    ],
 ];

@@ -20,6 +20,9 @@ Route::get('/article/{id}', 'ArticlesController@detail');
 Route::get('/oauth/github', 'OAuthController@redirectToGitHub');
 Route::get('/oauth/github/callback', 'OAuthController@handleGitHubCallback');
 
+Route::get('/oauth/wechat', 'OAuthController@redirectToWechat');
+Route::get('/oauth/wechat/callback', 'OAuthController@handleWechatCallback');
+
 Route::get('/shopItem/detail/{has_id}','HomeController@detail');
 
 

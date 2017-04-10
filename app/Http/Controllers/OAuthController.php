@@ -37,6 +37,28 @@ class OAuthController extends Controller
         return \Redirect::intended(\Session::pull('url.intended', '/'));
     }
 
+    /**
+     * Redirect the user to the Wechat authentication page.
+     *
+     * @return Response
+     */
+    public function redirectToWechat()
+    {
+        return Socialite::driver('wechat')->redirect();
+    }
+
+    /**
+     * Obtain the user information from Wechat.
+     *
+     * @return Response
+     */
+    public function handleWechatCallback()
+    {
+        $user = Socialite::driver('wechat')->user();
+        $this->authHandle('wechat',$user->getId(),$user->getName(),$user->getNickname(),$user->getAvatar(),$user->getOriginal());
+        return \Redirect::intended(\Session::pull('url.intended', '/'));
+    }
+
     public function authHandle($platform,$standardId,$nickName,$name,$avatar,$extdata){
         $thirdUser = ThirdUser::where('standard_id','=',$standardId)->where('platform','=',$platform)->first();
         if(isset($thirdUser)){
