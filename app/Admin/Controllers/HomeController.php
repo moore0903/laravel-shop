@@ -124,8 +124,10 @@ class HomeController extends Controller
             $stat = null;
             $s = DIRECTORY_SEPARATOR=="\\"? 'cmd /c "'.base_path('update.bat').'"' : 'sudo -u root "'.base_path('update.sh').'"';
             $last = exec($s,$out,$stat);
-
-            $rows = $out;
+            foreach($out as $line){
+                if(empty($line)) continue;
+                $rows[] = [$line];
+            }
 
             $content->row((new Box('Table', new Table($headers, $rows)))->style('info')->solid());
         });
