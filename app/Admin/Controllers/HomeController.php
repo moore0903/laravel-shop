@@ -122,7 +122,7 @@ class HomeController extends Controller
             $headers = ['记录'];
             $out = [];
             $stat = null;
-            $s = DIRECTORY_SEPARATOR=="\\"? 'cmd /c "'.base_path('update.bat').'"' : 'sudo -u root "'.base_path('update.sh').'"';
+            $s = DIRECTORY_SEPARATOR=="\\"? 'cmd /c "'.base_path('update.bat').'"2>&1' : 'sudo -u root "'.base_path('update.sh').'"2>&1';
             $last = exec($s,$out,$stat);
             foreach($out as $line){
                 if(empty($line)) continue;
