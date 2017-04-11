@@ -116,8 +116,8 @@ class HomeController extends Controller
     public function updateSite() {
         return Admin::content(function (Content $content) {
 
-            $content->header('代码更新');
-            $content->description('代码更新');
+            $content->header('代码更新`');
+            $content->description('代码更新`');
 
             $headers = ['记录'];
             $out = [];
