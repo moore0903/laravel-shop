@@ -32,7 +32,6 @@ Auth::routes();
 
 
 Route::group(
-//    ['middleware'=>['web', 'wechat.oauth']],
     ['middleware'=>['web', 'auth']],
     function (){
 
