@@ -124,6 +124,10 @@ class HomeController extends Controller
             $stat = null;
             $s = DIRECTORY_SEPARATOR=="\\"? 'cmd /c "'.base_path('update.bat').'"2>&1' : 'sudo -u root "'.base_path('update.sh').'"2>&1';
             $last = exec($s,$out,$stat);
+			\Log::debug($s);
+			\Log::debug($out);
+			\Log::debug($stat);
+			\Log::debug($last);
             foreach($out as $line){
                 if(empty($line)) continue;
                 $rows[] = [$line];
