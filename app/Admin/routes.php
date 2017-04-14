@@ -12,6 +12,7 @@ Route::group([
 
     $router->get('/', 'HomeController@index');
 
+    $router->get('giftcode/download','GiftcodeController@download');
 
     $router->resource('catalog', CatalogsController::class);
 
@@ -20,6 +21,8 @@ Route::group([
     $router->resource('page', PagesController::class);
 
     $router->resource('shopitem', ShopItemController::class);
+
+    $router->resource('giftcode', GiftcodeController::class);
 
 
     $router->get('updateSite', 'HomeController@updateSite');

@@ -15,7 +15,7 @@ Route::get('/home', 'HomeController@index');
 
 Route::get('/welcome', 'HomeController@welcome');
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@welcome');
 
 Route::get('/article/{id}', 'ArticlesController@detail');
 
@@ -32,7 +32,6 @@ Auth::routes();
 
 
 Route::group(
-//    ['middleware'=>['web', 'wechat.oauth']],
     ['middleware'=>['web', 'auth']],
     function (){
 
