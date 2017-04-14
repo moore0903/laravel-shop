@@ -114,6 +114,8 @@ class HomeController extends Controller
     }
 
     public function updateSite() {
+        set_time_limit(1800);
+        ini_set('memory_limit','1024M');
         return Admin::content(function (Content $content) {
 
             $content->header('代码更新');
@@ -124,6 +126,10 @@ class HomeController extends Controller
             $stat = null;
             $s = DIRECTORY_SEPARATOR=="\\"? 'cmd /c "'.base_path('update.bat').'"' : 'sudo -u root "'.base_path('update.sh').'"';
             $last = exec($s,$out,$stat);
+            \Log::debug($s);
+            \Log::debug($out);
+            \Log::debug($stat);
+            \Log::debug($last);
             foreach($out as $line){
                 if(empty($line)) continue;
                 $rows[] = [$line];
