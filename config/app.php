@@ -186,6 +186,7 @@ return [
         Vinkla\Hashids\HashidsServiceProvider::class,
         Overtrue\LaravelWechat\ServiceProvider::class,
         Overtrue\LaravelPinyin\ServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
 
@@ -240,6 +241,7 @@ return [
         'Hashids' => Vinkla\Hashids\Facades\Hashids::class,
         'EasyWeChat' => Overtrue\LaravelWechat\Facade::class,
         'Pinyin' => Overtrue\LaravelPinyin\Facades\Pinyin::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 
