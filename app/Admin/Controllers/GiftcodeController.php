@@ -73,14 +73,19 @@ class GiftcodeController extends Controller
     {
         return Admin::grid(Giftcode::class, function (Grid $grid) {
             $grid->model()->where('p_id', '=', 0);
+            $grid->model()->select(\DB::raw('*'),\DB::raw('sum(usecountmax) as sumusecountmax'),\DB::raw('sum(usecount) as sumusecount'));
             $grid->model()->groupBy('title','discountn','discountnlimit','usecountmax','start_time','end_time');
 //            $grid->id('ID')->sortable();
             $grid->title('标题');
             $grid->column('优惠')->display(function(){
                 return '满'.$this->discountnlimit.'元减'.$this->discountn.'元';
             });
-            $grid->usecountmax('总张数');
-            $grid->usecount('已使用');
+            $grid->column('总张数')->display(function(){
+                return $this->sumusecountmax;
+            });
+            $grid->column('已使用')->display(function(){
+                return $this->sumusecount;
+            });
             $grid->start_time('开始时间');
             $grid->end_time('开始时间');
             $grid->net('使用地址')->display(function($net){
@@ -89,8 +94,14 @@ class GiftcodeController extends Controller
             $grid->actions(function ($actions){
                 $actions->disableDelete();
                 $actions->disableEdit();
-                $download_url = url('admin/giftcode/download').'?title='.urlencode($actions->row->title).'&discountn='.urlencode($actions->row->discountn).'&discountnlimit='.urlencode($actions->row->discountnlimit).'&usecountmax='.urlencode($actions->row->usecountmax).'&start_time='.urlencode($actions->row->start_time).'&end_time='.urlencode($actions->row->end_time);
-                $actions->append('<a href="'.$download_url.'">下载CSV</a>');
+                $url = '?title='.urlencode($actions->row->title).'&discountn='.urlencode($actions->row->discountn).'&discountnlimit='.urlencode($actions->row->discountnlimit).'&usecountmax='.urlencode($actions->row->usecountmax).'&start_time='.urlencode($actions->row->start_time).'&end_time='.urlencode($actions->row->end_time);
+                $actions->append('<a href="'.url('admin/giftcode/download').$url.'" alt="下载CSV"><i class="glyphicon glyphicon-download"></i></a>&nbsp;&nbsp;&nbsp;');
+                $actions->append('<a href="'.url('admin/giftcode/clearNotUse').$url.'" alt="清空未使用"><i class="glyphicon glyphicon-trash"></i></a>');
+            });
+            $grid->tools(function ($tools) {
+                $tools->batch(function ($batch) {
+                    $batch->disableDelete();
+                });
             });
         });
     }
@@ -132,6 +143,25 @@ class GiftcodeController extends Controller
                 $sheet->fromModel($model);
             });
         })->download('csv');
+    }
+
+    public function clearNotUse(Request $request){
+        Giftcode::where('title',$request['title'])
+            ->where('discountn',$request['discountn'])
+            ->where('discountnlimit',$request['discountnlimit'])
+            ->where('usecountmax',$request['usecountmax'])
+            ->where('start_time',$request['start_time'])
+            ->where('end_time',$request['end_time'])
+            ->where('usecount',0)
+            ->delete();
+        Giftcode::where('title',$request['title'])
+            ->where('discountn',$request['discountn'])
+            ->where('discountnlimit',$request['discountnlimit'])
+            ->where('usecountmax',$request['usecountmax'])
+            ->where('start_time',$request['start_time'])
+            ->where('end_time',$request['end_time'])
+            ->whereRaw('usecount<>usecountmax')
+            ->update(['usecount' => \DB::raw( 'usecountmax')]);
     }
 
 }

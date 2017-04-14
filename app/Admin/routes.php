@@ -14,6 +14,8 @@ Route::group([
 
     $router->get('giftcode/download','GiftcodeController@download');
 
+    $router->get('giftcode/clearNotUse','GiftcodeController@clearNotUse');
+
     $router->resource('catalog', CatalogsController::class);
 
     $router->resource('article', ArticlesController::class);
