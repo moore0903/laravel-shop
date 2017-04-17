@@ -116,8 +116,8 @@ class ShopItemController extends Controller
             $form->number('count', '库存')->default('100');
 //            $form->currency('original_price', '原价')->symbol('￥');
             $form->currency('price', '现价')->symbol('￥');
-            $form->number('unit_number','单位数量');
-            $form->select('units','计量单位')->options(ShopItem::$units);
+//            $form->number('unit_number','单位数量');
+//            $form->select('units','计量单位')->options(ShopItem::$units);
 //            $form->currency('shipping', '运费')->symbol('￥')->default('0.00');
             $form->image('img', '图片');
             $form->editor('detail', '内容')->attribute(['style' => 'height:400px;max-height:500px;']);
