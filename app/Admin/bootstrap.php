@@ -20,7 +20,20 @@
 
 use App\Admin\Extensions\WangEditor;
 use Encore\Admin\Form;
+use App\Admin\Extensions\Column\ExpandRow;
+use Encore\Admin\Grid\Column;
+use App\Admin\Extensions\Column\ViewExpress;
 
 Form::forget('map');
 
 Form::extend('editor', WangEditor::class);
+
+Column::extend('expand', ExpandRow::class);
+
+Column::extend('express', ViewExpress::class);
+
+Column::extend('prependIcon', function ($value, $icon) {
+
+    return "<span style='color: #999;'><i class='fa fa-$icon'></i>  $value</span>";
+
+});

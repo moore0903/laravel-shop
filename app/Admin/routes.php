@@ -26,6 +26,8 @@ Route::group([
 
     $router->resource('giftcode', GiftcodeController::class);
 
+    $router->resource('order', OrderController::class);
+
 
     $router->get('updateSite', 'HomeController@updateSite');
 

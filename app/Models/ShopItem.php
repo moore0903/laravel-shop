@@ -28,13 +28,12 @@ class ShopItem extends Model
     /**
      * 查询商品分类
      * @param int $catalog_id 栏目ID
-     * @param string $recommend 是否推荐
+     * @param bool $recommend 是否推荐
      * @param bool $is_page 是否分页
      * @param int $page 每页多少条
      * @return mixed
      */
-    public static function shopItemList($catalog_id=0,$recommend='all',$is_page=false,$page=15){
-
+    public static function shopItemList($catalog_id=0,$recommend=false,$is_page=false,$page=15){
         $shopItemQuery = ShopItem::where('show','=',true);
 
         //根据栏目ID查询
@@ -51,7 +50,7 @@ class ShopItem extends Model
 
         //是否分页及一页多少条
         if($is_page === false){
-            $shopItemList = $shopItemQuery->get($page);
+            $shopItemList = $shopItemQuery->take($page)->get();
         }else{
             $shopItemList = $shopItemQuery->paginate($page);
         }
