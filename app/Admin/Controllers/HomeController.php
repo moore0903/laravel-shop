@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Config;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Column;
 use Encore\Admin\Layout\Content;
@@ -15,9 +16,12 @@ use Encore\Admin\Widgets\Chart\Pie;
 use Encore\Admin\Widgets\Chart\PolarArea;
 use Encore\Admin\Widgets\Chart\Radar;
 use Encore\Admin\Widgets\Collapse;
+use Encore\Admin\Widgets\Form;
 use Encore\Admin\Widgets\InfoBox;
 use Encore\Admin\Widgets\Tab;
 use Encore\Admin\Widgets\Table;
+use Illuminate\Support\MessageBag;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -137,5 +141,38 @@ class HomeController extends Controller
 
             $content->row((new Box('Table', new Table($headers, $rows)))->style('info')->solid());
         });
+    }
+
+    public function updateConfig(Request $request){
+        if($request->method() == 'GET'){
+            return Admin::content(function (Content $content) {
+                $content->header('网站配置');
+                $form = new Form();
+                $configs = Config::all();
+                $form->action(url(config('admin.prefix').'/updateConfig'));
+                $post_price = $configs->where('key','post_price')->first();
+                $include_postage = $configs->where('key','include_postage')->first();
+                $form->currency('key[post_price]', '运费')->symbol('￥')->default(!empty($post_price)? $post_price->value : '0.00');
+                $form->currency('key[include_postage]', '满X包邮')->symbol('￥')->default(!empty($include_postage)? $include_postage->value : '0.00');
+                $content->row(new Box('网站配置', $form));
+            });
+        }elseif($request->method() == 'POST'){
+            $keys = $request['key'];
+            foreach($keys as $key=>$value){
+                $configInfo = Config::where('key','=',$key)->first();
+                if(!empty($configInfo->value)){
+                    \DB::table('configs')->where('key','=',$key)->update(['value'=>$value]);
+                }else{
+                    Config::insert(['key'=>$key,'value'=>$value]);
+                }
+            }
+            $success = new MessageBag([
+                'title'   => '保存成功',
+                'message' => '更新成功',
+            ]);
+
+            return back()->with(compact('success'));
+        }
+
     }
 }

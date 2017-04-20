@@ -237,7 +237,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Socialite' => Overtrue\LaravelSocialite\Socialite::class,
-        'Cart'      => Overtrue\LaravelShoppingCart\Facade::class,
+        'Cart' => Overtrue\LaravelShoppingCart\Facade::class,
         'Hashids' => Vinkla\Hashids\Facades\Hashids::class,
         'EasyWeChat' => Overtrue\LaravelWechat\Facade::class,
         'Pinyin' => Overtrue\LaravelPinyin\Facades\Pinyin::class,

@@ -34,4 +34,14 @@ class Giftcode extends Model
             $model->usecountmax = 1;
         });
     }
+
+    /**
+     * 获取当前登录用户的可使用的优惠券
+     * @return string
+     */
+    public function available(){
+        if(!\Auth::check()) return '';
+        $availableGift = Giftcode::where('p_id','=',\Auth::user()->id)->where('usecountmax','>','usecount')->get();
+        return $availableGift;
+    }
 }

@@ -14,6 +14,7 @@ class Order extends Model
         return $this->hasMany(OrderDetail::class,'order_id');
     }
 
+
     public static function statString($stat) {
         switch($stat) {
             case Order::STAT_NOTPAY:

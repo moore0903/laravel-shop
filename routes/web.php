@@ -34,17 +34,28 @@ Auth::routes();
 Route::group(
     ['middleware'=>['web', 'auth']],
     function (){
-
         Route::group(['prefix'=>'wechat'],function(){
             Route::any('/serve', 'WechatController@serve');
             Route::get('/profile', 'WechatController@profile');
+        });
 
+        Route::group(
+            ['prefix'=>'order'],function(){
+            Route::get('add','OrderController@addOrder');
         });
     }
 );
 
+Route::group(
+    [
+        'prefix'=>'cart'
+    ],
+    function(){
+        Route::get('add','CartController@addCart');
+        Route::get('update','CartController@updateCart');
+        Route::get('all','CartController@cartAll');
+    }
+);
 
-
-Route::get('cart/add','CartController@addCart');
 
 Route::get('good_list','HomeController@good_list');

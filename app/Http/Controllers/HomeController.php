@@ -33,16 +33,28 @@ class HomeController extends Controller
     }
 
 
-    public function good_list(){
+    public function good_list(Request $request){
         $catalogs = Catalog::where('parent_id','=','0')->get();
         $catalogs = $catalogs->map(function($value){
             $value->hashid = \Hashids::encode($value->id);
             $value->attr = Catalog::where('parent_id','=',$value->id)->get();
             return $value;
         });
-        return view('good_list',[
-            'catalogs' => $catalogs
-        ]);
+        $shopItem = ShopItem::all();
+        $shopItem = $shopItem->map(function($value){
+            $value->hashid = \Hashids::encode($value->id);
+            $row = \Cart::search(['id'=>$value->id]);
+            $row = $row->first();
+            $value->rows = $row??'';
+            return $value;
+        });
+        $returnData = [
+            'catalogs' => $catalogs,
+            'shopItem' => $shopItem
+        ];
+
+        if(!empty($request['is_api'])) return $returnData;
+        return view('good_list',$returnData);
     }
 
     public function ajax_catalog(Request $request){

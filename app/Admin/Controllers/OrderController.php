@@ -102,6 +102,11 @@ class OrderController extends Controller
             $grid->column('物流信息')->express(function(){
                 return [$this->express_company, $this->express_no];
             });
+            $grid->filter(function ($filter) {
+                $filter->like('realname','收货人');
+                $filter->like('phone','收货电话');
+                $filter->is('stat', '状态')->select(Order::$stat);
+            });
             $grid->actions(function ($actions) {
                 $actions->disableDelete();
             });

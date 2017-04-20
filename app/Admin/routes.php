@@ -31,5 +31,7 @@ Route::group([
 
     $router->get('updateSite', 'HomeController@updateSite');
 
+    $router->match(['get','post'],'updateConfig','HomeController@updateConfig');
+
 
 });
