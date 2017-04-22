@@ -117,6 +117,10 @@ class HomeController extends Controller
         });
     }
 
+    /**
+     * 网站更新
+     * @return Content
+     */
     public function updateSite() {
         set_time_limit(1800);
         ini_set('memory_limit','1024M');
@@ -143,6 +147,11 @@ class HomeController extends Controller
         });
     }
 
+    /**
+     * 网站配置更新
+     * @param Request $request
+     * @return Content|\Illuminate\Http\RedirectResponse
+     */
     public function updateConfig(Request $request){
         if($request->method() == 'GET'){
             return Admin::content(function (Content $content) {
