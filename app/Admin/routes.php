@@ -16,6 +16,10 @@ Route::group([
 
     $router->get('giftcode/clearNotUse','GiftcodeController@clearNotUse');
 
+    $router->get('shopitem/collection','ShopItemController@collection');
+
+    $router->get('shopitem/comment','ShopItemController@comment');
+
     $router->resource('catalog', CatalogsController::class);
 
     $router->resource('article', ArticlesController::class);
