@@ -1,4 +1,4 @@
 cd %~dp0
-git pull origin master
+git pull
 php artisan migrate
 php artisan optimize
