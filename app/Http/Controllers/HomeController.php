@@ -29,6 +29,7 @@ class HomeController extends Controller
         $shopItem = ShopItem::where('id','=',$id)->first();
         return view('detail',[
             'item' => $shopItem,
+            'cart'=>['cart_items'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_price_count'=>\Cart::totalPrice()]
         ]);
     }
 
@@ -50,7 +51,8 @@ class HomeController extends Controller
         });
         $returnData = [
             'catalogs' => $catalogs,
-            'shopItem' => $shopItem
+            'shopItem' => $shopItem,
+            'cart'=>['cart_items'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_price_count'=>\Cart::totalPrice()]
         ];
 
         if(!empty($request['is_api'])) return $returnData;
