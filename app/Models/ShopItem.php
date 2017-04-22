@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class ShopItem extends Model
@@ -11,6 +12,23 @@ class ShopItem extends Model
     public function catalog()
     {
         return $this->belongsTo(Catalog::class,'catalog_id');
+    }
+
+    /**
+     * 收藏
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function collections()
+    {
+        return $this->belongsToMany(User::class,'collection','shop_item_id','user_id');
+    }
+
+    /**
+     * 评论
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function comments(){
+        return $this->belongsToMany(User::class,'comment','shop_item_id','user_id')->withPivot('content','images','star','created_at');
     }
 
     public function setImagesAttribute($images)
