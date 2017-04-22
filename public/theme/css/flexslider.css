@@ -47,7 +47,7 @@ html[xmlns] .slides {display: block;}
 .carousel li {margin-right: 5px}
 .flex-control-nav{ height:12px; position:absolute; top:270px; left:327px; z-index:11111; }
 .flex-control-nav li{ display:inline-block; width:12px; height:12px; margin:0px 6px;}
-.flex-control-nav li a{ display:inline-block; width:12px; height:12px; background:url(../bg/dd.png) no-repeat; text-indent:-1111px; }
+.flex-control-nav li a{ display:inline-block; width:12px; height:12px; text-indent:-1111px; }
 .flex-control-nav li a.flex-active{ background-position: right top; }
 
 /* Direction Nav */
