@@ -15,6 +15,7 @@
     <link href="{{ asset('theme/css/flexslider.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('theme/css/swiper.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('theme/css/fsgallery.css') }}" rel="stylesheet" type="text/css" />
+    {{--<link href="{{ asset('packages/layer/mobile/need/layer.css') }}" rel="stylesheet" type="text/css" />--}}
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([
@@ -33,6 +34,8 @@
 <script type="text/javascript" src="{{ asset('theme/common/tab.js') }}"></script>
 <script type="text/javascript" src="{{ asset('theme/common/jquery.flexslider.js') }}"></script>
 <script type="text/javascript" src="{{ asset('theme/common/fs_forse.js') }}"></script>
+<script type="text/javascript" src="{{ asset('packages/layer/layer.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/vue.js') }}"></script>
 <script>
     var swiper = new Swiper('.swiper-container', {
         pagination: '.swiper-pagination',
@@ -51,5 +54,8 @@
         });
     });
 </script>
+
+@yield('script')
+
 </body>
 </html>

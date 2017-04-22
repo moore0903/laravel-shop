@@ -59,7 +59,7 @@
             </div>
             <div class="coupons fr">
                 <p class="title"></p>
-                <div class="cont"><a href="#"></a></div>
+                <div class="cont"><a href="{{url('gift/available')}}"></a></div>
             </div>
         </div>
         <div class="fdm2"><a href="#"><img src="images/img3.jpg"/></a></div>
@@ -302,7 +302,7 @@
                     <p class="tu"></p>
                     <p class="name">首页</p>
                 </a></li>
-            <li class="f02"><a href="cpfl.asp">
+            <li class="f02"><a href="{{url('good_list')}}">
                     <p class="tu"></p>
                     <p class="name">分类</p>
                 </a></li>
@@ -343,4 +343,8 @@
         </div>
 
     </div>
+@endsection
+
+@section('script')
+
 @endsection
