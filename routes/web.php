@@ -57,5 +57,15 @@ Route::group(
     }
 );
 
+Route::group(
+    [
+        'prefix'=>'gift'
+    ],
+    function(){
+        Route::get('available','GiftcodeController@availableGiftcodes');
+        Route::get('receive','GiftcodeController@receiveGiftcode');
+    }
+);
+
 
 Route::get('good_list','HomeController@good_list');
