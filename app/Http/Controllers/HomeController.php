@@ -27,9 +27,13 @@ class HomeController extends Controller
     public function detail($has_id){
         $id = Hashids::decode($has_id);
         $shopItem = ShopItem::where('id','=',$id)->first();
+        $shopItem->hashid = Hashids::encode($shopItem->id);
         return view('detail',[
             'item' => $shopItem,
-            'cart'=>['cart_items'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_price_count'=>\Cart::totalPrice()]
+            'comments'=>$shopItem->comments,
+            'commentCount'=>$shopItem->comments->count(),
+            'itemStar'=>$shopItem->comments->avg('pivot.star')??0,
+            'cart'=>collect(['cart_items'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_price_count'=>\Cart::totalPrice()])
         ]);
     }
 
@@ -52,7 +56,7 @@ class HomeController extends Controller
         $returnData = [
             'catalogs' => $catalogs,
             'shopItem' => $shopItem,
-            'cart'=>['cart_items'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_price_count'=>\Cart::totalPrice()]
+            'cart'=>collect(['cart_items'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_price_count'=>\Cart::totalPrice()])
         ];
 
         if(!empty($request['is_api'])) return $returnData;
