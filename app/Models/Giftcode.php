@@ -30,8 +30,10 @@ class Giftcode extends Model
             }
             $model->code = Str::upper(Str::random(10));
             $model->net = $model->net??url('/');
-            $model->codecount = 1;
-            $model->usecountmax = 1;
+            if($model->codecount > 1){
+                $model->codecount = 1;
+                $model->usecountmax = 1;
+            }
         });
     }
 

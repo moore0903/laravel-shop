@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\ThirdUser;
+use App\User;
 use Overtrue\LaravelSocialite\Socialite;
 
 class OAuthController extends Controller
