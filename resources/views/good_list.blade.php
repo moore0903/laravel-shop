@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="wrap fmyh">
+<div class="wrap fmyh" id="shop_item_list" xmlns:v-on="http://www.w3.org/1999/xhtml">
     <div class="cpdm clear">
         <div class="header j-search-input">
             <p class="hlbg fl"></p>
@@ -10,14 +10,9 @@
             </p>
         </div>
         <ul class="cpfllist lifl clear">
-            <li class="on"><a href="#1">白酒</a></li>
-            <li><a href="#1">葡萄酒</a></li>
-            <li><a href="#1">洋酒</a></li>
-            <li><a href="#1">啤酒</a></li>
-            <li><a href="#1">黄酒</a></li>
-            <li><a href="#1">保健酒</a></li>
-            <li><a href="#1">酒具</a></li>
-            <li><a href="#1">饮料</a></li>
+            <li v-for="(catalog,index) in catalogs" :class="'catalogs _cata_'+catalog.hashid">
+                <a href="javascript:void(0);" v-on:click='sidebar(catalog.hashid)'>@{{ catalog.title }}</a>
+            </li>
         </ul>
         <ul class="cpsxlist lifl clear">
             <li class="on"><a href="javascript:;">销量排序</a></li>
@@ -26,221 +21,23 @@
         </ul>
     </div>
     <aside>
-        <div class="menu-left scrollbar-none" id="sidebar">
+        <div class="menu-left scrollbar-none">
             <ul>
-                <li class="active">全部</li>
-                <li>茅台</li>
-                <li>五粮液</li>
-                <li>国窖</li>
-                <li>汾酒</li>
-                <li>浏阳河</li>
-                <li>四特酒</li>
-                <li>洋河</li>
-                <li>泸州老窖</li>
+                <li v-for="cata in subCatalog" v-on:click="getShopItems(cata.hashid)">
+                    @{{ cata.title }}
+                </li>
             </ul>
         </div>
     </aside>
     <section class="menu-right padding-all scrollbar-none j-content">
         <ul class="lifl clear">
-            @foreach($shopItem as $item)
-            <li><a href="{{url('/shopItem/detail/').'/'.\Hashids::encode($item->id)}}">
-                    <p class="tu"><img src="{{asset('upload/').'/'.$item->img}}"/></p>
-                    <p class="name">{{$item->title}}</p>
-                    <p class="jige"><i class="fr">¥{{$item->original_price}}元</i>¥{{$item->price}}元</p>
-                </a></li>
-            @endforeach
-        </ul>
-    </section>
-    <section class="menu-right padding-all scrollbar-none j-content" style="display:none;">
-        <ul class="lifl clear">
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-        </ul>
-    </section>
-    <section class="menu-right padding-all scrollbar-none j-content" style="display:none;">
-        <ul class="lifl clear">
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-        </ul>
-    </section>
-    <section class="menu-right padding-all scrollbar-none j-content" style="display:none;">
-        <ul class="lifl clear">
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-        </ul>
-    </section>
-    <section class="menu-right padding-all scrollbar-none j-content" style="display:none;">
-        <ul class="lifl clear">
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-        </ul>
-    </section>
-    <section class="menu-right padding-all scrollbar-none j-content" style="display:none;">
-        <ul class="lifl clear">
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-        </ul>
-    </section>
-    <section class="menu-right padding-all scrollbar-none j-content" style="display:none;">
-        <ul class="lifl clear">
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-        </ul>
-    </section>
-    <section class="menu-right padding-all scrollbar-none j-content" style="display:none;">
-        <ul class="lifl clear">
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-        </ul>
-    </section>
-    <section class="menu-right padding-all scrollbar-none j-content" style="display:none;">
-        <ul class="lifl clear">
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
-            <li><a href="#">
-                    <p class="tu"><img src="images/img11.jpg"/></p>
-                    <p class="name">52度五粮国宾酒尊品限量500ml</p>
-                    <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                </a></li>
+            <li v-for="item in shopItems">
+                <a :href="item.url">
+                    <p class="tu"><img :src="item.imgUrl"/></p>
+                    <p class="name">@{{ item.title }}</p>
+                    <p class="jige"><i class="fr">¥ @{{item.original_price}}元</i>¥ @{{item.price}}元</p>
+                </a>
+            </li>
         </ul>
     </section>
     <ul class="footer fmyh lifl clear">
@@ -262,134 +59,6 @@
             </a></li>
     </ul>
     <div class="stop"></div>
-    <div class="cpflnr j-cpfl clear">
-        <div class="saixuan scrollbar-none fr">
-            <div class="sxbt"><p class="gb"></p>品牌</div>
-            <ul class="cplbylist lifl clear">
-                <li><a href="#">八月桂花香四川1</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="cpflnr j-cpfl clear">
-        <div class="saixuan scrollbar-none fr">
-            <div class="sxbt"><p class="gb"></p>品牌</div>
-            <ul class="cplbylist lifl clear">
-                <li><a href="#">八月桂花香四川2</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="cpflnr j-cpfl clear">
-        <div class="saixuan scrollbar-none fr">
-            <div class="sxbt"><p class="gb"></p>品牌</div>
-            <ul class="cplbylist lifl clear">
-                <li><a href="#">八月桂花香四川3</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="cpflnr j-cpfl clear">
-        <div class="saixuan scrollbar-none fr">
-            <div class="sxbt"><p class="gb"></p>品牌</div>
-            <ul class="cplbylist lifl clear">
-                <li><a href="#">八月桂花香四川4</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="cpflnr j-cpfl clear">
-        <div class="saixuan scrollbar-none fr">
-            <div class="sxbt"><p class="gb"></p>品牌</div>
-            <ul class="cplbylist lifl clear">
-                <li><a href="#">八月桂花香四川5</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="cpflnr j-cpfl clear">
-        <div class="saixuan scrollbar-none fr">
-            <div class="sxbt"><p class="gb"></p>品牌</div>
-            <ul class="cplbylist lifl clear">
-                <li><a href="#">八月桂花香四川6</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="cpflnr j-cpfl clear">
-        <div class="saixuan scrollbar-none fr">
-            <div class="sxbt"><p class="gb"></p>品牌</div>
-            <ul class="cplbylist lifl clear">
-                <li><a href="#">八月桂花香四川7</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="cpflnr j-cpfl clear">
-        <div class="saixuan scrollbar-none fr">
-            <div class="sxbt"><p class="gb"></p>品牌</div>
-            <ul class="cplbylist lifl clear">
-                <li><a href="#">八月桂花香四川8</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-                <li><a href="#">八月桂花香四川</a></li>
-            </ul>
-        </div>
-    </div>
     <div class="cpflnr j-ccgg clear">
         <div class="saixuan scrollbar-none fr">
             <div class="sxbt">筛选</div>
@@ -458,11 +127,49 @@
 @section('script')
     <script type="text/javascript">
         $(function($){
-            $('#sidebar ul li').click(function(){
-                $(this).addClass('active').siblings('li').removeClass('active');
-                var index = $(this).index();
-                $('.j-content').eq(index).show().siblings('.j-content').hide();
-            })
-        })
+            var layerLoad = '';
+
+            var shop_item_list = new Vue({
+                el:'#shop_item_list',
+                data:{
+                    'shopItems':{!! $shopItem??'{}' !!},
+                    'cart':{!! $cart??'{}' !!},
+                    'catalogs':{!! $catalogs??'{}' !!},
+                    'subCatalog':{!! $subCatalogs??'{}' !!},
+                },
+                methods:{
+                    getShopItems:function(hashid){
+                        $.get("{{url('shop_item/ajax_shop_item')}}", { hash_id: hashid},
+                            function(data){
+                                layer.close(layerLoad);
+                                if(data.stat){
+                                    shop_item_list.shopItems = data.shopItems;
+                                }else{
+                                    layer.msg(data.msg);
+                                }
+                            });
+                    },
+                    getSubCatalog:function(hashid){
+                        $.get("{{url('shop_item/ajax_sub_catalog')}}", { hash_id: hashid},
+                            function(data){
+                                layer.close(layerLoad);
+                                if(data.stat){
+                                    shop_item_list.subCatalog = data.catalogs;
+                                }else{
+                                    layer.msg(data.msg);
+                                }
+                            });
+                    },
+                    sidebar:function(hashid){
+                        layerLoad = layer.load();
+                        $('._cata_'+hashid).addClass('on').siblings('.catalogs').removeClass('on');
+                        shop_item_list.getSubCatalog(hashid);
+                        shop_item_list.getShopItems(hashid);
+                    },
+                }
+            });
+        });
+
+
     </script>
 @endsection

@@ -302,7 +302,7 @@
                     <p class="tu"></p>
                     <p class="name">首页</p>
                 </a></li>
-            <li class="f02"><a href="{{url('good_list')}}">
+            <li class="f02"><a href="{{url('shop_item/good_list')}}">
                     <p class="tu"></p>
                     <p class="name">分类</p>
                 </a></li>
