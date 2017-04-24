@@ -24,6 +24,11 @@ class HomeController extends Controller
         return view('welcome');
     }
 
+    /**
+     * 进入详情页
+     * @param $hash_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function detail($hash_id){
         $id = Hashids::decode($hash_id);
         $shopItem = ShopItem::where('id','=',$id)->first();
@@ -38,6 +43,11 @@ class HomeController extends Controller
     }
 
 
+    /**
+     * 进入商品列表
+     * @param Request $request
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function good_list(Request $request){
         $catalogs = Catalog::where('parent_id','=','0')->get();
         $catalogs = $catalogs->map(function($value){
@@ -78,11 +88,15 @@ class HomeController extends Controller
             $catalog_id = Hashids::decode($request['hash_id']);
             $catalogs = Catalog::where('parent_id','=',$catalog_id)->first();
         }
+        $catalogs = $catalogs->map(function($value){
+            $value->hashid = \Hashids::encode($value->id);
+            return $value;
+        });
         return ['stat'=>1,'catalogs'=>$catalogs->toJson()];
     }
 
     /**
-     *
+     *ajax 请求获取栏目下商品
      * @param Request $request
      * @return array
      */
@@ -90,6 +104,15 @@ class HomeController extends Controller
         $catalog_id = Hashids::decode($request['hash_id']);
         $catalog_ids = Catalog::where('id','=',$catalog_id)->orWhere('parent_id','=',$catalog_id)->select('id')->get();
         $shopItems = ShopItem::whereIn('catalog_id',array_flatten($catalog_ids->toArray()))->where('show','=','1')->orderBy('sort')->get();
+        $shopItems = $shopItems->map(function($value){
+            $value->hashid = \Hashids::encode($value->id);
+            $value->url = url('/shop_item/detail/'.$value->hashid);
+            $value->imgUrl = asset('upload/'.$value->img);
+            $row = \Cart::search(['id'=>$value->id]);
+            $row = $row->first();
+            $value->rows = $row??'';
+            return $value;
+        });
         return ['stat'=>1,'shopItems'=>$shopItems->toJson()];
     }
 
