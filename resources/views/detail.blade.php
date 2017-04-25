@@ -122,7 +122,7 @@
                     <p class="tu1"></p>
                     <p class="name">客服</p>
                 </a></li>
-            <li><a href="#"> <i>@{{ cart.cart_count }}</i>
+            <li><a href="{{url('cart/list')}}"> <i>@{{ cart.cart_count }}</i>
                     <p class="tu2"></p>
                     <p class="name">购物车</p>
                 </a></li>
@@ -153,7 +153,7 @@
                     $.ajax({
                         type: "GET",
                         url: "{{ url('cart/add') }}",
-                        data: "qty=1&has_id="+hashid,
+                        data: "qty=1&hash_id="+hashid,
                         success: function(data){
                             if(data.stat == 1){
                                 item_detail.cart.cart_count = data.cart_count;
