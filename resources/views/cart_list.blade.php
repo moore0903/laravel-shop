@@ -29,12 +29,16 @@
             </li>
         </ul>
         <div class="fselect">
-            <p class="choice fschoice">
-                <input name="all-sec" type="checkbox" @click="allRawIds()" value="">
-            </p>
-            <p class="fs1">全选</p>
-            <p class="fs2">合计¥ @{{ cart_totalPrice }}元 <i>不含运费</i></p>
-            <p class="fs3"><a href="#">结算(@{{ cart_raw_ids.length?cart_raw_ids.length:'0' }})</a></p>
+            <form method="post" action="{{url('order/cartsubmitquick')}}" name="form1" id="orderAdd">
+                <p class="choice fschoice">
+                    <input name="all-sec" type="checkbox" @click="allRawIds()" value="">
+                </p>
+                <p class="fs1">全选</p>
+                <p class="fs2">合计¥ @{{ cart_total }}元 <i>不含运费</i></p>
+                <input type="hidden" :value="cart_raw_ids" name="rowids"/>
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <p class="fs3"><a href="javascript:void(0);" @click="formSubmit()">结算(@{{ cart_raw_ids.length?cart_raw_ids.length:'0' }})</a></p>
+            </form>
         </div>
         @include('layouts.footer_nav')
         <div class="fstop"></div>
@@ -56,6 +60,7 @@
                 'cart_lists':{!! $cart_lists??'{}' !!},
                 'cart_count':{!! $cart_count??'{}' !!},
                 'cart_totalPrice':{!! $cart_totalPrice??'{}' !!},
+                'cart_total':'0.00',
                 'cart_raw_ids':new Array(),
                 'cart_raw_count':{!! $cart_raw_count??'{}' !!}
             },
@@ -123,19 +128,30 @@
                         }
                     }
                     if(is == 0){
+                        this.cart_total = Math.round((parseFloat(this.cart_total) + parseFloat(this.cart_lists[__raw_id].qty) * parseFloat(this.cart_lists[__raw_id].price)) * 100) / 100;
                         this.cart_raw_ids.splice(index,0,__raw_id);
                     }else{
+                        this.cart_total = Math.round((parseFloat(this.cart_total) - parseFloat(this.cart_lists[__raw_id].qty) * parseFloat(this.cart_lists[__raw_id].price)) * 100) / 100;
                         this.cart_raw_ids.splice(index,1);
                     }
                 },
                 allRawIds:function(){
-                    if(this.cart_raw_ids.length <= 0){
+                    this.cart_raw_ids = new Array();
+                    if($('input[name="all-sec"]').is(':checked')){
                         for(cart in this.cart_lists){
                             this.cart_raw_ids.splice(0,0,cart);
                         }
+                        this.cart_total = this.cart_totalPrice;
                     }else{
-                        this.cart_raw_ids = '';
+                        this.cart_total = '0.00';
                     }
+                },
+                formSubmit:function(){
+                    if(this.cart_raw_ids.length <= 0){
+                        layer.msg('请选择购物车中要购买的商品');
+                        return;
+                    }
+                    $('#orderAdd').submit();
                 }
             }
         });
