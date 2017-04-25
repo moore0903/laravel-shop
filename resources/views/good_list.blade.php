@@ -40,24 +40,7 @@
             </li>
         </ul>
     </section>
-    <ul class="footer fmyh lifl clear">
-        <li class="f01"><a href="index.asp">
-                <p class="tu"></p>
-                <p class="name">首页</p>
-            </a></li>
-        <li class="f02 on"><a href="cpfl.asp">
-                <p class="tu"></p>
-                <p class="name">分类</p>
-            </a></li>
-        <li class="f03"><a href="#">
-                <p class="tu"></p>
-                <p class="name">购物车</p>
-            </a></li>
-        <li class="f04"><a href="#">
-                <p class="tu"></p>
-                <p class="name">个人中心</p>
-            </a></li>
-    </ul>
+    @include('layouts.footer_nav')
     <div class="stop"></div>
     <div class="cpflnr j-ccgg clear">
         <div class="saixuan scrollbar-none fr">

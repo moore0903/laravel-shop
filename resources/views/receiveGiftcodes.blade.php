@@ -46,6 +46,8 @@
                                     window.location.href=result.url;
                                 });
                             }
+                        }else{
+                            layer.msg(result.msg);
                         }
                     });
             });
