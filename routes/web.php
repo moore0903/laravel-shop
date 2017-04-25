@@ -26,24 +26,12 @@ Route::get('/oauth/wechat', 'OAuthController@redirectToWechat');
 Route::get('/oauth/wechat/callback', 'OAuthController@handleWechatCallback');
 
 
+Route::get('sendSmsVerify','UserController@sendSMSVerify');
+Route::post('bindphone','UserController@bindphone');
+
 
 Auth::routes();
 
-
-Route::group(
-    ['middleware'=>['web', 'auth']],
-    function (){
-        Route::group(['prefix'=>'wechat'],function(){
-            Route::any('/serve', 'WechatController@serve');
-            Route::get('/profile', 'WechatController@profile');
-        });
-
-        Route::group(
-            ['prefix'=>'order'],function(){
-            Route::get('add','OrderController@addOrder');
-        });
-    }
-);
 
 Route::group(
     [
@@ -52,7 +40,9 @@ Route::group(
     function(){
         Route::get('add','CartController@addCart');
         Route::get('update','CartController@updateCart');
+        Route::get('del','CartController@delCart');
         Route::get('all','CartController@cartAll');
+        Route::get('list','CartController@list');
     }
 );
 
@@ -73,6 +63,29 @@ Route::group(
         Route::get('good_list','HomeController@good_list');
         Route::get('ajax_sub_catalog','HomeController@ajax_sub_catalog');
         Route::get('ajax_shop_item','HomeController@ajax_shop_item');
+    }
+);
+
+Route::group(
+    ['middleware'=>['web', 'auth']],
+    function(){
+        Route::group(
+            ['prefix'=>'user'],
+            function(){
+                Route::get('info','UserController@info');
+            }
+        );
+        Route::group(
+            ['prefix'=>'order'],
+            function(){
+                Route::post('cartsubmitquick','OrderController@cartsubmitquick');
+                Route::post('add','OrderController@addOrder');
+            }
+        );
+        Route::group(['prefix'=>'wechat'],function(){
+            Route::any('/serve', 'WechatController@serve');
+            Route::get('/profile', 'WechatController@profile');
+        });
     }
 );
 

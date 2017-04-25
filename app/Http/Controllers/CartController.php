@@ -20,20 +20,30 @@ class CartController extends Controller
         return \Cart::all();
     }
 
+    public function list(){
+        \Log::debug(\Cart::all()->toArray());
+        return view('cart_list',[
+            'cart_lists'=>\Cart::all(),
+            'cart_count'=>\Cart::count(),
+            'cart_totalPrice'=>\Cart::totalPrice(),
+            'cart_raw_count' => \Cart::count(false),
+        ]);
+    }
+
     /**
      * 加入购物车
      * @param Request $request
      * @return array
      */
     public function addCart(Request $request){
-        $id = Hashids::decode($request['has_id']);
+        $id = Hashids::decode($request['hash_id']);
         $shopItem = ShopItem::where('id','=',$id)->first();
         $stat = 0;
         if(isset($shopItem)){
-            \Cart::add($shopItem->id,$shopItem->title,$request['qty'],$shopItem->price,[]);
+            \Cart::add($shopItem->id,$shopItem->title,$request['qty'],$shopItem->price,['imgUrl'=>asset('upload/'.$shopItem->img),'url'=>url('/shop_item/detail/'.$shopItem->hashid),'hashid'=>\Hashids::encode($shopItem->id)]);
             $stat = 1;
         }
-        return ['stat'=>$stat,'cart_items'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_price_count'=>\Cart::totalPrice()];
+        return ['stat'=>$stat,'cart_lists'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_totalPrice'=>\Cart::totalPrice(),'cart_raw_count' => \Cart::count(false)];
     }
 
     /**
@@ -42,11 +52,16 @@ class CartController extends Controller
      * @return array
      */
     public function updateCart(Request $request){
-        $cart_item = \Cart::get($request['row_id']);
+        $cart_item = \Cart::get($request['raw_id']);
         if(!empty($cart_item)){
             $qty = empty($request['qty']) ? $cart_item->qty - 1 : $request['qty'];
-            \Cart::update($request['row_id'],$qty);
+            \Cart::update($request['raw_id'],$qty);
         }
-        return ['stat'=>1,'cart_items'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_price_count'=>\Cart::totalPrice()];
+        return ['stat'=>1,'cart_lists'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_totalPrice'=>\Cart::totalPrice(),'cart_raw_count' => \Cart::count(false)];
+    }
+
+    public function delCart(Request $request){
+        \Cart::remove($request['raw_id']);
+        return ['stat'=>1,'cart_lists'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_totalPrice'=>\Cart::totalPrice(),'cart_raw_count' => \Cart::count(false)];
     }
 }
