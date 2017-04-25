@@ -42,7 +42,7 @@ class UserController extends Controller
             ]);
             \Auth::loginUsingId($user->id, true);
         }
-        return \Redirect::intended(\Session::pull('url.intended', '/'));
+        return \Redirect::intended(\Session::pull('url.intended', '/'));  //TODO 跳转地址有问题
     }
 
     /**
@@ -62,7 +62,7 @@ class UserController extends Controller
         if($resstr < 0) {
             return array('stat'=>0,'msg'=>'短信发送失败.');
         }
-        \Log::debug($code);
+        \Log::debug($code);  //TODO 验证码无法接受
         $request->session()->put('verifycode', $code);
         $request->session()->put('verifykey', $request['phone']);
         return array('stat'=>1);
