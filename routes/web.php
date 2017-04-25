@@ -53,6 +53,7 @@ Route::group(
         Route::get('add','CartController@addCart');
         Route::get('update','CartController@updateCart');
         Route::get('all','CartController@cartAll');
+        Route::get('list','CartController@list');
     }
 );
 
@@ -73,6 +74,13 @@ Route::group(
         Route::get('good_list','HomeController@good_list');
         Route::get('ajax_sub_catalog','HomeController@ajax_sub_catalog');
         Route::get('ajax_shop_item','HomeController@ajax_shop_item');
+    }
+);
+
+Route::group(
+    ['prefix'=>'user'],
+    function(){
+        Route::get('info','UserController@info');
     }
 );
 

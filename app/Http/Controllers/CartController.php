@@ -20,6 +20,14 @@ class CartController extends Controller
         return \Cart::all();
     }
 
+    public function list(){
+        return view('cartList',[
+            'cart_list'=>\Cart::all(),
+            'cart_count'=>\Cart::count(),
+            'cart_price'=>\Cart::totalPrice()
+        ]);
+    }
+
     /**
      * 加入购物车
      * @param Request $request
@@ -30,7 +38,7 @@ class CartController extends Controller
         $shopItem = ShopItem::where('id','=',$id)->first();
         $stat = 0;
         if(isset($shopItem)){
-            \Cart::add($shopItem->id,$shopItem->title,$request['qty'],$shopItem->price,[]);
+            \Cart::add($shopItem->id,$shopItem->title,$request['qty'],$shopItem->price,['imgUrl'=>asset('upload/'.$shopItem->img),'url'=>url('/shop_item/detail/'.$shopItem->hashid)]);
             $stat = 1;
         }
         return ['stat'=>$stat,'cart_items'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_price_count'=>\Cart::totalPrice()];
