@@ -21,7 +21,6 @@ class CartController extends Controller
     }
 
     public function list(){
-        \Log::debug(\Cart::all()->toArray());
         return view('cart_list',[
             'cart_lists'=>\Cart::all(),
             'cart_count'=>\Cart::count(),
