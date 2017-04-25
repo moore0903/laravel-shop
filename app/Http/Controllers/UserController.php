@@ -57,11 +57,11 @@ class UserController extends Controller
         require_once app_path() . '/../thirdlib/ZhongZhenSMS.php';
         $code = ''.mt_rand(0,9999);
         $code = str_repeat('0',4-strlen($code)).$code;
-//        $msg = '您好，您的验证码是'.$code.'【久诚久酒业】';
-//        $resstr = NewSms($request['phone'], $msg);
-//        if($resstr < 0) {
-//            return array('stat'=>0,'msg'=>'短信发送失败.');
-//        }
+        $msg = '您好，您的验证码是'.$code.'【久诚久酒业】';
+        $resstr = NewSms($request['phone'], $msg);
+        if($resstr < 0) {
+            return array('stat'=>0,'msg'=>'短信发送失败.');
+        }
         \Log::debug($code);
         $request->session()->put('verifycode', $code);
         $request->session()->put('verifykey', $request['phone']);

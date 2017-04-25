@@ -37,6 +37,7 @@
                 <p class="fs2">合计¥ @{{ cart_total }}元 <i>不含运费</i></p>
                 <input type="hidden" :value="cart_raw_ids" name="rowids"/>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="intend" value="cart/list"/>
                 <p class="fs3"><a href="javascript:void(0);" @click="formSubmit()">结算(@{{ cart_raw_ids.length?cart_raw_ids.length:'0' }})</a></p>
             </form>
         </div>
