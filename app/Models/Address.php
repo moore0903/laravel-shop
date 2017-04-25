@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Address extends Model
 {
-    protected $table = 'addresser';
+    protected $table = 'addresses';
 }

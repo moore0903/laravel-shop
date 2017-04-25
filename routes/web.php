@@ -34,21 +34,6 @@ Auth::routes();
 
 
 Route::group(
-    ['middleware'=>['web', 'auth']],
-    function (){
-        Route::group(['prefix'=>'wechat'],function(){
-            Route::any('/serve', 'WechatController@serve');
-            Route::get('/profile', 'WechatController@profile');
-        });
-
-        Route::group(
-            ['prefix'=>'order'],function(){
-            Route::get('add','OrderController@addOrder');
-        });
-    }
-);
-
-Route::group(
     [
         'prefix'=>'cart'
     ],
@@ -82,12 +67,25 @@ Route::group(
 );
 
 Route::group(
-    [
-        'prefix'=>'user',
-        'middleware'=>['web', 'auth']
-    ],
+    ['middleware'=>['web', 'auth']],
     function(){
-        Route::get('info','UserController@info');
+        Route::group(
+            ['prefix'=>'user'],
+            function(){
+                Route::get('info','UserController@info');
+            }
+        );
+        Route::group(
+            ['prefix'=>'order'],
+            function(){
+                Route::post('cartsubmitquick','OrderController@cartsubmitquick');
+                Route::post('add','OrderController@addOrder');
+            }
+        );
+        Route::group(['prefix'=>'wechat'],function(){
+            Route::any('/serve', 'WechatController@serve');
+            Route::get('/profile', 'WechatController@profile');
+        });
     }
 );
 
