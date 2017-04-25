@@ -24,23 +24,25 @@
             </div>
             <div class="disdzkuai">
                 <ul class="lifl clear">
-                    <li class="di01">
+                    <!--<li class="di01">
                         <p class="name fl">联系人</p>
                         <p class="nr fl">
                             <input name="" type="text">
                         </p>
-                    </li>
-                    <li class="di02">
+                    </li>-->
+                    <!--<li class="di02">
                         <p class="name fl">手机</p>
                         <p class="nr fl">
                             <input name="" type="text">
                         </p>
-                    </li>
+                    </li>-->
                     <li class="di03">
                         <p class="name fl">详细地址</p>
-                        <p class="nr fl">
-                            <input name="" type="text">
-                        </p>
+                        <div class="yaddlist fl">
+                          <p class="name"><i>李好</i> 18712345678</p>
+                          <p class="nr">湖北省武汉市关山大道290号</p>
+                        </div>
+                        <div class="clean"></div>
                     </li>
                 </ul>
             </div>
