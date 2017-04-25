@@ -26,6 +26,9 @@ Route::get('/oauth/wechat', 'OAuthController@redirectToWechat');
 Route::get('/oauth/wechat/callback', 'OAuthController@handleWechatCallback');
 
 
+Route::get('sendSmsVerify','UserController@sendSMSVerify');
+Route::post('bindphone','UserController@bindphone');
+
 
 Auth::routes();
 
@@ -52,6 +55,7 @@ Route::group(
     function(){
         Route::get('add','CartController@addCart');
         Route::get('update','CartController@updateCart');
+        Route::get('del','CartController@delCart');
         Route::get('all','CartController@cartAll');
         Route::get('list','CartController@list');
     }
@@ -78,7 +82,10 @@ Route::group(
 );
 
 Route::group(
-    ['prefix'=>'user'],
+    [
+        'prefix'=>'user',
+        'middleware'=>['web', 'auth']
+    ],
     function(){
         Route::get('info','UserController@info');
     }
