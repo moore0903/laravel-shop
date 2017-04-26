@@ -8,10 +8,10 @@
     <ul class="landlist lifl clear">
         <form method="post" action="{{url('bindphone')}}">
             <li>
-                <input type="text" name="phone" placeholder="请输入手机号码">
+                <input type="text" name="phone" :value="verifykey?verifykey:''" placeholder="请输入手机号码">
             </li>
             <li>
-                <input type="text" name="verifycode" placeholder="请输入手机验证码">
+                <input type="text" name="verifycode" :value="verifycode?verifycode:''" placeholder="请输入手机验证码">
                 <p class="annniu">
                     <input name="Verify" type="button" value="获取验证码" @click="sendSmsVerify(true)">
                 </p>
@@ -31,10 +31,13 @@
             el:'#login',
             data:{
                 'countdown':60,
+                'verifycode':'',
+                'verifykey':'',
             },
             methods:{
                 sendSmsVerify:function(is_send){
                     var phone = $('input[name="phone"]').val();
+                    this.verifykey = phone;
                     if(phone == null || phone == ''){
                         layer.msg('请填写手机号');
                         return;
@@ -46,7 +49,9 @@
                             data: "phone="+phone,
                             success: function(data){
                                 if(data.stat == 1){
-                                    layer.msg('发送成功')
+                                    layer.msg('发送成功');
+                                    console.log(data.code);
+                                    login.verifycode = data.code;
                                 }else{
                                     layer.msg(data.msg);
                                 }
@@ -56,6 +61,32 @@
                     var obj = $('input[name="Verify"]');
                     countdown(obj);
                 }
+            }
+        });
+
+        $(function(){
+            <?php
+                $error = $verifycode = $verifykey = '';
+                if(isset($errors)){
+                    $error = $errors->first();
+                }
+                $input = session()->get('_old_input')??'';
+                if(!empty($input)){
+                    $verifycode = $input['verifycode'];
+                    $verifykey = $input['phone'];
+                }
+            ?>
+            var error = '{{$error}}';
+            var verifycode = '{{$verifycode}}';
+            var verifykey = '{{$verifykey}}';
+            if(error){
+                layer.msg(error);
+            }
+            if(verifycode){
+                login.verifycode = verifycode;
+            }
+            if(verifykey){
+                login.verifykey = verifykey;
             }
         });
 
