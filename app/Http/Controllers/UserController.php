@@ -46,7 +46,7 @@ class UserController extends Controller
             ]);
             \Auth::loginUsingId($user->id);
         }
-        return \Redirect::intended(\Session::pull('url.intended', '/'));  //TODO 跳转地址有问题
+        return \Redirect::intended(\Session::pull('url.intended', '/'));
     }
 
     /**

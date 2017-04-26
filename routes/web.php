@@ -78,8 +78,8 @@ Route::group(
         Route::group(
             ['prefix'=>'order'],
             function(){
-                Route::match(['get','post'],'cartsubmitquick','OrderController@cartsubmitquick');
-                Route::post('add','OrderController@addOrder');
+                Route::get('cartsubmitquick','OrderController@cartsubmitquick');
+                Route::any('add','OrderController@addOrder');
             }
         );
         Route::group(['prefix'=>'wechat'],function(){
