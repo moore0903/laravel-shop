@@ -62,4 +62,10 @@ class LoginController extends Controller
         return $this->_login($request);
     }
 
+    public function logout(){
+        Auth::logout();
+        Session::flush();
+        return Redirect::to('/');
+    }
+
 }

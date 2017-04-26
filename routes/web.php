@@ -78,7 +78,7 @@ Route::group(
         Route::group(
             ['prefix'=>'order'],
             function(){
-                Route::post('cartsubmitquick','OrderController@cartsubmitquick');
+                Route::match(['get','post'],'cartsubmitquick','OrderController@cartsubmitquick');
                 Route::post('add','OrderController@addOrder');
             }
         );

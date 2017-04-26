@@ -21,6 +21,9 @@ use Illuminate\Http\Request;
 class OrderController extends Controller
 {
     public function cartsubmitquick(Request $request){
+        if($request->method() == 'GET') {
+            return \Redirect::intended('cart/list');
+        }
         $address_list = Address::where('user_id','=',\Auth::user()->id)->get();
         $gift_list = Giftcode::where('user_id','=',\Auth::user()->id)->get();
         $cart_list = [];

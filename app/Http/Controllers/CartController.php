@@ -21,6 +21,7 @@ class CartController extends Controller
     }
 
     public function list(){
+        session()->put('url.intended', url('cart/list'));
         return view('cart_list',[
             'cart_lists'=>\Cart::all(),
             'cart_count'=>\Cart::count(),
