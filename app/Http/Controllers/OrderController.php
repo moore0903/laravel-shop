@@ -20,6 +20,11 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    /**
+     * 订单确认页面
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function cartsubmitquick(Request $request){
         $address = Address::where('user_id', '=', \Auth::user()->id)->orderBy('created_at')->first();
         $gift_list = Giftcode::where('user_id', '=', \Auth::user()->id)->get();
@@ -55,6 +60,11 @@ class OrderController extends Controller
     }
 
 
+    /**
+     * 添加订单页面
+     * @param Request $request
+     * @return $this
+     */
     public function addOrder(Request $request){
         if($request->method() == 'GET'){
             return \Redirect::intended('cart/list')->withInput()->withErrors(['msg' => '请重新下单']);
@@ -140,6 +150,17 @@ class OrderController extends Controller
         if ($order->totalpay == 0) $order->stat = Order::STAT_PAYED;
 
         $order->save();
+    }
+
+    public function orderList(Request $request){
+        if($request['stat']){
+            $orderList = Order::where('user_id','=',\Auth::user()->id)->where('stat','=',$request['stat'])->with('details')->orderBy('created_at')->get();
+        }else{
+            $orderList = Order::where('user_id','=',\Auth::user()->id)->with('details')->orderBy('created_at')->get();
+        }
+        return view('order_list',[
+            'orders'=>$orderList
+        ]);
     }
 
     /**
