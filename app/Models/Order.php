@@ -44,6 +44,37 @@ class Order extends Model
         }
     }
 
+    /**
+     * 订单状态描述
+     * @param $stat
+     * @return string
+     */
+    public static function statDescribe($stat){
+        switch($stat) {
+            case Order::STAT_NOTPAY:
+                return '请在30分钟内支付';
+                break;
+            case Order::STAT_PAYED:
+                return '等待卖家发货';
+                break;
+            case Order::STAT_EXPRESS:
+                return '卖家已发货';
+                break;
+            case Order::STAT_FINISH:
+                return '交易完成';
+                break;
+            case Order::STAT_CANCEL:
+                return '已取消';
+                break;
+            case Order::STAT_SERVICE:
+                return '售后中';
+                break;
+            default:
+                return '未知';
+                break;
+        }
+    }
+
     public function progressString($str) {
         $type = intval($str);
         switch($type) {

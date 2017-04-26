@@ -80,6 +80,7 @@ Route::group(
             function(){
                 Route::get('cartsubmitquick','OrderController@cartsubmitquick');
                 Route::any('add','OrderController@addOrder');
+                Route::get('list','OrderController@orderList');
             }
         );
         Route::group(['prefix'=>'wechat'],function(){

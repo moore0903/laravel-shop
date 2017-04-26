@@ -26,6 +26,9 @@ class OrderController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function cartsubmitquick(Request $request){
+        if(\Cart::count() <= 0){
+            return \Redirect::intended('cart/list')->withInput()->withErrors(['msg' => '请重新下单']);
+        }
         $address = Address::where('user_id', '=', \Auth::user()->id)->orderBy('created_at')->first();
         $gift_list = Giftcode::where('user_id', '=', \Auth::user()->id)->get();
         $cart_list = [];
@@ -146,17 +149,20 @@ class OrderController extends Controller
         $order->details()->saveMany($details);
         $order->total = $total;
         $order->discount = $discount;
-        $order->totalpay = max(0, $total - $order->discount + !empty($post_price) ? $post_price->value : '0.00' - !empty($include_postage) && $include_postage->value >= ($total - $order->discount) ? $include_postage->value : '0.00');
+        $order->totalpay = max(0, $total - $order->discount + (!empty($post_price) ? $post_price->value : 0) - ((!empty($include_postage) && $include_postage->value >= ($total - $order->discount)) ? $include_postage->value : 0));
         if ($order->totalpay == 0) $order->stat = Order::STAT_PAYED;
 
         $order->save();
+
+        return redirect('/order/list');
+//        return \Redirect::intended('order/list');
     }
 
     public function orderList(Request $request){
         if($request['stat']){
-            $orderList = Order::where('user_id','=',\Auth::user()->id)->where('stat','=',$request['stat'])->with('details')->orderBy('created_at')->get();
+            $orderList = Order::where('user_id','=',\Auth::user()->id)->where('stat','=',$request['stat'])->with('details')->orderBy('created_at','desc')->get();
         }else{
-            $orderList = Order::where('user_id','=',\Auth::user()->id)->with('details')->orderBy('created_at')->get();
+            $orderList = Order::where('user_id','=',\Auth::user()->id)->with('details')->orderBy('created_at','desc')->get();
         }
         return view('order_list',[
             'orders'=>$orderList
