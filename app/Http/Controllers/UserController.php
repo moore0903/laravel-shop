@@ -25,24 +25,28 @@ class UserController extends Controller
      */
     public function bindphone(Request $request){
         if($request['phone']!=session('verifykey'))
-            return array('stat'=>1,'msg'=>'用户名错误');
+            return back()->withInput($request->toArray())
+                ->withErrors(['用户名错误']);
         if(!session('verifycode'))
-            return array('stat'=>1,'msg'=>'验证码已过期');
+            return back()->withInput($request->toArray())
+                ->withErrors(['验证码已过期']);
         if($request['verifycode']!=session('verifycode'))
-            return array('stat'=>1,'msg'=>'验证码错误');
+            return back()->withInput($request->toArray())
+                ->withErrors(['验证码错误']);
         $old_user = User::where('phone',$request['phone'])->first();
         if($old_user) {
-            \Auth::loginUsingId($old_user->id, true);
+            \Auth::loginUsingId($old_user->id);
         }else{
             $user = User::create([
                 'name' => $request['phone'],
                 'email' => $request['phone'].'@'.$request['phone'],
                 'password' => bcrypt($request['phone']),
+                'phone' => $request['phone'],
                 'headimage' => '',
             ]);
-            \Auth::loginUsingId($user->id, true);
+            \Auth::loginUsingId($user->id);
         }
-        return \Redirect::intended(\Session::pull('url.intended', '/'));
+        return \Redirect::intended(\Session::pull('url.intended', '/'));  //TODO 跳转地址有问题
     }
 
     /**
@@ -62,9 +66,11 @@ class UserController extends Controller
 //        if($resstr < 0) {
 //            return array('stat'=>0,'msg'=>'短信发送失败.');
 //        }
-        \Log::debug($code);
+//        \Log::debug($resstr);
+//        \Log::debug($code);
         $request->session()->put('verifycode', $code);
         $request->session()->put('verifykey', $request['phone']);
-        return array('stat'=>1);
+//        return array('stat'=>1);
+        return array('stat'=>1,'code'=>$code);   //TODO 上线前将验证码打开
     }
 }

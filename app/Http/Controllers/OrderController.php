@@ -20,6 +20,43 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    public function cartsubmitquick(Request $request){
+        if($request->method() == 'GET') {
+            return \Redirect::intended('cart/list');
+        }
+        $address_list = Address::where('user_id','=',\Auth::user()->id)->get();
+        $gift_list = Giftcode::where('user_id','=',\Auth::user()->id)->get();
+        $cart_list = [];
+        $cartids = explode(',',$request['rowids']);
+        foreach($cartids as $cartid){
+            $cart_list[$cartid] = \Cart::get($cartid);
+        }
+        $dillCart = collect(\Cart::all())->diffKeys(collect($cart_list));
+        foreach($dillCart as $raw_id => $cart){
+            \Cart::remove($raw_id);
+        }
+        //物流费用
+        $configs = \App\Models\Config::all();
+        $post_price = $configs->where('key','post_price')->first();
+        $include_postage = $configs->where('key','include_postage')->first();
+        $postage = 0.00;
+        if(!empty($post_price) && (empty($include_postage) && \Cart::totalPrice < $include_postage->value)){
+            $postage = $post_price->value;
+        }
+        return view('cartsubmitquick',[
+            'address_list' => $address_list,
+            'gift_list' => $gift_list,
+            'cart_list' => \Cart::all(),
+            'cart_count'=>\Cart::count(),
+            'cart_totalPrice'=>\Cart::totalPrice(),
+            'postage'=>$postage
+        ]);
+    }
+
+    /**
+     * 加入订单
+     * @param Request $request
+     */
     public function addOrder(Request $request){
         DB::transaction(function () use($request){
             //获取收货地址
