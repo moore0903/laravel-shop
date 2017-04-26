@@ -9,6 +9,10 @@ class Comment extends Model
 {
     protected $table = 'comment';
 
+    protected $fillable = [
+        'user_id', 'shop_item_id', 'content','images','star'
+    ];
+
     public function shopItem() {
         return $this->belongsTo(ShopItem::class,'shop_item_id');
     }

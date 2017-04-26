@@ -8,6 +8,9 @@ class Order extends Model
 {
     protected $table = 'orders';
 
+    protected $fillable = [
+        'user_id', 'serial', 'address','realname','phone','stat','total','discount','totalpay','paytype','trade_no','notify_time','memo','totalget','giftcode_id','pay_order_id','progress','express_company','express_no','remark','postage'
+    ];
 
     public function details()
     {

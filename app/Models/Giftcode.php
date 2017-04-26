@@ -9,6 +9,11 @@ class Giftcode extends Model
 {
     protected $table = 'giftcodes';
 
+
+    protected $fillable = [
+        'title', 'code', 'discountn','discountnlimit','usecountmax','usecount','codecount','start_time','end_time','user_id','p_id','net'
+    ];
+
     public static function boot()
     {
         parent::boot();

@@ -134,10 +134,10 @@ class HomeController extends Controller
             $stat = null;
             $s = DIRECTORY_SEPARATOR=="\\"? 'cmd /c "'.base_path('update.bat').'"2>&1' : 'sudo -u root "'.base_path('update.sh').'"2>&1';
             $last = exec($s,$out,$stat);
-			\Log::debug($s);
-			\Log::debug($out);
-			\Log::debug($stat);
-			\Log::debug($last);
+            \Log::debug($s);
+            \Log::debug($out);
+            \Log::debug($stat);
+            \Log::debug($last);
             foreach($out as $line){
                 if(empty($line)) continue;
                 $rows[] = [$line];
@@ -161,8 +161,14 @@ class HomeController extends Controller
                 $form->action(url(config('admin.prefix').'/updateConfig'));
                 $post_price = $configs->where('key','post_price')->first();
                 $include_postage = $configs->where('key','include_postage')->first();
+                $since_address = $configs->where('key','since_address')->first();
+                $since_realname = $configs->where('key','since_realname')->first();
+                $since_phone = $configs->where('key','since_phone')->first();
                 $form->currency('key[post_price]', '运费')->symbol('￥')->default(!empty($post_price)? $post_price->value : '0.00');
                 $form->currency('key[include_postage]', '满X包邮')->symbol('￥')->default(!empty($include_postage)? $include_postage->value : '0.00');
+                $form->text('key[since_address]', '自提点')->default(!empty($since_address)? $since_address->value : '');
+                $form->text('key[since_realname]', '自提点联系人')->default(!empty($since_realname)? $since_realname->value : '');
+                $form->mobile('key[since_phone]', '自提点电话')->default(!empty($since_phone)? $since_phone->value : '');
                 $content->row(new Box('网站配置', $form));
             });
         }elseif($request->method() == 'POST'){

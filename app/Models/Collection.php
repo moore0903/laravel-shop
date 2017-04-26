@@ -9,6 +9,10 @@ class Collection extends Model
 {
     protected $table = 'collection';
 
+    protected $fillable = [
+        'user_id', 'shop_item_id'
+    ];
+
     public function shopItem() {
         return $this->belongsTo(ShopItem::class,'shop_item_id');
     }
