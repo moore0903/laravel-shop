@@ -23,8 +23,7 @@ $(function($){
 	  $(this).toggleClass("on")	
 	})
 	$(".dispslist li .name").click(function(){
-	  $(this).toggleClass("on");
-	  //.parent().siblings().find(".name").removeClass("on")
+	  $(this).addClass("on").parent().siblings().find(".name").removeClass("on");
 	})	/*点击弹出搜索层*/
 	$(".j-search-input").click(function() {
 		$("body").addClass("show-search-div");
