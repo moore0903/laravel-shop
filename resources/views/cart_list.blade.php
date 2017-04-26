@@ -29,26 +29,16 @@
             </li>
         </ul>
         <div class="fselect">
-            <form method="post" action="{{url('order/cartsubmitquick')}}" name="form1" id="orderAdd">
-                <p class="choice fschoice">
-                    <input name="all-sec" type="checkbox" @click="allRawIds()" value="">
-                </p>
-                <p class="fs1">全选</p>
-                <p class="fs2">合计¥ @{{ cart_total }}元 <i>不含运费</i></p>
-                <input type="hidden" :value="cart_raw_ids" name="rowids"/>
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <input type="hidden" name="intend" value="cart/list"/>
-                <p class="fs3"><a href="javascript:void(0);" @click="formSubmit()">结算(@{{ cart_raw_ids.length?cart_raw_ids.length:'0' }})</a></p>
-            </form>
+            <p class="choice fschoice">
+                <input name="all-sec" type="checkbox" @click="allRawIds()" value="">
+            </p>
+            <p class="fs1">全选</p>
+            <p class="fs2">合计¥ @{{ cart_total }}元 <i>不含运费</i></p>
+            <input type="hidden" :value="cart_raw_ids" name="rowids"/>
+            <p class="fs3"><a href="javascript:void(0);" @click="formSubmit()">结算(@{{ cart_raw_ids.length?cart_raw_ids.length:'0' }})</a></p>
         </div>
         @include('layouts.footer_nav')
         <div class="fstop"></div>
-        {{--<div class="jd_win">--}}
-        {{--<div class="jd_win_box">--}}
-        {{--<div class="jd_win_tit">你确定删除该商品吗？</div>--}}
-        {{--<div class="jd_btn clearfix clear"> <a href="#" class="cancle f_left fl">取消</a> <a href="#" class="submit f_right fr">确定</a> </div>--}}
-        {{--</div>--}}
-        {{--</div>--}}
     </template>
 </div>
 @endsection
@@ -152,8 +142,21 @@
                         layer.msg('请选择购物车中要购买的商品');
                         return;
                     }
-                    $('#orderAdd').submit();
+                    window.location.href='{{url("order/cartsubmitquick")}}'+'?rowids='+$('input[name="rowids"]').val();
                 }
+            }
+        });
+
+        $(function(){
+                <?php
+                $error = '';
+                if(isset($errors)){
+                    $error = $errors->first();
+                }
+                ?>
+            var error = '{{$error}}';
+            if(error){
+                layer.msg(error);
             }
         });
     </script>
