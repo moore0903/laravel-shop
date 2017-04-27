@@ -76,6 +76,9 @@ Route::group(
                 Route::post('addAddress','UserController@addAddress');
                 Route::post('updateAddress','UserController@updateAddress');
                 Route::get('delAddress','UserController@delAddress');
+                Route::get('myGift','UserController@myGift');
+                Route::get('myCollection','UserController@myCollection');
+                Route::get('myBrowse','UserController@myBrowse');
             }
         );
         Route::group(

@@ -10,13 +10,48 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Address;
+use App\Models\Collection;
+use App\Models\Giftcode;
+use App\Models\Order;
+use App\Models\ShopItem;
+use App\Models\Browse;
 use App\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    /**
+     * 用户中心首页
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function info(){
-        
+        $order_list = Order::where('user_id','=',\Auth::user()->id)->get();
+        $recomment_shop = ShopItem::where('recommend','=','1')->get();
+        return view('user_info',[
+            'recomment_shop' => $recomment_shop->count() > 4 ? $recomment_shop->random(4): $recomment_shop,
+            'order_no_pay_count' => $order_list->filter(function($order){return $order->stat == Order::STAT_NOTPAY;})->count(),
+            'order_express_count' => $order_list->filter(function($order){return $order->stat == Order::STAT_EXPRESS || $order->stat == Order::STAT_PAYED;})->count(),
+            'order_finish_count' => $order_list->filter(function($order){return $order->stat == Order::STAT_FINISH;})->count(),
+            'order_service_count' => $order_list->filter(function($order){return $order->stat == Order::STAT_SERVICE;})->count(),
+        ]);
+    }
+
+    public function myGift(){
+        return view('user_gift',[
+            'gift_list'=>Giftcode::where('user_id','=',\Auth::user()->id)->get(),
+        ]);
+    }
+
+    public function myCollection(){
+        return view('user_collection',[
+            'collection_list'=>Collection::where('user_id','=',\Auth::user()->id)->with('shopItem')->get()
+        ]);
+    }
+
+    public function myBrowse(){
+        return view('user_browse',[
+            'browse_list'=>Browse::where('user_id','=',\Auth::user()->id)->with('shopItem')->get()
+        ]);
     }
 
     /**

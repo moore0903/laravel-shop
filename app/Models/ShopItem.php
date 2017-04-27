@@ -35,6 +35,15 @@ class ShopItem extends Model
         return $this->belongsToMany(User::class,'comment','shop_item_id','user_id')->withPivot('content','images','star','created_at');
     }
 
+    /**
+     * 访问记录
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function browses()
+    {
+        return $this->belongsToMany(User::class,'browse','shop_item_id','user_id');
+    }
+
     public function setImagesAttribute($images)
     {
         if (is_array($images)) {
