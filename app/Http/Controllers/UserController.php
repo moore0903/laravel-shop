@@ -47,6 +47,18 @@ class UserController extends Controller
         ]);
     }
 
+    public function myCollection(){
+        return view('user_collection',[
+            'collection_list'=>Collection::where('user_id','=',\Auth::user()->id)->with('shopItem')->get()
+        ]);
+    }
+
+    public function myBrowse(){
+        return view('user_browse',[
+            'browse_list'=>Browse::where('user_id','=',\Auth::user()->id)->with('shopItem')->get()
+        ]);
+    }
+
     /**
      * 获取用户的收藏列表
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

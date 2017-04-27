@@ -24,7 +24,7 @@ class Browse extends Model
     }
 
     /**
-     * è®°å½•ç”¨æˆ·çš„è®¿é—®è¶³è¿¹
+     * ¼ÇÂ¼ÓÃ»§µÄ·ÃÎÊ×ã¼£
      * @param $user_id
      * @param $shopItem_id
      */
