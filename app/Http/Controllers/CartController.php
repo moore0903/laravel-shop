@@ -21,7 +21,6 @@ class CartController extends Controller
     }
 
     public function submitCartQuick(Request $request){
-        session()->put('url.intended', url('cart/list'));
         $shop_item_id = $request['shop_item_id'];
         $quantity = $request['qty']??'1';
         $cartitem = \Cart::search(['id'=>$shop_item_id]);
@@ -42,8 +41,6 @@ class CartController extends Controller
     }
 
     public function list(){
-        session()->put('url.intended', url('cart/list'));
-        \Log::debug(\Cart::all()->toArray());
         return view('cart_list',[
             'cart_lists'=>\Cart::all(),
             'cart_count'=>\Cart::count(),
