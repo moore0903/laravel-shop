@@ -26,7 +26,7 @@
                 </section>
             </div>
             <div class="detanrkuai">
-                <div class="dsc">
+                <div :class="is_collection?'dsc on':'dsc'" @click="addCollection(item.hashid)">
                     <p class="tu"></p>
                     <p class="nr">收藏</p>
                 </div>
@@ -127,7 +127,7 @@
                     <p class="name">购物车</p>
                 </a></li>
             <li class="dc01"><a @click="addCart(item.hashid)" href="javascript:void(0);">加入购物车</a></li>
-            <li class="dc02"><a href="#">立即购买</a></li>
+            <li class="dc02"><a href="{{url('cart/submitCartQuick/'.'?shop_item_id='.$item->id.'&qty=1')}}">立即购买</a></li>
         </ul>
     </div>
     <div class="stop"></div>
@@ -146,7 +146,8 @@
                 'item':{!! $item??'{}' !!},
                 'cart':{!! $cart??'{}' !!},
                 'comments':{!! $comments??'{}' !!},
-                'itemStar':{!! $itemStar??'{}' !!}
+                'itemStar':{!! $itemStar??'{}' !!},
+                'is_collection':{!! $is_collection??'""' !!},
             },
             methods:{
                 addCart:function(hashid){
@@ -160,6 +161,24 @@
                             }else{
                                 layer.msg('添加购物车失败');
                             }
+                        }
+                    });
+                },
+                addCollection:function(hashid){
+                    if(this.is_collection){
+                        layer.msg('您已收藏过该商品');
+                        return;
+                    }
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ url('user/addCollection') }}",
+                        data: "hash_id="+hashid,
+                        success: function(data){
+                            if(data.stat == 1){
+                                item_detail.is_collection = 1;
+
+                            }
+                            layer.msg(data.msg);
                         }
                     });
                 }

@@ -4,10 +4,7 @@ $(function($){
         $(".detailstitle li").eq(2).addClass("active").siblings().removeClass("active");
 		$(".detailscont .box").eq(2).show().siblings().hide();
     });
-	
-	$(".dsc").click(function(){
-        $(this).toggleClass("on");
-	})
+
 	$('.cpfllist li').click(function(){
 		$(this).addClass('on').siblings('li').removeClass('on');
 		var index = $(this).index();
