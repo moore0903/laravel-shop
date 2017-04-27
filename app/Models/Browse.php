@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use PhpParser\Node\Expr\New_;
 
 class Browse extends Model
 {
@@ -24,7 +23,7 @@ class Browse extends Model
     }
 
     /**
-     * ¼ÇÂ¼ÓÃ»§µÄ·ÃÎÊ×ã¼£
+     * è®°å½•è®¿é—®è¶³è¿¹
      * @param $user_id
      * @param $shopItem_id
      */
