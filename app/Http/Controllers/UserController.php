@@ -16,6 +16,7 @@ use App\Models\Order;
 use App\Models\ShopItem;
 use App\Models\Browse;
 use App\User;
+use Hashids\Hashids;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -36,6 +37,10 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * 获取用户的优惠劵列表
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function myGift(){
         return view('user_gift',[
             'gift_list'=>Giftcode::where('user_id','=',\Auth::user()->id)->get(),
@@ -48,6 +53,26 @@ class UserController extends Controller
         ]);
     }
 
+    public function myBrowse(){
+        return view('user_browse',[
+            'browse_list'=>Browse::where('user_id','=',\Auth::user()->id)->with('shopItem')->get()
+        ]);
+    }
+
+    /**
+     * 获取用户的收藏列表
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function myCollection(){
+        return view('user_collection',[
+            'collection_list'=>Collection::where('user_id','=',\Auth::user()->id)->with('shopItem')->get()
+        ]);
+    }
+
+    /**
+     * 显示用户的访问记录,最多显示不重复的十条商品
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function myBrowse(){
         return view('user_browse',[
             'browse_list'=>Browse::where('user_id','=',\Auth::user()->id)->with('shopItem')->get()
@@ -127,6 +152,16 @@ class UserController extends Controller
             'address' => 'required|max:191',
             'phone' => 'required|digits:11',
         ]);
+    }
+
+    public function addCollection(Request $request){
+        if(!\Auth::check()) return ['stat'=>0,'msg'=>'请登录后在收藏商品'];
+        $id = \Hashids::decode($request['hash_id']);
+        Collection::insert([
+            'user_id'=>\Auth::user()->id,
+            'shop_item_id'=>$id[0]
+        ]);
+        return ['stat'=>1,'msg'=>'收藏成功'];
     }
 
     /**

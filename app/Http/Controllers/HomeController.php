@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Browse;
 use App\Models\Catalog;
+use App\Models\Collection;
 use App\Models\ShopItem;
 use Illuminate\Http\Request;
 use Vinkla\Hashids\Facades\Hashids;
@@ -33,12 +35,17 @@ class HomeController extends Controller
         $id = Hashids::decode($hash_id);
         $shopItem = ShopItem::where('id','=',$id)->first();
         $shopItem->hashid = Hashids::encode($shopItem->id);
+        if(\Auth::check()){
+            Browse::recording(\Auth::user()->id,$shopItem->id);
+            $is_collection = Collection::where('user_id','=',\Auth::user()->id)->where('shop_item_id','=',$shopItem->id)->first();
+        }
         return view('detail',[
             'item' => $shopItem,
             'comments'=>$shopItem->comments,
             'commentCount'=>$shopItem->comments->count(),
             'itemStar'=>$shopItem->comments->avg('pivot.star')??0,
-            'cart'=>collect(['cart_items'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_price_count'=>\Cart::totalPrice()])
+            'cart'=>collect(['cart_items'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_price_count'=>\Cart::totalPrice()]),
+            'is_collection'=>empty($is_collection)?0:1,
         ]);
     }
 

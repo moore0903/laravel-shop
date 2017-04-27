@@ -20,8 +20,30 @@ class CartController extends Controller
         return \Cart::all();
     }
 
+    public function submitCartQuick(Request $request){
+        session()->put('url.intended', url('cart/list'));
+        $shop_item_id = $request['shop_item_id'];
+        $quantity = $request['qty']??'1';
+        $cartitem = \Cart::search(['id'=>$shop_item_id]);
+        $shopItem = ShopItem::find($shop_item_id);
+        if(!empty($cartitem)){
+            $cartitem = $cartitem->first();
+            \Cart::remove($cartitem->__raw_id);
+        }
+        $cartitem = \Cart::add($shopItem->id,$shopItem->title,$quantity,$shopItem->price,['imgUrl'=>asset('upload/'.$shopItem->img),'url'=>url('/shop_item/detail/'.$shopItem->hashid),'hashid'=>\Hashids::encode($shopItem->id)]);
+        $cartitems[$cartitem->__raw_id] = $cartitem;
+        return view('cart_list',[
+            'cart_lists'=>collect($cartitems),
+            'cart_count'=>$quantity,
+            'cart_totalPrice'=>$shopItem->price,
+            'cart_raw_count' => '1'
+        ]);
+
+    }
+
     public function list(){
         session()->put('url.intended', url('cart/list'));
+        \Log::debug(\Cart::all()->toArray());
         return view('cart_list',[
             'cart_lists'=>\Cart::all(),
             'cart_count'=>\Cart::count(),
@@ -60,6 +82,11 @@ class CartController extends Controller
         return ['stat'=>1,'cart_lists'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_totalPrice'=>\Cart::totalPrice(),'cart_raw_count' => \Cart::count(false)];
     }
 
+    /**
+     * 删除购物车中某商品
+     * @param Request $request
+     * @return array
+     */
     public function delCart(Request $request){
         \Cart::remove($request['raw_id']);
         return ['stat'=>1,'cart_lists'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_totalPrice'=>\Cart::totalPrice(),'cart_raw_count' => \Cart::count(false)];
