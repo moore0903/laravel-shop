@@ -13,6 +13,8 @@ class Collection extends Model
         'user_id', 'shop_item_id'
     ];
 
+    protected $dates = ['created_at', 'updated_at'];
+
     public function shopItem() {
         return $this->belongsTo(ShopItem::class,'shop_item_id');
     }

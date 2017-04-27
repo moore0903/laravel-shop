@@ -9,13 +9,147 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Address;
+use App\Models\Collection;
+use App\Models\Giftcode;
+use App\Models\Order;
+use App\Models\ShopItem;
+use App\Models\Browse;
 use App\User;
+use Hashids\Hashids;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    /**
+     * 用户中心首页
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function info(){
+        $order_list = Order::where('user_id','=',\Auth::user()->id)->get();
+        $recomment_shop = ShopItem::where('recommend','=','1')->get();
+        return view('user_info',[
+            'recomment_shop' => $recomment_shop->count() > 4 ? $recomment_shop->random(4): $recomment_shop,
+            'order_no_pay_count' => $order_list->filter(function($order){return $order->stat == Order::STAT_NOTPAY;})->count(),
+            'order_express_count' => $order_list->filter(function($order){return $order->stat == Order::STAT_EXPRESS || $order->stat == Order::STAT_PAYED;})->count(),
+            'order_finish_count' => $order_list->filter(function($order){return $order->stat == Order::STAT_FINISH;})->count(),
+            'order_service_count' => $order_list->filter(function($order){return $order->stat == Order::STAT_SERVICE;})->count(),
+        ]);
+    }
 
+    /**
+     * 获取用户的优惠劵列表
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function myGift(){
+        return view('user_gift',[
+            'gift_list'=>Giftcode::where('user_id','=',\Auth::user()->id)->get(),
+        ]);
+    }
+
+    /**
+     * 获取用户的收藏列表
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function myCollection(){
+        return view('user_collection',[
+            'collection_list'=>Collection::where('user_id','=',\Auth::user()->id)->with('shopItem')->get()
+        ]);
+    }
+
+    /**
+     * 显示用户的访问记录,最多显示不重复的十条商品
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function myBrowse(){
+        return view('user_browse',[
+            'browse_list'=>Browse::where('user_id','=',\Auth::user()->id)->with('shopItem')->get()
+        ]);
+    }
+
+    /**
+     * 添加收货地址
+     * @param Request $request
+     * @return array
+     */
+    public function addAddress(Request $request)
+    {
+        $validator = $this->addressValidator($request->all());
+        if ($validator->fails()) {
+            return ['stat' => 0, 'msg' => $validator->getMessageBag()->first()];
+        }
+        $data = [
+            'user_id' => \Auth::user()->id,
+            'realname' => $request['realname'],
+            'address' => $request['address'],
+            'phone' => $request['phone'],
+        ];
+        $id = Address::insertGetId($data);
+        if (!empty($id)) return ['stat' => 1, 'data' => Address::find($id),'address_list'=>Address::where('user_id','=',\Auth::user()->id)->get()];
+        else return ['stat' => 0, 'msg' => '添加收货地址失败,请联系管理员!'];
+    }
+
+    /**
+     * 删除收货地址
+     * @param Request $request
+     * @return array
+     */
+    public function delAddress(Request $request){
+        $address = Address::where('user_id','=',\Auth::user()->id)->where('id','=',$request['id'])->first();
+        if(empty($address)) return ['stat'=>0,'msg'=>'不能删除不属于自己的收货地址或不存在的收货地址!'];
+        $address->delete();
+        return ['stat'=>'1','address_list'=>Address::where('user_id','=',\Auth::user()->id)->get()];
+    }
+
+    /**
+     * 修改收货地址
+     * @param Request $request
+     * @return array
+     */
+    public function updateAddress(Request $request)
+    {
+        $validator = $this->addressValidator($request->all());
+        if ($validator->fails()) {
+            return ['stat' => 0, 'msg' => $validator->getMessageBag()->first()];
+        }
+        $address = Address::find($request['id']);
+        if(empty($address)) return ['stat'=>0,'msg'=>'找不到该收货地址'];
+        $address->realname = $request['realname'];
+        $address->address = $request['address'];
+        $address->phone = $request['phone'];
+        $address->save();
+        $data = [
+            'user_id' => \Auth::user()->id,
+            'realname' => $request['realname'],
+            'address' => $request['address'],
+            'c' => $request['phone'],
+        ];
+        Address::where('id','=',$request['id'])->update($data);
+        return ['stat' => 1, 'data' => Address::find($request['id']),'address_list'=>Address::where('user_id','=',\Auth::user()->id)->get()];
+    }
+
+    /**
+     * 添加收货地址的验证
+     * @param array $data
+     * @return \Illuminate\Validation\Validator
+     */
+    protected function addressValidator(array $data)
+    {
+        return \Validator::make($data, [
+            'realname' => 'required|max:191',
+            'address' => 'required|max:191',
+            'phone' => 'required|digits:11',
+        ]);
+    }
+
+    public function addCollection(Request $request){
+        if(!\Auth::check()) return ['stat'=>0,'msg'=>'请登录后在收藏商品'];
+        $id = \Hashids::decode($request['hash_id']);
+        Collection::insert([
+            'user_id'=>\Auth::user()->id,
+            'shop_item_id'=>$id[0]
+        ]);
+        return ['stat'=>1,'msg'=>'收藏成功'];
     }
 
     /**
