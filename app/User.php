@@ -46,4 +46,13 @@ class User extends Authenticatable
     public function comments(){
         return $this->belongsToMany(ShopItem::class,'comment','user_id','shop_item_id')->withPivot('content','images','star','created_at');;
     }
+
+    /**
+     * 收藏
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function browses()
+    {
+        return $this->belongsToMany(ShopItem::class,'browse','user_id','shop_item_id');
+    }
 }

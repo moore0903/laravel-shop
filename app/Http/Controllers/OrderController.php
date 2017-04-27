@@ -49,7 +49,7 @@ class OrderController extends Controller
         $since_realname = $configs->where('key', 'since_realname')->first();
         $since_phone = $configs->where('key', 'since_phone')->first();
         $postage = 0.00;
-        if (!empty($post_price) || (!empty($include_postage) && \Cart::totalPrice() < $include_postage->value) || (empty($include_postage))) {
+        if (!empty($post_price) && (empty($include_postage) || (!empty($include_postage) && \Cart::totalPrice() < $include_postage->value))) {
             $postage = $post_price->value;
         }
         return view('cartsubmitquick', [
