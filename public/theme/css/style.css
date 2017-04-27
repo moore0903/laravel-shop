@@ -622,7 +622,7 @@ ul,ol,dl{ list-style-type:none;}
 
 .distribution .dispslist li .name input{ width:38px; height:37px; opacity: 0; -webkit-appearance: none; cursor:pointer; }
 
-.distribution .disdzkuai{ padding-top:15px; padding-bottom:36px; background:url(../bg/pbg1.png) no-repeat 650px 80px; }
+.distribution .disdzkuai{ padding-top:15px; padding-bottom:36px; background:url(../bg/pbg1.png) no-repeat 650px center; }
 
 .distribution .disdzkuai li{ margin-top:20px; }
 
