@@ -29,8 +29,9 @@ class OrderController extends Controller
         if(\Cart::count() <= 0){
             return \Redirect::intended('cart/list')->withInput()->withErrors(['msg' => '请重新下单']);
         }
-        $address = Address::where('user_id', '=', \Auth::user()->id)->orderBy('created_at')->first();
-        $gift_list = Giftcode::where('user_id', '=', \Auth::user()->id)->get();
+        $address_list = Address::where('user_id', '=', \Auth::user()->id)->orderBy('created_at')->get();
+        $now = date('Y-m-d H:i:s');
+        $gift_list = Giftcode::where('user_id', '=', \Auth::user()->id)->where('start_time','<',$now)->where('end_time','>=',$now)->whereColumn('usecountmax','>','usecount')->get();
         $cart_list = [];
         $cartids = explode(',', $request['rowids']);
         foreach ($cartids as $cartid) {
@@ -48,11 +49,12 @@ class OrderController extends Controller
         $since_realname = $configs->where('key', 'since_realname')->first();
         $since_phone = $configs->where('key', 'since_phone')->first();
         $postage = 0.00;
-        if (!empty($post_price) && (empty($include_postage) && \Cart::totalPrice < $include_postage->value)) {
+        if (!empty($post_price) || (!empty($include_postage) && \Cart::totalPrice() < $include_postage->value) || (empty($include_postage))) {
             $postage = $post_price->value;
         }
         return view('cartsubmitquick', [
-            'address' => $address,
+            'address_list' => $address_list,
+            'address' => $address_list->first(),
             'gift_list' => $gift_list,
             'cart_list' => \Cart::all(),
             'cart_count' => \Cart::count(),
@@ -72,9 +74,10 @@ class OrderController extends Controller
         if($request->method() == 'GET'){
             return \Redirect::intended('cart/list')->withInput()->withErrors(['msg' => '请重新下单']);
         }
+        \Log::debug($request->toArray());
         if ($request['useraddress'] != 'since') {
             //获取收货地址
-            $address = Address::where('id', $request['useraddress'])->where('user_id', Auth::user()->id)->first();
+            $address = Address::where('id', $request['useraddress'])->where('user_id', \Auth::user()->id)->first();
             if (!$address) {
                 return back()->withInput($request->toArray())->withErrors(['msg' => '请选择一个地址']);
             }
@@ -83,21 +86,19 @@ class OrderController extends Controller
         if (!empty($request['gift'])) {
             $gift = Giftcode::where('id', $request['gift'])->first();
             if (!$gift) return back()->withInput($request->toArray())->withErrors(['msg' => '优惠券不存在']);
-            $now = new \Carbon\Carbon();
+            $now = new Carbon();
             if (!$now->between($gift->start_time, $gift->end_time)) return back()->withInput()->withErrors(['msg' => '优惠券不在有效期']);
             if ($gift->usecount >= $gift->usecountmax) return back()->withInput()->withErrors(['msg' => '优惠券已被使用']);
-            if ($gift->discountnlimit < \Cart::totalPrice()) return back()->withInput($request->toArray())->withErrors(['msg' => '购物车内商品不满足该优惠券']);
+            if ($gift->discountnlimit > \Cart::totalPrice()) return back()->withInput($request->toArray())->withErrors(['msg' => '购物车内商品不满足该优惠券']);
             $gift->usecount += 1;
             $gift->save();
         }
-
 
         if (\Cart::count() <= 0) return \Redirect::intended('cart/list')->withInput()->withErrors(['msg' => '由于长时间未操作,购物车已过期,请重新下单']);
 
         $orders = $shopItems = [];
         $configs = Config::all();
-        $post_price = $configs->where('key', 'post_price')->first();
-        $include_postage = $configs->where('key', 'include_postage')->first();
+        $post_price = $request['postage'];
         $since_address = $configs->where('key', 'since_address')->first();
         $since_realname = $configs->where('key', 'since_realname')->first();
         $since_phone = $configs->where('key', 'since_phone')->first();
@@ -131,10 +132,12 @@ class OrderController extends Controller
             'realname' => empty($address) ? $since_realname->value : $address->realname,
             'phone' => empty($address) ? $since_phone->value : $address->phone,
             'stat' => Order::STAT_NOTPAY,
-            'remark' => $request['remark']??'',
+            'remark' => $request['remark'],
             'giftcode_id' => !empty($gift) ? $gift->id : 0,
             'memo' => '',
-            'post_price' => !empty($post_price) ? $post_price->value : '0.00'
+            'post_price' => $post_price,
+            'paytype'=>Order::paytypeString($request['paytype']),
+
         ]);
 
         foreach ($details as $detail) {
@@ -142,22 +145,26 @@ class OrderController extends Controller
         }
 
         if (!empty($gift)) {
-            $order->memo .= '(优惠券ID=' . $gift->id . ')满' + $gift->discountnlimit + '元减' + $gift->discountn + '元。';
+            $order->memo .= '(优惠券ID=' . $gift->id . ')满' . $gift->discountnlimit . '元减' . $gift->discountn . '元。';
             $discount = $gift->discountn;
         }
 
         $order->details()->saveMany($details);
         $order->total = $total;
         $order->discount = $discount;
-        $order->totalpay = max(0, $total - $order->discount + (!empty($post_price) ? $post_price->value : 0) - ((!empty($include_postage) && $include_postage->value >= ($total - $order->discount)) ? $include_postage->value : 0));
+        $order->totalpay = max(0, $total - $order->discount + $post_price);
         if ($order->totalpay == 0) $order->stat = Order::STAT_PAYED;
 
         $order->save();
 
         return redirect('/order/list');
-//        return \Redirect::intended('order/list');
     }
 
+    /**
+     * 获取订单列表
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function orderList(Request $request){
         if($request['stat']){
             $orderList = Order::where('user_id','=',\Auth::user()->id)->where('stat','=',$request['stat'])->with('details')->orderBy('created_at','desc')->get();
@@ -169,42 +176,6 @@ class OrderController extends Controller
         ]);
     }
 
-    /**
-     * 添加邮寄地址
-     * @param Request $request
-     * @return array
-     */
-    public function addAddress(Request $request)
-    {
-        $validator = $this->addressValidator($request->all());
-        if ($validator->fails()) {
-            return ['stat' => 0, 'msg' => $validator->getMessageBag()->first()];
-        }
-        $data = [
-            'user_id' => \Auth::user()->id,
-            'realname' => $request['realname'],
-            'address' => $request['address'],
-            'phone' => $request['phone'],
-            'area' => $request['area'],
-        ];
-        $id = Address::insertGetId($data);
-        if (!empty($id)) return ['stat' => 1, 'data' => $data];
-        else return ['stat' => 0, 'msg' => '添加邮寄地址失败,请联系管理员!'];
-    }
 
-    /**
-     * 添加邮寄地址的验证
-     * @param array $data
-     * @return \Illuminate\Validation\Validator
-     */
-    protected function addressValidator(array $data)
-    {
-        return \Validator::make($data, [
-            'realname' => 'required|max:191',
-            'address' => 'required|max:191',
-            'phone' => 'required|digits:11',
-            'area' => 'required|max:191',
-        ]);
-    }
 
 }

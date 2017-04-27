@@ -73,6 +73,9 @@ Route::group(
             ['prefix'=>'user'],
             function(){
                 Route::get('info','UserController@info');
+                Route::post('addAddress','UserController@addAddress');
+                Route::post('updateAddress','UserController@updateAddress');
+                Route::get('delAddress','UserController@delAddress');
             }
         );
         Route::group(
