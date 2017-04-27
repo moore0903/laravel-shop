@@ -120,10 +120,10 @@ class Order extends Model
 
     public static function paytypeString($paytype){
         switch ($paytype){
-            case 'WechatPay_Js':
+            case 'WechatPay':
                 return '微信支付';
                 break;
-            case 'Alipay_WapExpress':
+            case 'Alipay':
                 return '支付宝支付';
                 break;
             default:

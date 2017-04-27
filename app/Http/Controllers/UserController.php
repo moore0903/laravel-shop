@@ -9,13 +9,89 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Address;
 use App\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     public function info(){
+        
+    }
 
+    /**
+     * 添加收货地址
+     * @param Request $request
+     * @return array
+     */
+    public function addAddress(Request $request)
+    {
+        $validator = $this->addressValidator($request->all());
+        if ($validator->fails()) {
+            return ['stat' => 0, 'msg' => $validator->getMessageBag()->first()];
+        }
+        $data = [
+            'user_id' => \Auth::user()->id,
+            'realname' => $request['realname'],
+            'address' => $request['address'],
+            'phone' => $request['phone'],
+        ];
+        $id = Address::insertGetId($data);
+        if (!empty($id)) return ['stat' => 1, 'data' => Address::find($id),'address_list'=>Address::where('user_id','=',\Auth::user()->id)->get()];
+        else return ['stat' => 0, 'msg' => '添加收货地址失败,请联系管理员!'];
+    }
+
+    /**
+     * 删除收货地址
+     * @param Request $request
+     * @return array
+     */
+    public function delAddress(Request $request){
+        $address = Address::where('user_id','=',\Auth::user()->id)->where('id','=',$request['id'])->first();
+        if(empty($address)) return ['stat'=>0,'msg'=>'不能删除不属于自己的收货地址或不存在的收货地址!'];
+        $address->delete();
+        return ['stat'=>'1','address_list'=>Address::where('user_id','=',\Auth::user()->id)->get()];
+    }
+
+    /**
+     * 修改收货地址
+     * @param Request $request
+     * @return array
+     */
+    public function updateAddress(Request $request)
+    {
+        $validator = $this->addressValidator($request->all());
+        if ($validator->fails()) {
+            return ['stat' => 0, 'msg' => $validator->getMessageBag()->first()];
+        }
+        $address = Address::find($request['id']);
+        if(empty($address)) return ['stat'=>0,'msg'=>'找不到该收货地址'];
+        $address->realname = $request['realname'];
+        $address->address = $request['address'];
+        $address->phone = $request['phone'];
+        $address->save();
+        $data = [
+            'user_id' => \Auth::user()->id,
+            'realname' => $request['realname'],
+            'address' => $request['address'],
+            'c' => $request['phone'],
+        ];
+        Address::where('id','=',$request['id'])->update($data);
+        return ['stat' => 1, 'data' => Address::find($request['id']),'address_list'=>Address::where('user_id','=',\Auth::user()->id)->get()];
+    }
+
+    /**
+     * 添加收货地址的验证
+     * @param array $data
+     * @return \Illuminate\Validation\Validator
+     */
+    protected function addressValidator(array $data)
+    {
+        return \Validator::make($data, [
+            'realname' => 'required|max:191',
+            'address' => 'required|max:191',
+            'phone' => 'required|digits:11',
+        ]);
     }
 
     /**

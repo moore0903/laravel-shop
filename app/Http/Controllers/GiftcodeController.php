@@ -56,6 +56,7 @@ class GiftcodeController extends Controller
             ->where('start_time',$request['start_time'])
             ->where('end_time',$request['end_time'])
             ->where('user_id','=',\Auth::user()->id)
+            ->where('usecountmax','>',\DB::raw('usecount'))
             ->first();
         if($is_receive) return ['stat'=>0,'msg'=>'你已领取过该优惠劵,请不要重复领取'];
         //避免优惠劵存在重复领取,该查询查除ID及优惠码其他数据,并随机返回一条数据
@@ -87,7 +88,7 @@ class GiftcodeController extends Controller
             $giftcode->user_id = \Auth::user()->id;
             $giftcode->save();
         }
-        return ['stat'=>1,'成功领取优惠劵'];
+        return ['stat'=>1,'msg'=>'成功领取优惠劵'];
     }
 
 
