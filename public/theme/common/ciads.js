@@ -22,6 +22,7 @@ $(function($){
 	$(".choice").click(function(){
 	  $(this).toggleClass("on")	
 	})
+	$(".dispslist li").eq(0).find(".name").addClass("on");
 	$(".dispslist li .name").click(function(){
 	  $(this).addClass("on").parent().siblings().find(".name").removeClass("on");
 	})	/*点击弹出搜索层*/
