@@ -37,3 +37,6 @@ Column::extend('prependIcon', function ($value, $icon) {
     return "<span style='color: #999;'><i class='fa fa-$icon'></i>  $value</span>";
 
 });
+
+Admin::css('/packages/pace/pace.css');
+Admin::js('/packages/pace/pace.min.js');
