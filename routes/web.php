@@ -43,6 +43,7 @@ Route::group(
         Route::get('del','CartController@delCart');
         Route::get('all','CartController@cartAll');
         Route::get('list','CartController@list');
+        Route::get('submitCartQuick','CartController@submitCartQuick');
     }
 );
 
@@ -79,6 +80,7 @@ Route::group(
                 Route::get('myGift','UserController@myGift');
                 Route::get('myCollection','UserController@myCollection');
                 Route::get('myBrowse','UserController@myBrowse');
+                Route::get('addCollection','UserController@addCollection');
             }
         );
         Route::group(
