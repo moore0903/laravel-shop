@@ -7,6 +7,7 @@ use App\Models\Catalog;
 use App\Models\Collection;
 use App\Models\ShopItem;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Vinkla\Hashids\Facades\Hashids;
 
 class HomeController extends Controller
@@ -62,7 +63,11 @@ class HomeController extends Controller
             $value->attr = Catalog::where('parent_id','=',$value->id)->get();
             return $value;
         });
-        $shopItem = ShopItem::all();
+        if($request['search']){
+            $shopItem = ShopItem::where('title','like','%'.$request['search'].'%')->where('detail','like','%'.$request['search'].'%')->get();
+        }else{
+            $shopItem = ShopItem::all();
+        }
         $shopItem = $shopItem->map(function($value){
             $value->hashid = \Hashids::encode($value->id);
             $value->url = url('/shop_item/detail/'.$value->hashid);
@@ -72,11 +77,16 @@ class HomeController extends Controller
             $value->rows = $row??'';
             return $value;
         });
+        $configs = \App\Models\Config::all();
+        $search_key = $configs->where('key','search_key')->first();
+        $search = [];
+        if(!empty($search_key)) $search = explode(',',$search_key->value);
         $returnData = [
             'catalogs' => $catalogs,
             'shopItem' => $shopItem,
             'subCatalogs'=>$catalogs->first()->attr,
-            'cart'=>collect(['cart_items'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_price_count'=>\Cart::totalPrice()])
+            'cart'=>collect(['cart_items'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_price_count'=>\Cart::totalPrice()]),
+            'searches' => collect($search),
         ];
 
         if(!empty($request['is_api'])) return $returnData;
@@ -93,13 +103,15 @@ class HomeController extends Controller
             $catalogs = Catalog::all();
         }else{
             $catalog_id = Hashids::decode($request['hash_id']);
-            $catalogs = Catalog::where('parent_id','=',$catalog_id)->first();
+            $catalogs = Catalog::where('parent_id','=',$catalog_id)->get();
         }
+        if(empty($catalogs->toArray())) return ['stat'=>0,'msg'=>'该栏目无下级栏目'];
         $catalogs = $catalogs->map(function($value){
             $value->hashid = \Hashids::encode($value->id);
             return $value;
         });
-        return ['stat'=>1,'catalogs'=>$catalogs->toJson()];
+
+        return ['stat'=>1,'catalogs'=>$catalogs->toArray()];
     }
 
     /**
@@ -108,9 +120,33 @@ class HomeController extends Controller
      * @return array
      */
     public function ajax_shop_item(Request $request){
-        $catalog_id = Hashids::decode($request['hash_id']);
-        $catalog_ids = Catalog::where('id','=',$catalog_id)->orWhere('parent_id','=',$catalog_id)->select('id')->get();
-        $shopItems = ShopItem::whereIn('catalog_id',array_flatten($catalog_ids->toArray()))->where('show','=','1')->orderBy('sort')->get();
+        switch ($request['sortType']){
+            case 'sell':
+                $orderBy = \DB::raw('sellcount_real+sellcount_false');
+                $orderType = \DB::raw('desc');
+                break;
+            case 'priceDesc':
+                $orderBy = \DB::raw('price');
+                $orderType = \DB::raw('desc');
+                break;
+            case 'priceAsc':
+                $orderBy = \DB::raw('price');
+                $orderType = \DB::raw('asc');
+                break;
+            default:
+                $orderBy = \DB::raw('sellcount_real+sellcount_false');
+                $orderType = \DB::raw('desc');
+                break;
+        }
+        if(empty($request['hash_id'])){
+            $shopItems = ShopItem::where('show','=','1')->orderBy($orderBy,$orderType)->get();
+        }else{
+            $catalog_id = Hashids::decode($request['hash_id']);
+            $catalog_ids = Catalog::where('id','=',$catalog_id)->orWhere('parent_id','=',$catalog_id)->select('id')->get();
+            if(empty($catalog_ids)) return ['stat'=>0,'msg'=>'找不到该栏目'];
+            $shopItems = ShopItem::whereIn('catalog_id',array_flatten($catalog_ids->toArray()))->where('show','=','1')->orderBy($orderBy,$orderType)->get();
+        }
+        if(empty($shopItems->toArray())) return ['stat'=>0,'msg'=>'该栏目下无商品'];
         $shopItems = $shopItems->map(function($value){
             $value->hashid = \Hashids::encode($value->id);
             $value->url = url('/shop_item/detail/'.$value->hashid);
@@ -120,7 +156,7 @@ class HomeController extends Controller
             $value->rows = $row??'';
             return $value;
         });
-        return ['stat'=>1,'shopItems'=>$shopItems->toJson()];
+        return ['stat' => '1','shopItems' => $shopItems->toArray()];
     }
 
 

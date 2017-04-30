@@ -63,7 +63,7 @@ Route::group(
         Route::get('detail/{hash_id}','HomeController@detail');
         Route::get('good_list','HomeController@good_list');
         Route::get('ajax_sub_catalog','HomeController@ajax_sub_catalog');
-        Route::get('ajax_shop_item','HomeController@ajax_shop_item');
+        Route::any('ajax_shop_item','HomeController@ajax_shop_item');
     }
 );
 
