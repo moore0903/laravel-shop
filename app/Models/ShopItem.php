@@ -10,7 +10,9 @@ class ShopItem extends Model
     protected $table = 'shop_item';
 
     protected $fillable = [
-        'title', 'catalog_id', 'count','price','img','short_title','show','detail','sort','images','shipping','original_price','units','unit_number','recommend','sellcount_real','sellcount_false'
+        'title', 'catalog_id', 'count','price','img','short_title','show','detail','sort',
+        'images','shipping','original_price','units','unit_number','recommend','sellcount_real','sellcount_false',
+        'production'
     ];
 
     public function catalog()
@@ -96,5 +98,12 @@ class ShopItem extends Model
         '克'=>'克',
         '斤'=>'斤',
         '个'=>'个',
+    ];
+
+    public static $productions = [
+        '未知' => '未知',
+        '法国' => '法国',
+        '俄罗斯' => '俄罗斯',
+        '波尔多' => '波尔多',
     ];
 }

@@ -176,6 +176,20 @@ class OrderController extends Controller
         ]);
     }
 
+    /**
+     * 收货
+     * @param Request $request
+     * @return array
+     */
+    public function confirmReceipt(Request $request){
+        if(!\Auth::check()) return ['stat'=>0,'msg'=>'请先登录!'];
+        $orderInfo = Order::find($request['id']);
+        if(empty($orderInfo)) return ['stat'=>0,'msg'=>'找不到该订单'];
+        $orderInfo->stat = Order::STAT_FINISH;
+        $orderInfo->save();
+        return ['stat'=>1,'msg'=>'已收货,请评价'];
+    }
+
 
 
 }
