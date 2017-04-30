@@ -15,9 +15,9 @@
             </li>
         </ul>
         <ul class="cpsxlist lifl clear">
-            <li class="on"><a href="javascript:;">销量排序</a></li>
-            <li><a href="javascript:;"><i class="c01">价格排序</i></a></li>
-            <li><a href="javascript:;"><i class="c02">筛选</i></a></li>
+            <li class="_sort _sortSell"><a href="javascript:void(0);" @click="sortType('sell')">销量排序</a></li>
+            <li class="_sort _sortPrice"><a href="javascript:void(0);" @click="sortType('price')"><i class="c01">价格排序</i></a></li>
+            <li><a href="javascript:void(0);"><i class="c02">筛选</i></a></li>
         </ul>
     </div>
     <aside>
@@ -52,55 +52,33 @@
             </ul>
             <div class="sxtitle">产地</div>
             <ul class="cpsxccc lifl clear">
-                <li><a href="#">四川</a></li>
-                <li><a href="#">四川</a></li>
-                <li><a href="#">四川</a></li>
-                <li><a href="#">四川</a></li>
-                <li><a href="#">四川</a></li>
-                <li><a href="#">四川</a></li>
-                <li><a href="#">四川</a></li>
-                <li><a href="#">四川</a></li>
-                <li><a href="#">四川</a></li>
-                <li><a href="#">四川</a></li>
-                <li><a href="#">四川</a></li>
-                <li><a href="#">四川</a></li>
-                <li><a href="#">四川</a></li>
-                <li><a href="#">四川</a></li>
-                <li><a href="#">四川</a></li>
-                <li><a href="#">四川</a></li>
-                <li><a href="#">四川</a></li>
-                <li><a href="#">四川</a></li>
-                <li><a href="#">四川</a></li>
-                <li><a href="#">四川</a></li>
-                <li><a href="#">四川</a></li>
-                <li><a href="#">四川</a></li>
-                <li><a href="#">四川</a></li>
-                <li><a href="#">四川</a></li>
+                <li v-for="production in productions">
+                    <a href="#">@{{ production }}</a>
+                </li>
             </ul>
         </div>
     </div>
     <div class="search">
         <div class="sedm">
-            <p class="fh j-close-search"></p>
-            <div class="header clear">
-                <p class="hlbg fl"></p>
-                <p class="hrbg fl">
-                    <input type="text" name="text" placeholder="搜索商品名称或品牌">
+            <form action="{{url('shop_item/good_list')}}">
+                <p class="fh j-close-search"></p>
+                <div class="header clear">
+                    <p class="hlbg fl"></p>
+                    <p class="hrbg fl">
+                        <input type="text" name="search" placeholder="搜索商品名称或品牌">
+                    </p>
+                </div>
+                <p class="ssk">
+                    <input type="submit" value="搜索">
                 </p>
-            </div>
-            <p class="ssk">
-                <input type="button" value="搜索">
-            </p>
+            </form>
         </div>
         <div class="seakuai">
             <div class="title">热门搜索</div>
             <ul class="selist lifl clear">
-                <li><a href="#">五粮液</a></li>
-                <li><a href="#">茅台</a></li>
-                <li><a href="#">剑南春</a></li>
-                <li><a href="#">五粮液</a></li>
-                <li><a href="#">茅台</a></li>
-                <li><a href="#">剑南春</a></li>
+                <li v-for="search in searches">
+                    <a :href="'{{url('shop_item/good_list').'?search='}}'+search">@{{ search }}</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -109,7 +87,6 @@
 
 @section('script')
     <script type="text/javascript">
-        $(function($){
             var layerLoad = '';
 
             var shop_item_list = new Vue({
@@ -119,14 +96,19 @@
                     'cart':{!! $cart??'{}' !!},
                     'catalogs':{!! $catalogs??'{}' !!},
                     'subCatalog':{!! $subCatalogs??'{}' !!},
+                    'sortTypeStr': 'sell',
+                    'currentCataHashid':0,
+                    'searches':{!! $searches??'{}' !!},
+                    'productions':{!! collect(\App\Models\ShopItem::$productions) !!}
                 },
                 methods:{
                     getShopItems:function(hashid){
-                        $.get("{{url('shop_item/ajax_shop_item')}}", { hash_id: hashid},
+                        $.get("{{url('shop_item/ajax_shop_item')}}", { hash_id: hashid,sortType: shop_item_list.sortTypeStr},
                             function(data){
                                 layer.close(layerLoad);
                                 if(data.stat){
                                     shop_item_list.shopItems = data.shopItems;
+                                    shop_item_list.currentCataHashid = hashid;
                                 }else{
                                     layer.msg(data.msg);
                                 }
@@ -149,10 +131,23 @@
                         shop_item_list.getSubCatalog(hashid);
                         shop_item_list.getShopItems(hashid);
                     },
+                    sortType:function(type){
+                        if(type == 'sell'){
+                            shop_item_list.sortTypeStr = 'sell';
+                            $('._sortSell').addClass('on').siblings('._sort').removeClass('on');
+                        }else if(type == 'price'){
+                            if(shop_item_list.sortTypeStr == 'priceDesc'){
+                                shop_item_list.sortTypeStr = 'priceAsc';
+                            }else{
+                                shop_item_list.sortTypeStr = 'priceDesc';
+                            }
+                            $('._sortPrice').addClass('on').siblings('._sort').removeClass('on');
+                        }
+                        layerLoad = layer.load();
+                        shop_item_list.getShopItems(shop_item_list.currentCataHashid);
+                    }
                 }
             });
-        });
-
 
     </script>
 @endsection
