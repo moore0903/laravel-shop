@@ -49,12 +49,15 @@ class ShopItem extends Model
     public function setImagesAttribute($images)
     {
         if (is_array($images)) {
+            \Log::debug($images);
             $this->attributes['images'] = json_encode($images);
+            \Log::debug($this->attributes['images']);
         }
     }
 
     public function getImagesAttribute($images)
     {
+        \Log::debug(json_decode($images, true));
         return json_decode($images, true);
     }
 

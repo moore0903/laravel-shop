@@ -89,6 +89,9 @@ Route::group(
                 Route::get('cartsubmitquick','OrderController@cartsubmitquick');
                 Route::any('add','OrderController@addOrder');
                 Route::get('list','OrderController@orderList');
+                Route::get('confirmReceipt','OrderController@confirmReceipt');
+                Route::any('evaluation','OrderController@evaluation');
+                Route::get('cancel','OrderController@cancel');
             }
         );
         Route::group(['prefix'=>'wechat'],function(){
