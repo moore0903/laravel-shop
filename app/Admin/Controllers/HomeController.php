@@ -164,11 +164,13 @@ class HomeController extends Controller
                 $since_address = $configs->where('key','since_address')->first();
                 $since_realname = $configs->where('key','since_realname')->first();
                 $since_phone = $configs->where('key','since_phone')->first();
+                $search_key = $configs->where('key','search_key')->first();
                 $form->currency('key[post_price]', '运费')->symbol('￥')->default(!empty($post_price)? $post_price->value : '0.00');
                 $form->currency('key[include_postage]', '满X包邮')->symbol('￥')->default(!empty($include_postage)? $include_postage->value : '0.00');
                 $form->text('key[since_address]', '自提点')->default(!empty($since_address)? $since_address->value : '');
                 $form->text('key[since_realname]', '自提点联系人')->default(!empty($since_realname)? $since_realname->value : '');
                 $form->mobile('key[since_phone]', '自提点电话')->default(!empty($since_phone)? $since_phone->value : '');
+                $form->text('key[search_key]', '搜索关键字以,隔开')->default(!empty($search_key)? $search_key->value : '');
                 $content->row(new Box('网站配置', $form));
             });
         }elseif($request->method() == 'POST'){

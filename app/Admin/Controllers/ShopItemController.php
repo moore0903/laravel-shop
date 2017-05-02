@@ -136,6 +136,7 @@ class ShopItemController extends Controller
 //            $form->number('unit_number','单位数量');
 //            $form->select('units','计量单位')->options(ShopItem::$units);
 //            $form->currency('shipping', '运费')->symbol('￥')->default('0.00');
+            $form->select('production','产地')->options(ShopItem::$productions);
             $form->image('img', '图片');
             $form->editor('detail', '内容')->attribute(['style' => 'height:400px;max-height:500px;']);
 
