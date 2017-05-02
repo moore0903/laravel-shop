@@ -748,7 +748,11 @@ ul,ol,dl{ list-style-type:none;}
 
 .saixuan .sxjg li:nth-child(2){ margin-right:0px; }
 
-.cpsxccc{ margin-top:-12px; padding-bottom:20px; }
+.sxanniu{ position:absolute; bottom:0px; right:0px; width:560px; background:#fff; height:50px; }
+
+.sxanniu input{ width:190px; height:50px; background:#F00; font-size:24px; color:#fff; border:none; float:right; cursor:pointer; }
+
+.cpsxccc{ margin-top:-12px; padding-bottom:70px; }
 
 .cpsxccc li a{ width:170px; height:62px; background:#f4f4f4; font-size:24px; color:#595959; text-align:center; line-height:62px; display:block; margin:12px 8px 0 8px; border-radius:5px; }
 

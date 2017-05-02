@@ -44,7 +44,7 @@
     <div class="stop"></div>
     <div class="cpflnr j-ccgg clear">
         <div class="saixuan scrollbar-none fr">
-            <div class="sxbt">筛选</div>
+            <div class="sxbt"><p class="gb">筛选</div>
             <div class="sxtitle">价格区间（元）</div>
             <ul class="sxjg lifl clear">
                 <li><input type="text" name="text" placeholder="最低价"></li>
@@ -56,6 +56,7 @@
                     <a href="#">@{{ production }}</a>
                 </li>
             </ul>
+        <div class="sxanniu clear"><input name="" type="button" value="确定"></div>
         </div>
     </div>
     <div class="search">
