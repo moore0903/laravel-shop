@@ -24,7 +24,9 @@
                 <p class="name">{{$detail->product_title}}</p>
                 <p class="sla">数量 x{{$detail->product_num}}</p>
                 <p class="jya">¥{{$detail->product_price}}元</p>
-                <p class="ljpj"><a href="#">立即评价</a></p>
+                @if($order->stat == \App\Models\Order::STAT_FINISH)
+                    <p class="ljpj"><a href="#">立即评价</a></p>
+                @endif
             </div>
                 <?php $orderNum += $detail->product_num?>
             @endforeach
