@@ -43,6 +43,9 @@ class Order extends Model
             case Order::STAT_EXPRESS:
                 return '快递中';
                 break;
+            case Order::STAT_EVALUATE:
+                return '待评价';
+                break;
             case Order::STAT_FINISH:
                 return '已完成';
                 break;
@@ -73,6 +76,9 @@ class Order extends Model
                 break;
             case Order::STAT_EXPRESS:
                 return '卖家已发货';
+                break;
+            case Order::STAT_EVALUATE:
+                return '请评价';
                 break;
             case Order::STAT_FINISH:
                 return '交易完成';
@@ -155,6 +161,7 @@ class Order extends Model
         Order::STAT_NOTPAY,
         Order::STAT_PAYED,
         Order::STAT_EXPRESS,
+        Order::STAT_EVALUATE,
         Order::STAT_FINISH,
         Order::STAT_CANCEL,
         Order::STAT_SERVICE
@@ -168,6 +175,7 @@ class Order extends Model
         '未支付',
         '已支付',
         '快递中',
+        '待评价',
         '已完成',
         '已取消',
         '售后中'
@@ -177,6 +185,7 @@ class Order extends Model
         Order::STAT_NOTPAY => '未支付',
         Order::STAT_PAYED => '已支付',
         Order::STAT_EXPRESS => '快递中',
+        Order::STAT_EVALUATE=>'待评价',
         Order::STAT_FINISH => '已完成',
         Order::STAT_CANCEL => '已取消',
         Order::STAT_SERVICE => '售后中',
@@ -196,7 +205,8 @@ class Order extends Model
     const  STAT_NOTPAY = 0;   //未支付
     const  STAT_PAYED = 1;  //已支付
     const  STAT_EXPRESS = 2;  //快递中
-    const  STAT_FINISH = 3;   //已完成
+    const  STAT_EVALUATE = 3;   //待评价
+    const  STAT_FINISH = 4;   //已完成
     const  STAT_CANCEL = -1;   //已取消
     const  STAT_SERVICE = 99;
     const PROGRESS_CREATE = 1;

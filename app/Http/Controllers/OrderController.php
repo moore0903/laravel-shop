@@ -166,13 +166,17 @@ class OrderController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function orderList(Request $request){
-        if($request['stat']){
-            $orderList = Order::where('user_id','=',\Auth::user()->id)->where('stat','=',$request['stat'])->with('details')->orderBy('created_at','desc')->get();
+        $stat = $request['stat']??'all';
+        if($stat != 'all'){
+            $stat = (int)$stat;
+            $orderList = Order::where('user_id','=',\Auth::user()->id)->where('stat','=',$stat)->with('details')->orderBy('created_at','desc')->get();
         }else{
             $orderList = Order::where('user_id','=',\Auth::user()->id)->with('details')->orderBy('created_at','desc')->get();
         }
+        \Log::debug($stat);
         return view('order_list',[
-            'orders'=>$orderList
+            'orders'=>$orderList,
+            'stat'=>$stat
         ]);
     }
 
