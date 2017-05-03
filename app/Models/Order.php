@@ -23,9 +23,11 @@ class Order extends Model
 
         static::saving(function ($model) {
             $old_order = Order::find($model->id);
-            if($old_order->stat <=0 && $model->stat > 0){
-                foreach($model->details as $detail){
-                    \DB::table('shop_item')->where('id','=',$detail->shop_item_id)->increment('sellcount_real',$detail->product_num);
+            if($old_order){
+                if($old_order->stat <=0 && $model->stat > 0){
+                    foreach($model->details as $detail){
+                        \DB::table('shop_item')->where('id','=',$detail->shop_item_id)->increment('sellcount_real',$detail->product_num);
+                    }
                 }
             }
         });
