@@ -190,6 +190,23 @@ class OrderController extends Controller
         return ['stat'=>1,'msg'=>'已收货,请评价'];
     }
 
+    /**
+     * 评价
+     * @param Request $request
+     * @return array
+     * TODO 此处有三种做法,第一只针对商品进行评价.第二只针对订单进行评价.第三针对商品和订单都做评价.  这三种评价用作不同的应用场景
+     */
+    public function evaluation(Request $request){
+        if(!\Auth::check()) return ['stat'=>0,'msg'=>'请先登录!'];
+        $orderInfo = Order::find($request['id']);
+        if(empty($orderInfo)) return ['stat'=>0,'msg'=>'找不到该订单'];
+        if($request->method() == 'GET'){
+            return view('order_evaluation',['id'=>$request['id']]);
+        }else{
+
+        }
+    }
+
 
 
 }
