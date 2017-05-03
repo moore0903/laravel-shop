@@ -3,14 +3,15 @@
 @section('content')
 <div class="wrap fmyh" id="order_list">
     <div class="land">
-        <p class="fhaniu"><a href="javascript:window.history.go(-1)"></a></p>
+        <p class="fhaniu"><a href="{{url('user/info')}}"></a></p>
         我的订单</div>
     <ul class="orderlist lifl clear">
-        <li class="on"><a href="{{url('order/list')}}">全部</a></li>
-        <li><a href="{{url('order/list').'?stat='.\App\Models\Order::STAT_NOTPAY}}">待付款</a></li>
-        <li><a href="{{url('order/list').'?stat='.\App\Models\Order::STAT_EXPRESS}}">待收货</a></li>
-        <li><a href="{{url('order/list').'?stat='.\App\Models\Order::STAT_PAYED}}">待评价</a></li>
-        <li><a href="{{url('order/list').'?stat='.\App\Models\Order::STAT_SERVICE}}">退换货</a></li>
+        <li @if($stat === 'all') class="on" @endif><a href="{{url('order/list')}}">全部</a></li>
+        <li @if($stat === \App\Models\Order::STAT_NOTPAY) class="on" @endif><a href="{{url('order/list').'?stat='.\App\Models\Order::STAT_NOTPAY}}">待付款</a></li>
+        <li @if($stat == \App\Models\Order::STAT_PAYED) class="on" @endif><a href="{{url('order/list').'?stat='.\App\Models\Order::STAT_PAYED}}">待发货</a></li>
+        <li @if($stat == \App\Models\Order::STAT_EXPRESS) class="on" @endif><a href="{{url('order/list').'?stat='.\App\Models\Order::STAT_EXPRESS}}">待收货</a></li>
+        <li @if($stat == \App\Models\Order::STAT_EVALUATE) class="on" @endif><a href="{{url('order/list').'?stat='.\App\Models\Order::STAT_EVALUATE}}">待评价</a></li>
+        <li @if($stat == \App\Models\Order::STAT_SERVICE) class="on" @endif><a href="{{url('order/list').'?stat='.\App\Models\Order::STAT_SERVICE}}">退换货</a></li>
     </ul>
     <ul class="odlist lifl clear">
         @foreach($orders as $order)

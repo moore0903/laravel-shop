@@ -43,21 +43,24 @@
     @include('layouts.footer_nav')
     <div class="stop"></div>
     <div class="cpflnr j-ccgg clear">
-        <div class="saixuan scrollbar-none fr">
-            <div class="sxbt"><p class="gb">筛选</div>
-            <div class="sxtitle">价格区间（元）</div>
-            <ul class="sxjg lifl clear">
-                <li><input type="text" name="text" placeholder="最低价"></li>
-                <li><input type="text" name="text" placeholder="最高价"></li>
-            </ul>
-            <div class="sxtitle">产地</div>
-            <ul class="cpsxccc lifl clear">
-                <li v-for="production in productions">
-                    <a href="#">@{{ production }}</a>
-                </li>
-            </ul>
-        <div class="sxanniu clear"><input name="" type="button" value="确定"></div>
-        </div>
+        <form action="{{url('shop_item/good_list')}}">
+            <div class="saixuan scrollbar-none fr">
+                <div class="sxbt"><p class="gb">筛选</div>
+                <div class="sxtitle">价格区间（元）</div>
+                <ul class="sxjg lifl clear">
+                    <li><input type="text" name="lowestPrice" placeholder="最低价"></li>
+                    <li><input type="text" name="highestPrice" placeholder="最高价"></li>
+                </ul>
+                <div class="sxtitle">产地</div>
+                <ul class="cpsxccc lifl clear">
+                    <li v-for="production in productions">
+                        <a href="javascript:void(0);">@{{ production }}</a>
+                    </li>
+                </ul>
+                {{--<input type="hidden" name="filterProduction" :value="filterProduction"/>--}}
+            <div class="sxanniu clear"><input name="" type="submit" value="确定"></div>
+            </div>
+        </form>
     </div>
     <div class="search">
         <div class="sedm">
