@@ -92,6 +92,7 @@ Route::group(
                 Route::get('confirmReceipt','OrderController@confirmReceipt');
                 Route::any('evaluation','OrderController@evaluation');
                 Route::get('cancel','OrderController@cancel');
+                Route::post('commentUpload','HomeController@imageUpload');
             }
         );
         Route::group(['prefix'=>'wechat'],function(){

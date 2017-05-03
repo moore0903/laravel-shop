@@ -10,7 +10,7 @@ class Comment extends Model
     protected $table = 'comment';
 
     protected $fillable = [
-        'user_id', 'shop_item_id', 'content','images','star'
+        'user_id', 'shop_item_id', 'content','images','star','order_id','order_detail_id'
     ];
 
     public function shopItem() {
@@ -19,6 +19,16 @@ class Comment extends Model
 
     public function user() {
         return $this->belongsTo(User::class,'user_id');
+    }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class,'order_id');
+    }
+
+    public function detail()
+    {
+        return $this->belongsTo(OrderDetail::class,'order_detail_id');
     }
 
     /**
