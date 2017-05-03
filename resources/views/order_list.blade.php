@@ -24,8 +24,8 @@
                 <p class="name">{{$detail->product_title}}</p>
                 <p class="sla">数量 x{{$detail->product_num}}</p>
                 <p class="jya">¥{{$detail->product_price}}元</p>
-                @if($order->stat == \App\Models\Order::STAT_FINISH)
-                    <p class="ljpj"><a href="#">立即评价</a></p>
+                @if($order->stat == \App\Models\Order::STAT_EVALUATE)
+                    <p class="ljpj"><a href="{{url('order/evaluation').'?detail_id='.$detail->id.'&shop_item_id='.$detail->shop_item_id.'&order_id='.$order->id}}">立即评价</a></p>
                 @endif
             </div>
                 <?php $orderNum += $detail->product_num?>
@@ -39,7 +39,7 @@
                     <p class="od1 fr" data-order_id="{{$order->id}}"><a href="javascript:void(0);">确认收货</a></p>
                     <p class="od2 fr"><a href="#">查看物流</a></p>
                 @elseif($order->stat == \App\Models\Order::STAT_FINISH)
-                    <p class="od1 fr"><a href="{{url('order/evaluation').'?id='.$order->id}}">立即评价</a></p>
+                    <p class="od1 fr"><a href="#">申请退货</a></p>
                 @endif
             </div>
         </li>
@@ -50,6 +50,16 @@
 
 @section('script')
     <script>
+        <?php
+            $error = '';
+            if(isset($errors)){
+                $error = $errors->first();
+            }
+        ?>
+        var error = '{{$error}}';
+        if(error){
+            layer.msg(error);
+        }
         $('._confirmReceipt').click(function(){
             layer.confirm('确定收货?',function(index){
                 layer.close(index);
@@ -62,7 +72,7 @@
                         layer.msg(data.msg);
                         if(data.stat == 1){
                             var evaluationUrl = '{{url('order/evaluation')}}?id='+id;
-                            $('._order_'+id).html('<p class="od1 fr"><a href="'+evaluationUrl+'">立即评价</a></p> ');
+                            window.location.reload();
                         }
                     }
                 });
