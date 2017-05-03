@@ -201,11 +201,14 @@ class OrderController extends Controller
      * TODO 此处有三种做法,第一只针对商品进行评价.第二只针对订单进行评价.第三针对商品和订单都做评价.  这三种评价用作不同的应用场景
      */
     public function evaluation(Request $request){
-        if(!\Auth::check()) return ['stat'=>0,'msg'=>'请先登录!'];
-        $orderInfo = Order::find($request['id']);
-        if(empty($orderInfo)) return ['stat'=>0,'msg'=>'找不到该订单'];
+        if(!\Auth::check()) return back()->withInput($request->toArray())->withErrors(['msg' => '请先登录']);
+        $orderDetailInfo = OrderDetail::with('order')->find($request['detail_id']);
+        if(empty($orderDetailInfo)) return back()->withInput($request->toArray())->withErrors(['msg' => '找不到该订单']);
+        if($orderDetailInfo->order->user_id != \Auth::user()->id)  return back()->withInput($request->toArray())->withErrors(['msg' => '请确认你购买过此商品']);
         if($request->method() == 'GET'){
-            return view('order_evaluation',['id'=>$request['id']]);
+            return view('order_evaluation',[
+                'detail'=>$orderDetailInfo
+            ]);
         }else{
 
         }

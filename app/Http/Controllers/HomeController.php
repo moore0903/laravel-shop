@@ -159,5 +159,11 @@ class HomeController extends Controller
         return ['stat' => '1','shopItems' => $shopItems->toArray()];
     }
 
+    public function imageUpload(Request $request){
+        \Log::debug($request->file('file'));
+        $path = \Storage::putFile('comment', $request->file('file'));
+        return ['path'=>$path];
+    }
+
 
 }
