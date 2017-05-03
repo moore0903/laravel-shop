@@ -53,7 +53,7 @@
             <div class="sxtitle">产地</div>
             <ul class="cpsxccc lifl clear">
                 <li v-for="production in productions">
-                    <a href="#">@{{ production }}</a>
+                    <a class="on" href="#">@{{ production }}</a>
                 </li>
             </ul>
         <div class="sxanniu clear"><input name="" type="button" value="确定"></div>
