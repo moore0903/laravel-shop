@@ -414,12 +414,11 @@ ul,ol,dl{ list-style-type:none;}
 
 .personal li:nth-child(2){ width:714px; padding-right:0px; background:none; }
 
-
 .orderlist{ padding:0 7px; border-top:2px solid #eee; margin-top:18px; background:url(../bg/fbt1.gif) repeat left top; }
 
 .orderlist li{ font-size:24px; color:#666; }
 
-.orderlist li a{ color:#666; display:block; padding: 0 40px; height:86px; line-height:88px; }
+.orderlist li a{ color:#666; display:block; padding: 0 27px; height:86px; line-height:88px; }
 
 .orderlist li.on a{ color:#f22612; border-bottom:2px solid #f22612; }
 
@@ -442,6 +441,8 @@ ul,ol,dl{ list-style-type:none;}
 .odlist li .odkuai .od1 a{ width:120px; height:40px; border-radius:5px; font-size:22px; color:#fff; background:#e02933; display:block; line-height:40px; text-align:center; border:2px solid #e02933; }
 
 .odlist li .odkuai .od2 a{ width:120px; height:40px; border-radius:5px; font-size:22px; color:#666; background:#fff; display:block; line-height:40px; text-align:center; border:2px solid #666; }
+
+.odlist li .ljpj a{ position:absolute; top:105px; right:20px; width:120px; height:40px; border-radius:5px; font-size:22px; color:#fff; background:#e02933; display:block; line-height:40px; text-align:center; border:2px solid #e02933; }
 
 .collelist{ background:#fff; }
 
@@ -755,6 +756,8 @@ ul,ol,dl{ list-style-type:none;}
 .cpsxccc{ margin-top:-12px; padding-bottom:70px; }
 
 .cpsxccc li a{ width:170px; height:62px; background:#f4f4f4; font-size:24px; color:#595959; text-align:center; line-height:62px; display:block; margin:12px 8px 0 8px; border-radius:5px; }
+
+.cpsxccc li a.on{ background:#F00; color:#fff; }
 
 .cplbylist{ padding-bottom:20px; }
 
