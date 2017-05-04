@@ -94,6 +94,7 @@ class CatalogsController extends Controller
             $form->display('id', 'ID');
 
             $form->text('title', '标题');
+            $form->image('img', '图片')->uniqueName();
             $form->number('order', '排序');
             $form->select('parent_id', '上级栏目')->options(Catalog::selectOptions());
             $form->text('url', '链接地址')->placeholder('选填 直接跳转地址');
