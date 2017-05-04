@@ -74,7 +74,6 @@ class OrderController extends Controller
         if($request->method() == 'GET'){
             return \Redirect::intended('cart/list')->withInput()->withErrors(['msg' => '请重新下单']);
         }
-        \Log::debug($request->toArray());
         if ($request['useraddress'] != 'since') {
             //获取收货地址
             $address = Address::where('id', $request['useraddress'])->where('user_id', \Auth::user()->id)->first();
@@ -173,7 +172,6 @@ class OrderController extends Controller
         }else{
             $orderList = Order::where('user_id','=',\Auth::user()->id)->with('details')->orderBy('created_at','desc')->get();
         }
-        \Log::debug($stat);
         return view('order_list',[
             'orders'=>$orderList,
             'stat'=>$stat
