@@ -20,6 +20,8 @@ Route::group([
 
     $router->get('shopitem/comment','ShopItemController@comment');
 
+    $router->post('imageUpload','HomeController@imageUpload');
+
     $router->resource('catalog', CatalogsController::class);
 
     $router->resource('article', ArticlesController::class);

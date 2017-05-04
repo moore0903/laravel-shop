@@ -25,9 +25,15 @@ class WangEditor extends Field
 
     public function render()
     {
+        $token = csrf_token();
+        $uploadUrl = url('admin/imageUpload');
         $this->script = <<<EOT
 
 var editor = new wangEditor('{$this->id}');
+    editor.config.uploadImgUrl = '{$uploadUrl}';
+    editor.config.uploadParams = {
+        _token: '{$token}',
+    };
     editor.create();
 
 EOT;
