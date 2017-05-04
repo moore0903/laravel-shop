@@ -36,6 +36,7 @@
 <script type="text/javascript" src="{{ asset('theme/common/fs_forse.js') }}"></script>
 <script type="text/javascript" src="{{ asset('packages/layer/layer.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/vue.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.form.min.js') }}"></script>
 <script>
     var swiper = new Swiper('.swiper-container', {
         pagination: '.swiper-pagination',

@@ -31,32 +31,7 @@ $(function ($) {
     $(".j-close-search").click(function () {
         $("body").removeClass("show-search-div");
     });
-    /*商品评价*/
-    $(".order-list-Below ul li").click(
-        function () {
-            var num = $(this).index() + 1;
-            var len = $(this).index();
-            var thats = $(this).parent(".order-list-Below ul").find("li");
-            if ($(thats).eq(len).attr("class") == "on") {
-                if ($(thats).eq(num).attr("class") == "on") {
-                    $(thats).removeClass();
-                    for (var i = 0; i < num; i++) {
-                        $(thats).eq(i).addClass("on");
-                    }
-                } else {
-                    $(thats).removeClass();
-                    for (var k = 0; k < len; k++) {
-                        $(thats).eq(k).addClass("on");
-                    }
-                }
-            } else {
-                $(thats).removeClass();
-                for (var j = 0; j < num; j++) {
-                    $(thats).eq(j).addClass("on");
-                }
-            }
-        }
-    );
+
     /*数量加减*/
     $(".add").click(function () {
         var t = $(this).parent().find('input[class*=text_box]');

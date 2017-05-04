@@ -5,9 +5,10 @@
     <div class="land">
         <p class="fhaniu"><a href="javascript:window.history.go(-1)"></a></p>
         发布评价</div>
+    <form>
     <div class="evakuai">
         <div class="evaxont clear">
-            <p class="tu fl"><img src="images/img12.jpg"/></p>
+            <p class="tu fl"><img src="{{asset('upload'.'/'.$detail->thumbnail)}}" width="127" height="127"/></p>
             <p class="name">{{$detail->product_title}}</p>
             <p class="sla">数量 x{{$detail->product_num}}</p>
             <p class="jya"><span class="fr">交易完成</span>¥{{$detail->product_num * $detail->product_price}}元</p>
@@ -15,11 +16,11 @@
         <div class="order-list-Below clear">
             <h1 class="fl">商品评价</h1>
             <ul class="lifl fl clear">
-                <li class="on"></li>
-                <li class="on"></li>
-                <li class="on"></li>
-                <li class="on"></li>
-                <li class="on"></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
             </ul>
         </div>
     </div>
@@ -28,36 +29,48 @@
             <textarea name="content" rows="" id="Content" onfocus="if(this.value=='评价长度为10-500字之间，写下评价可以为其他淘友提供参考哦。') {this.value='';}" onblur="if(this.value=='') {this.value='评价长度为10-500字之间，写下评价可以为其他淘友提供参考哦。';}"maxlength="1500">评价长度为10-500字之间，写下评价可以为其他淘友提供参考哦。</textarea>
         </div>
         <div class="fileUpload btn btn-primary">
-            <img class="preview"src=""/>
-            <input type="file" name="image" class="upload" />
+            <form action="{{url('order/commentUpload')}}" class="_commentUpload" method="post" enctype="multipart/form-data">
+                <img class="preview" src="" width="95"/>
+                <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                <input type="file" name="image" class="upload" />
+            </form>
         </div>
     </div>
     <div class="evaanniu">
+        <input type="hidden" name="images" value=""/>
+        <input type="hidden" name="stat" value="0"/>
         <input name="" type="button" value="确认提交">
     </div>
+    </form>
 </div>
 @endsection
 
 @section('script')
     <script>
-            <?php
-            $error = '';
-            if(isset($errors)){
-                $error = $errors->first();
-            }
-            ?>
+        <?php
+        $error = '';
+        if(isset($errors)){
+            $error = $errors->first();
+        }
+        ?>
         var error = '{{$error}}';
         if(error){
             layer.msg(error);
         }
 
         $('.upload').change(function(){
-            var _token = '{{ csrf_token() }}';
-            $.post( "{{url('order/commentUpload')}}", {file: $(this).val(),_token: _token } )
-                .done(function( data )
-                {
-                    $( 'img.preview' ).attr( 'src', data.path );
-                });
+            layer.load(1);
+            $('._commentUpload').ajaxForm(function(data){
+                layer.closeAll('loading');
+                if(data.stat == 1){
+                    $( 'img.preview' ).attr( 'src', data.imgUrl );
+                    $('input[name="images"]').val(data.path);
+                    $('.upload').hide();
+                    $('.fileUpload').removeClass('btn-primary');
+                }else{
+                    layer.msg(data.msg);
+                }
+            }).submit();
         });
 
         $('._confirmReceipt').click(function(){
@@ -71,13 +84,44 @@
                     success: function(data){
                         layer.msg(data.msg);
                         if(data.stat == 1){
-                            var evaluationUrl = '{{url('order/evaluation')}}?id='+id;
                             window.location.reload();
                         }
                     }
                 });
             });
         });
+
+        function stat(stat){
+            $('input[name="stat"]').val(Number(stat)+Number(1));
+        }
+
+        /*商品评价*/
+        $(".order-list-Below ul li").click(
+            function () {
+                stat($(".order-list-Below ul li").index(this));
+                var num = $(this).index() + 1;
+                var len = $(this).index();
+                var thats = $(this).parent(".order-list-Below ul").find("li");
+                if ($(thats).eq(len).attr("class") == "on") {
+                    if ($(thats).eq(num).attr("class") == "on") {
+                        $(thats).removeClass();
+                        for (var i = 0; i < num; i++) {
+                            $(thats).eq(i).addClass("on");
+                        }
+                    } else {
+                        $(thats).removeClass();
+                        for (var k = 0; k < len; k++) {
+                            $(thats).eq(k).addClass("on");
+                        }
+                    }
+                } else {
+                    $(thats).removeClass();
+                    for (var j = 0; j < num; j++) {
+                        $(thats).eq(j).addClass("on");
+                    }
+                }
+            }
+        );
 
     </script>
 @endsection
