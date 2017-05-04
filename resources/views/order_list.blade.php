@@ -24,7 +24,7 @@
                 <p class="name">{{$detail->product_title}}</p>
                 <p class="sla">数量 x{{$detail->product_num}}</p>
                 <p class="jya">¥{{$detail->product_price}}元</p>
-                @if($order->stat == \App\Models\Order::STAT_EVALUATE)
+                @if($order->stat == \App\Models\Order::STAT_EVALUATE && \App\Models\Comment::getCommentCountByOrderDetail(Auth::user()->id,$detail->shop_item_id,$order->id,$detail->id) <= 0)
                     <p class="ljpj"><a href="{{url('order/evaluation').'?detail_id='.$detail->id.'&shop_item_id='.$detail->shop_item_id.'&order_id='.$order->id}}">立即评价</a></p>
                 @endif
             </div>

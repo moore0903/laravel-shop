@@ -6,7 +6,7 @@
         <p class="fhaniu"><a href="javascript:window.history.go(-1)"></a></p>
         发布评价</div>
     <div class="ecvkuai">
-    <form>
+    <form method="post" action="{{url('order/evaluation')}}">
     <div class="evakuai">
         <div class="evaxont clear">
             <p class="tu fl"><img src="{{asset('upload'.'/'.$detail->thumbnail)}}" width="127" height="127"/></p>
@@ -32,17 +32,19 @@
     </div>
     <div class="evaanniu">
         <input type="hidden" name="images" value=""/>
-        <input type="hidden" name="stat" value="0"/>
-        <input name="" type="button" value="确认提交">
+        <input type="hidden" name="star" value="0"/>
+        <input type="hidden" name="detail_id" value="{{$detail->id}}"/>
+        <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+        <input name="" type="submit" value="确认提交">
     </div>
     </form>
     <div class="evform">
     <div class="fileUpload btn btn-primary">
-            <form action="{{url('order/commentUpload')}}" class="_commentUpload" method="post" enctype="multipart/form-data">
-                <img class="preview" src="" width="95"/>
-                <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
-                <input type="file" name="image" class="upload" />
-            </form>
+        <form action="{{url('order/commentUpload')}}" class="_commentUpload" method="post" enctype="multipart/form-data">
+            <img class="preview" src="" width="95"/>
+            <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+            <input type="file" name="image" class="upload" />
+        </form>
     </div>
     </div>
     </div>
@@ -95,14 +97,14 @@
             });
         });
 
-        function stat(stat){
-            $('input[name="stat"]').val(Number(stat)+Number(1));
+        function star(star){
+            $('input[name="star"]').val(Number(star)+Number(1));
         }
 
         /*商品评价*/
         $(".order-list-Below ul li").click(
             function () {
-                stat($(".order-list-Below ul li").index(this));
+                star($(".order-list-Below ul li").index(this));
                 var num = $(this).index() + 1;
                 var len = $(this).index();
                 var thats = $(this).parent(".order-list-Below ul").find("li");
