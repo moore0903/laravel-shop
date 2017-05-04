@@ -23,23 +23,23 @@
             </section>
         </div>
         <ul class="navlist lifl clear">
-            <li><a href="#">
+            <li><a href="{{url('shop_item/good_list').'?catalog_id=1'}}">
                     <p class="tu"></p>
                     <p class="name">白酒</p>
                 </a></li>
-            <li><a href="#">
+            <li><a href="{{url('shop_item/good_list').'?catalog_id=2'}}">
                     <p class="tu1"></p>
                     <p class="name">葡萄酒</p>
                 </a></li>
-            <li><a href="#">
+            <li><a href="{{url('gift/available')}}">
                     <p class="tu2"></p>
                     <p class="name">优惠券</p>
                 </a></li>
-            <li><a href="#">
+            <li><a href="{{url('shop_item/good_list').'?catalog_id=6'}}">
                     <p class="tu3"></p>
                     <p class="name">啤酒</p>
                 </a></li>
-            <li><a href="#">
+            <li><a href="{{url('shop_item/good_list').'?catalog_id=5'}}">
                     <p class="tu4"></p>
                     <p class="name">洋酒</p>
                 </a></li>
@@ -67,42 +67,14 @@
             <div class="title"><span class="fr"><a href="#"></a></span>商品推荐</div>
             <div class="swiper-container">
                 <ul class="swiper-wrapper">
-                    <li class="swiper-slide"><a href="#">
+                    @foreach(\App\Models\ShopItem::shopItemList(0,true,false,6) as $item)
+                    <li class="swiper-slide"><a href="{{url('shop_item/detail/'.\Hashids::encode($item->id))}}">
                             <p class="w1">推<br/>
                                 荐</p>
-                            <p class="tu"><img src="images/img4.jpg"/></p>
-                            <p class="name">¥398.0元<i>¥1980.0元</i></p>
+                            <p class="tu"><img src="{{asset('upload/'.$item->img)}}"/></p>
+                            <p class="name">¥{{$item->original_price}}元<i>¥{{$item->price}}元</i></p>
                         </a></li>
-                    <li class="swiper-slide"><a href="#">
-                            <p class="w2">爆<br/>
-                                款</p>
-                            <p class="tu"><img src="images/img4.jpg"/></p>
-                            <p class="name">¥398.0元<i>¥1980.0元</i></p>
-                        </a></li>
-                    <li class="swiper-slide"><a href="#">
-                            <p class="w1">推<br/>
-                                荐</p>
-                            <p class="tu"><img src="images/img4.jpg"/></p>
-                            <p class="name">¥398.0元<i>¥1980.0元</i></p>
-                        </a></li>
-                    <li class="swiper-slide"><a href="#">
-                            <p class="w1">推<br/>
-                                荐</p>
-                            <p class="tu"><img src="images/img4.jpg"/></p>
-                            <p class="name">¥398.0元<i>¥1980.0元</i></p>
-                        </a></li>
-                    <li class="swiper-slide"><a href="#">
-                            <p class="w1">推<br/>
-                                荐</p>
-                            <p class="tu"><img src="images/img4.jpg"/></p>
-                            <p class="name">¥398.0元<i>¥1980.0元</i></p>
-                        </a></li>
-                    <li class="swiper-slide"><a href="#">
-                            <p class="w1">推<br/>
-                                荐</p>
-                            <p class="tu"><img src="images/img4.jpg"/></p>
-                            <p class="name">¥398.0元<i>¥1980.0元</i></p>
-                        </a></li>
+                    @endforeach
                 </ul>
             </div>
         </div>
@@ -301,26 +273,25 @@
         <div class="stop"></div>
         <div class="search">
             <div class="sedm">
-                <p class="fh j-close-search"></p>
-                <div class="header clear">
-                    <p class="hlbg fl"></p>
-                    <p class="hrbg fl">
-                        <input type="text" name="text" placeholder="搜索商品名称或品牌">
+                <form action="{{url('shop_item/good_list')}}">
+                    <p class="fh j-close-search"></p>
+                    <div class="header clear">
+                        <p class="hlbg fl"></p>
+                        <p class="hrbg fl">
+                            <input type="text" name="search" placeholder="搜索商品名称或品牌">
+                        </p>
+                    </div>
+                    <p class="ssk">
+                        <input type="submit" value="搜索">
                     </p>
-                </div>
-                <p class="ssk">
-                    <input type="button" value="搜索">
-                </p>
+                </form>
             </div>
             <div class="seakuai">
                 <div class="title">热门搜索</div>
                 <ul class="selist lifl clear">
-                    <li><a href="#">五粮液</a></li>
-                    <li><a href="#">茅台</a></li>
-                    <li><a href="#">剑南春</a></li>
-                    <li><a href="#">五粮液</a></li>
-                    <li><a href="#">茅台</a></li>
-                    <li><a href="#">剑南春</a></li>
+                    <li v-for="search in searches">
+                        <a :href="'{{url('shop_item/good_list').'?search='}}'+search">@{{ search }}</a>
+                    </li>
                 </ul>
             </div>
         </div>
