@@ -97,8 +97,8 @@ class ShopItem extends Model
 
     public static function like($page=15){
         if(\Auth::check()){
-            $collection_ids = Collection::where('user_id','=',\Auth::check()->id)->inRandomOrder()->take($page)->select('shop_item_id')->get();
-            $catalog_ids = ShopItem::whereIn('id',$collection_ids->toArray())->select('catalog_id')->get();
+            $browse_ids = Browse::where('user_id','=',\Auth::user()->id)->inRandomOrder()->take($page)->select('shop_item_id')->get();
+            $catalog_ids = ShopItem::whereIn('id',$browse_ids->toArray())->select('catalog_id')->get();
             return ShopItem::whereIn('catalog_id',$catalog_ids->toArray())->distinct()->inRandomOrder()->take($page)->get();
         }else{
             return ShopItem::distinct()->inRandomOrder()->take($page)->get();
