@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Address;
+use App\Models\Comment;
 use App\Models\Config;
 use App\Models\Giftcode;
 use App\Models\Order;
@@ -196,7 +197,6 @@ class OrderController extends Controller
      * 评价
      * @param Request $request
      * @return array
-     * TODO 此处有三种做法,第一只针对商品进行评价.第二只针对订单进行评价.第三针对商品和订单都做评价.  这三种评价用作不同的应用场景
      */
     public function evaluation(Request $request){
         if(!\Auth::check()) return back()->withInput($request->toArray())->withErrors(['msg' => '请先登录']);
@@ -208,7 +208,23 @@ class OrderController extends Controller
                 'detail'=>$orderDetailInfo
             ]);
         }else{
+            $comment = Comment::create([
+                'user_id'=>\Auth::user()->id,
+                'shop_item_id'=>$orderDetailInfo->shop_item_id,
+                'content'=>$request['content'],
+                'images'=>$request['images'],
+                'star'=>$request['star'],
+                'order_id'=>$orderDetailInfo->order->id,
+                'order_detail_id'=>$request['detail_id']
+            ]);
+            if(!$comment) return back()->withInput($request->toArray())->withErrors(['msg' => '评价失败,请联系管理员!']);
+            $order = Order::find($orderDetailInfo->order_id);
+            if($order->evaluationStat()){
+                $order->stat = Order::STAT_FINISH;
+                $order->save();
+            }
 
+            return redirect('/order/list');
         }
     }
 

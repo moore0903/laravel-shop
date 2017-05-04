@@ -39,4 +39,16 @@ class Comment extends Model
     public static function shopItemCommentCount($shop_item_id){
         return Comment::where('shop_item_id','=',$shop_item_id)->count();
     }
+
+    /**
+     * 获取是否有评论内容
+     * @param $user_id
+     * @param $shop_item_id
+     * @param $order_id
+     * @param $order_detail_id
+     * @return mixed
+     */
+    public static function getCommentCountByOrderDetail($user_id,$shop_item_id,$order_id,$order_detail_id){
+        return Comment::where('user_id','=',$user_id)->where('shop_item_id','=',$shop_item_id)->where('order_id','=',$order_id)->where('order_detail_id','=',$order_detail_id)->count();
+    }
 }
