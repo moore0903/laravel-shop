@@ -364,6 +364,10 @@ ul,ol,dl{ list-style-type:none;}
 .landlist li.anniuland{ height:60px; margin-top:80px; text-align:center; }
 .landlist li.anniuland input{ width:242px; background:#e02933; height:60px; padding:0px; line-height:60px; color:#fff; -webkit-appearance: none; outline: medium; cursor:pointer; border-radius:5px; }
 
+.ecvkuai{ position:relative; }
+
+.evform{ position:absolute; top:455px; left:20px; }
+
 .fileUpload{ position:relative; overflow:hidden; margin-top:15px; }
 
 .fileUpload input.upload{ position:absolute; top:0; right:0; cursor: pointer; opacity: 0; filter:alpha(opacity=0); width:96px; height:95px; }
@@ -392,7 +396,7 @@ ul,ol,dl{ list-style-type:none;}
 
 .order-list-Below li.on{ background:url(../bg/pic2.png) no-repeat; }
 
-.evapja{ margin-top:12px; background:#fff; padding:20px; }
+.evapja{ margin-top:12px; background:#fff; padding:20px 20px 130px 20px; }
 
 .evapja .evatex textarea{ background:#fff; height:150px; width:100%; border:none; -webkit-appearance: none; outline: medium; font-size:24px; color:#999; }
 

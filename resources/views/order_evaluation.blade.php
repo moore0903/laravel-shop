@@ -5,6 +5,7 @@
     <div class="land">
         <p class="fhaniu"><a href="javascript:window.history.go(-1)"></a></p>
         发布评价</div>
+    <div class="ecvkuai">
     <form>
     <div class="evakuai">
         <div class="evaxont clear">
@@ -28,13 +29,6 @@
         <div class="evatex">
             <textarea name="content" rows="" id="Content" onfocus="if(this.value=='评价长度为10-500字之间，写下评价可以为其他淘友提供参考哦。') {this.value='';}" onblur="if(this.value=='') {this.value='评价长度为10-500字之间，写下评价可以为其他淘友提供参考哦。';}"maxlength="1500">评价长度为10-500字之间，写下评价可以为其他淘友提供参考哦。</textarea>
         </div>
-        <div class="fileUpload btn btn-primary">
-            <form action="{{url('order/commentUpload')}}" class="_commentUpload" method="post" enctype="multipart/form-data">
-                <img class="preview" src="" width="95"/>
-                <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
-                <input type="file" name="image" class="upload" />
-            </form>
-        </div>
     </div>
     <div class="evaanniu">
         <input type="hidden" name="images" value=""/>
@@ -42,6 +36,16 @@
         <input name="" type="button" value="确认提交">
     </div>
     </form>
+    <div class="evform">
+    <div class="fileUpload btn btn-primary">
+            <form action="{{url('order/commentUpload')}}" class="_commentUpload" method="post" enctype="multipart/form-data">
+                <img class="preview" src="" width="95"/>
+                <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                <input type="file" name="image" class="upload" />
+            </form>
+    </div>
+    </div>
+    </div>
 </div>
 @endsection
 
