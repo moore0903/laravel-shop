@@ -17,6 +17,9 @@ class Order extends Model
         return $this->hasMany(OrderDetail::class,'order_id');
     }
 
+    /**
+     * 前置任务
+     */
     public static function boot()
     {
         parent::boot();
@@ -33,7 +36,25 @@ class Order extends Model
         });
     }
 
+    /**
+     * 查看当前订单是否所有商品都已经评价过
+     * @return bool
+     */
+    public function evaluationStat(){
+        foreach($this->details as $detail){
+            if(Comment::getCommentCountByOrderDetail(\Auth::user()->id,$detail->shop_item_id,$this->id,$detail->id) <= 0){
+                return false;
+            }
+        }
+        return true;
+    }
 
+
+    /**
+     * 订单状态简短介绍
+     * @param $stat
+     * @return string
+     */
     public static function statString($stat) {
         switch($stat) {
             case Order::STAT_NOTPAY:
@@ -97,6 +118,11 @@ class Order extends Model
         }
     }
 
+    /**
+     * 根据流程状态返回中文解释
+     * @param $str
+     * @return string
+     */
     public function progressString($str) {
         $type = intval($str);
         switch($type) {
@@ -140,6 +166,11 @@ class Order extends Model
         }
     }
 
+    /**
+     * 根据支付状态返回中文解释
+     * @param $paytype
+     * @return string
+     */
     public static function paytypeString($paytype){
         switch ($paytype){
             case 'WechatPay':
@@ -183,6 +214,10 @@ class Order extends Model
         '售后中'
     ];
 
+    /**
+     * 状态对应的中文
+     * @var array
+     */
     public static $stat = [
         Order::STAT_NOTPAY => '未支付',
         Order::STAT_PAYED => '已支付',
@@ -193,6 +228,10 @@ class Order extends Model
         Order::STAT_SERVICE => '售后中',
     ];
 
+    /**
+     * 快递公司
+     * @var array
+     */
     public static $express_company = [
         '自提' => '自提',
         '顺丰' => '顺丰',
