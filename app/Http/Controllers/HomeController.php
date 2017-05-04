@@ -160,9 +160,9 @@ class HomeController extends Controller
     }
 
     public function imageUpload(Request $request){
-        \Log::debug($request->file('file'));
-        $path = \Storage::putFile('comment', $request->file('file'));
-        return ['path'=>$path];
+        if(!$request->hasFile('image')) return ['stat'=>0,'msg'=>'没有选中上传文件'];
+        $path = \Storage::putFile('public/comment', $request->file('image'));
+        return ['stat'=>1,'imgUrl'=>\Storage::url($path),'path'=>$path];
     }
 
 
