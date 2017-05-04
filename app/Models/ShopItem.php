@@ -49,15 +49,12 @@ class ShopItem extends Model
     public function setImagesAttribute($images)
     {
         if (is_array($images)) {
-            \Log::debug($images);
             $this->attributes['images'] = json_encode($images);
-            \Log::debug($this->attributes['images']);
         }
     }
 
     public function getImagesAttribute($images)
     {
-        \Log::debug(json_decode($images, true));
         return json_decode($images, true);
     }
 
@@ -92,6 +89,20 @@ class ShopItem extends Model
         }
 
         return $shopItemList;
+    }
+
+    public static function sellCountOrder($page=15){
+        return ShopItem::where('show','=',1)->orderBy(\DB::raw('sellcount_real+sellcount_false'),\DB::raw('desc'))->take($page)->get();
+    }
+
+    public static function like($page=15){
+        if(\Auth::check()){
+            $collection_ids = Collection::where('user_id','=',\Auth::check()->id)->inRandomOrder()->take($page)->select('shop_item_id')->get();
+            $catalog_ids = ShopItem::whereIn('id',$collection_ids->toArray())->select('catalog_id')->get();
+            return ShopItem::whereIn('catalog_id',$catalog_ids->toArray())->distinct()->inRandomOrder()->take($page)->get();
+        }else{
+            return ShopItem::distinct()->inRandomOrder()->take($page)->get();
+        }
     }
 
     public static $units = [

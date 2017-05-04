@@ -65,6 +65,8 @@ class HomeController extends Controller
         });
         if($request['search']){
             $shopItem = ShopItem::where('title','like','%'.$request['search'].'%')->where('detail','like','%'.$request['search'].'%')->get();
+        }elseif($request['catalog_id']){
+            $shopItem = ShopItem::where('catalog_id','=',$request['catalog_id']);
         }else{
             $shopItem = ShopItem::all();
         }
