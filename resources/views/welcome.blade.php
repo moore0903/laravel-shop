@@ -101,26 +101,12 @@
                 </div>
             </div>
             <ul class="falist lifl clear">
-                <li><a href="#">
-                        <p class="tu"><img src="images/img9.jpg"/></p>
-                        <p class="name">茅台</p>
+                @foreach(\App\Models\Catalog::parentCatalog(1,5) as $catalog)
+                <li><a href="{{url('shop_item/good_list').'?catalog_id='.$catalog->id}}">
+                        <p class="tu"><img width="105" src="{{asset('upload/'.$catalog->img)}}"/></p>
+                        <p class="name">{{$catalog->title}}</p>
                     </a></li>
-                <li><a href="#">
-                        <p class="tu"><img src="images/img9.jpg"/></p>
-                        <p class="name">五粮液</p>
-                    </a></li>
-                <li><a href="#">
-                        <p class="tu"><img src="images/img9.jpg"/></p>
-                        <p class="name">茅台</p>
-                    </a></li>
-                <li><a href="#">
-                        <p class="tu"><img src="images/img9.jpg"/></p>
-                        <p class="name">五粮液</p>
-                    </a></li>
-                <li><a href="#">
-                        <p class="tu"><img src="images/img9.jpg"/></p>
-                        <p class="name">茅台</p>
-                    </a></li>
+                @endforeach
             </ul>
         </div>
         <div class="farea farea1">
@@ -146,26 +132,12 @@
                 </div>
             </div>
             <ul class="falist lifl clear">
-                <li><a href="#">
-                        <p class="tu"><img src="images/img9.jpg"/></p>
-                        <p class="name">茅台</p>
-                    </a></li>
-                <li><a href="#">
-                        <p class="tu"><img src="images/img9.jpg"/></p>
-                        <p class="name">五粮液</p>
-                    </a></li>
-                <li><a href="#">
-                        <p class="tu"><img src="images/img9.jpg"/></p>
-                        <p class="name">茅台</p>
-                    </a></li>
-                <li><a href="#">
-                        <p class="tu"><img src="images/img9.jpg"/></p>
-                        <p class="name">五粮液</p>
-                    </a></li>
-                <li><a href="#">
-                        <p class="tu"><img src="images/img9.jpg"/></p>
-                        <p class="name">茅台</p>
-                    </a></li>
+                @foreach(\App\Models\Catalog::parentCatalog(2,5) as $catalog)
+                    <li><a href="{{url('shop_item/good_list').'?catalog_id='.$catalog->id}}">
+                            <p class="tu"><img width="105" src="{{asset('upload/'.$catalog->img)}}"/></p>
+                            <p class="name">{{$catalog->title}}</p>
+                        </a></li>
+                @endforeach
             </ul>
         </div>
         <div class="farea farea2">
@@ -191,26 +163,12 @@
                 </div>
             </div>
             <ul class="falist lifl clear">
-                <li><a href="#">
-                        <p class="tu"><img src="images/img9.jpg"/></p>
-                        <p class="name">茅台</p>
-                    </a></li>
-                <li><a href="#">
-                        <p class="tu"><img src="images/img9.jpg"/></p>
-                        <p class="name">五粮液</p>
-                    </a></li>
-                <li><a href="#">
-                        <p class="tu"><img src="images/img9.jpg"/></p>
-                        <p class="name">茅台</p>
-                    </a></li>
-                <li><a href="#">
-                        <p class="tu"><img src="images/img9.jpg"/></p>
-                        <p class="name">五粮液</p>
-                    </a></li>
-                <li><a href="#">
-                        <p class="tu"><img src="images/img9.jpg"/></p>
-                        <p class="name">茅台</p>
-                    </a></li>
+                @foreach(\App\Models\Catalog::parentCatalog(5,5) as $catalog)
+                    <li><a href="{{url('shop_item/good_list').'?catalog_id='.$catalog->id}}">
+                            <p class="tu"><img width="105" src="{{asset('upload/'.$catalog->img)}}"/></p>
+                            <p class="name">{{$catalog->title}}</p>
+                        </a></li>
+                @endforeach
             </ul>
         </div>
         <div class="cplove">
@@ -221,50 +179,24 @@
             <div class="cpcont tab-bd">
                 <div class="box">
                     <ul class="cplist lifl clear">
-                        <li><a href="#">
-                                <p class="tu"><img src="images/img10.jpg" /></p>
-                                <p class="name">1法国拉菲传奇波尔多红酒葡萄酒750ml</p>
-                                <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
+                        @foreach(\App\Models\ShopItem::like(4) as $item)
+                        <li><a href="{{url('shop_item/detail/'.\Hashids::encode($item->id))}}">
+                                <p class="tu"><img width="374" height="342" src="{{asset('upload/'.$item->img)}}" /></p>
+                                <p class="name">{{$item->title}}</p>
+                                <p class="jige"><i class="fr">¥{{$item->original_price}}元</i>¥{{$item->price}}元</p>
                                 <ins class="c1"></ins> </a></li>
-                        <li><a href="#">
-                                <p class="tu"><img src="images/img10.jpg" /></p>
-                                <p class="name">法国拉菲传奇波尔多红酒葡萄酒750ml</p>
-                                <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                                <ins class="c2"></ins> </a></li>
-                        <li><a href="#">
-                                <p class="tu"><img src="images/img10.jpg" /></p>
-                                <p class="name">法国拉菲传奇波尔多红酒葡萄酒750ml</p>
-                                <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                                <ins class="c2"></ins> </a></li>
-                        <li><a href="#">
-                                <p class="tu"><img src="images/img10.jpg" /></p>
-                                <p class="name">法国拉菲传奇波尔多红酒葡萄酒750ml</p>
-                                <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                                <ins class="c1"></ins> </a></li>
+                        @endforeach
                     </ul>
                 </div>
                 <div class="box">
                     <ul class="cplist lifl clear">
-                        <li><a href="#">
-                                <p class="tu"><img src="images/img10.jpg" /></p>
-                                <p class="name">2法国拉菲传奇波尔多红酒葡萄酒750ml</p>
-                                <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                                <ins class="c1"></ins> </a></li>
-                        <li><a href="#">
-                                <p class="tu"><img src="images/img10.jpg" /></p>
-                                <p class="name">法国拉菲传奇波尔多红酒葡萄酒750ml</p>
-                                <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                                <ins class="c2"></ins> </a></li>
-                        <li><a href="#">
-                                <p class="tu"><img src="images/img10.jpg" /></p>
-                                <p class="name">法国拉菲传奇波尔多红酒葡萄酒750ml</p>
-                                <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                                <ins class="c2"></ins> </a></li>
-                        <li><a href="#">
-                                <p class="tu"><img src="images/img10.jpg" /></p>
-                                <p class="name">法国拉菲传奇波尔多红酒葡萄酒750ml</p>
-                                <p class="jige"><i class="fr">¥1980.0元</i>¥608.0元</p>
-                                <ins class="c1"></ins> </a></li>
+                        @foreach(\App\Models\ShopItem::sellCountOrder(4) as $item)
+                            <li><a href="{{url('shop_item/detail/'.\Hashids::encode($item->id))}}">
+                                    <p class="tu"><img width="374" height="342" src="{{asset('upload/'.$item->img)}}" /></p>
+                                    <p class="name">{{$item->title}}</p>
+                                    <p class="jige"><i class="fr">¥{{$item->original_price}}元</i>¥{{$item->price}}元</p>
+                                    <ins class="c1"></ins> </a></li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
