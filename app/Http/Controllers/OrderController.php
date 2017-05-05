@@ -228,6 +228,18 @@ class OrderController extends Controller
         }
     }
 
-
+    /**
+     * 取消订单
+     * @param Request $request
+     * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function cancel(Request $request){
+        if(!\Auth::check()) return back()->withInput($request->toArray())->withErrors(['msg' => '请先登录']);
+        $order = Order::find($request['id']);
+        if(empty($order)) return back()->withInput($request->toArray())->withErrors(['msg' => '找不到该订单']);
+        $order->stat = Order::STAT_CANCEL;
+        $order->save();
+        return redirect('/order/list');
+    }
 
 }
