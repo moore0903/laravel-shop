@@ -23,11 +23,11 @@
             </section>
         </div>
         <ul class="navlist lifl clear">
-            <li><a href="{{url('shop_item/good_list').'?catalog_id=1'}}">
+            <li><a href="{{url('shop_item/good_list').'?catalog_id='.\Hashids::encode(1)}}">
                     <p class="tu"></p>
                     <p class="name">白酒</p>
                 </a></li>
-            <li><a href="{{url('shop_item/good_list').'?catalog_id=2'}}">
+            <li><a href="{{url('shop_item/good_list').'?catalog_id='.\Hashids::encode(2)}}">
                     <p class="tu1"></p>
                     <p class="name">葡萄酒</p>
                 </a></li>
@@ -35,11 +35,11 @@
                     <p class="tu2"></p>
                     <p class="name">优惠券</p>
                 </a></li>
-            <li><a href="{{url('shop_item/good_list').'?catalog_id=6'}}">
+            <li><a href="{{url('shop_item/good_list').'?catalog_id='.\Hashids::encode(6)}}">
                     <p class="tu3"></p>
                     <p class="name">啤酒</p>
                 </a></li>
-            <li><a href="{{url('shop_item/good_list').'?catalog_id=5'}}">
+            <li><a href="{{url('shop_item/good_list').'?catalog_id='.\Hashids::encode(5)}}">
                     <p class="tu4"></p>
                     <p class="name">洋酒</p>
                 </a></li>
@@ -102,7 +102,7 @@
             </div>
             <ul class="falist lifl clear">
                 @foreach(\App\Models\Catalog::parentCatalog(1,5) as $catalog)
-                <li><a href="{{url('shop_item/good_list').'?catalog_id='.$catalog->id}}">
+                <li><a href="{{url('shop_item/good_list').'?catalog_id='.\Hashids::encode($catalog->id)}}">
                         <p class="tu"><img width="105" src="{{asset('upload/'.$catalog->img)}}"/></p>
                         <p class="name">{{$catalog->title}}</p>
                     </a></li>
@@ -133,7 +133,7 @@
             </div>
             <ul class="falist lifl clear">
                 @foreach(\App\Models\Catalog::parentCatalog(2,5) as $catalog)
-                    <li><a href="{{url('shop_item/good_list').'?catalog_id='.$catalog->id}}">
+                    <li><a href="{{url('shop_item/good_list').'?catalog_id='.\Hashids::encode($catalog->id)}}">
                             <p class="tu"><img width="105" src="{{asset('upload/'.$catalog->img)}}"/></p>
                             <p class="name">{{$catalog->title}}</p>
                         </a></li>
@@ -164,7 +164,7 @@
             </div>
             <ul class="falist lifl clear">
                 @foreach(\App\Models\Catalog::parentCatalog(5,5) as $catalog)
-                    <li><a href="{{url('shop_item/good_list').'?catalog_id='.$catalog->id}}">
+                    <li><a href="{{url('shop_item/good_list').'?catalog_id='.\Hashids::encode($catalog->id)}}">
                             <p class="tu"><img width="105" src="{{asset('upload/'.$catalog->img)}}"/></p>
                             <p class="name">{{$catalog->title}}</p>
                         </a></li>
@@ -221,9 +221,17 @@
             <div class="seakuai">
                 <div class="title">热门搜索</div>
                 <ul class="selist lifl clear">
-                    <li v-for="search in searches">
-                        <a :href="'{{url('shop_item/good_list').'?search='}}'+search">@{{ search }}</a>
+                    <?php
+                    $configs = \App\Models\Config::all();
+                    $search_key = $configs->where('key','search_key')->first();
+                    $searches = [];
+                    if(!empty($search_key)) $searches = explode(',',$search_key->value);
+                    ?>
+                    @foreach($searches as $search)
+                    <li>
+                        <a href="{{url('shop_item/good_list').'?search='.$search}}">{{ $search }}</a>
                     </li>
+                    @endforeach
                 </ul>
             </div>
         </div>

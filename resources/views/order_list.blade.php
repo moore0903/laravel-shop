@@ -40,6 +40,8 @@
                     <p class="od2 fr"><a href="#">查看物流</a></p>
                 @elseif($order->stat == \App\Models\Order::STAT_FINISH)
                     <p class="od1 fr"><a href="#">申请退货</a></p>
+                @else
+
                 @endif
             </div>
         </li>
