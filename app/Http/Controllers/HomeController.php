@@ -63,13 +63,26 @@ class HomeController extends Controller
             $value->attr = Catalog::where('parent_id','=',$value->id)->get();
             return $value;
         });
+        $maxid = 0xffffffff;
+        $shopItemQuery = ShopItem::where('id','<',$maxid);
         if($request['search']){
-            $shopItem = ShopItem::where('title','like','%'.$request['search'].'%')->where('detail','like','%'.$request['search'].'%')->get();
-        }elseif($request['catalog_id']){
-            $shopItem = ShopItem::where('catalog_id','=',$request['catalog_id']);
-        }else{
-            $shopItem = ShopItem::all();
+            $shopItemQuery = $shopItemQuery->where('title','like','%'.$request['search'].'%')->where('detail','like','%'.$request['search'].'%');
         }
+        if($request['catalog_id']){
+            $shopItemQuery = $shopItemQuery->where('catalog_id','=',$request['catalog_id']);
+        }
+        if($request['lowestPrice']){
+            $shopItemQuery = $shopItemQuery->where('price','>',$request['lowestPrice']);
+        }
+        if($request['highestPrice']){
+            $shopItemQuery = $shopItemQuery->where('price','<',$request['highestPrice']);
+        }
+        if($request['filterProduction']){
+            $shopItemQuery = $shopItemQuery->where('production','=',$request['filterProduction']);
+//        }else{
+//            $shopItem = ShopItem::all();
+        }
+        $shopItem = $shopItemQuery->get();
         $shopItem = $shopItem->map(function($value){
             $value->hashid = \Hashids::encode($value->id);
             $value->url = url('/shop_item/detail/'.$value->hashid);
@@ -89,6 +102,7 @@ class HomeController extends Controller
             'subCatalogs'=>$catalogs->first()->attr,
             'cart'=>collect(['cart_items'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_price_count'=>\Cart::totalPrice()]),
             'searches' => collect($search),
+            'filter' => collect(['lowestPrice'=>$request['lowestPrice'],'highestPrice'=>$request['highestPrice'],'filterProduction'=>$request['filterProduction']])
         ];
 
         if(!empty($request['is_api'])) return $returnData;
