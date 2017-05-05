@@ -48,16 +48,16 @@
                 <div class="sxbt"><p class="gb">筛选</div>
                 <div class="sxtitle">价格区间（元）</div>
                 <ul class="sxjg lifl clear">
-                    <li><input type="text" name="lowestPrice" placeholder="最低价"></li>
-                    <li><input type="text" name="highestPrice" placeholder="最高价"></li>
+                    <li><input type="text" :value="filter.lowestPrice?filter.lowestPrice:''" name="lowestPrice" placeholder="最低价"></li>
+                    <li><input type="text" :value="filter.highestPrice?filter.highestPrice:''" name="highestPrice" placeholder="最高价"></li>
                 </ul>
                 <div class="sxtitle">产地</div>
                 <ul class="cpsxccc lifl clear">
-                    <li v-for="production in productions">
-                        <a href="javascript:void(0);">@{{ production }}</a>
+                    <li v-for="production in productions" class="_productions">
+                        <a href="javascript:void(0);" @click="selectProduction(production)">@{{ production }}</a>
                     </li>
                 </ul>
-                {{--<input type="hidden" name="filterProduction" :value="filterProduction"/>--}}
+                <input type="hidden" name="filterProduction" :value="filter.filterProduction?filter.filterProduction:''"/>
             <div class="sxanniu clear"><input name="" type="submit" value="确定"></div>
             </div>
         </form>
@@ -103,7 +103,8 @@
                     'sortTypeStr': 'sell',
                     'currentCataHashid':0,
                     'searches':{!! $searches??'{}' !!},
-                    'productions':{!! collect(\App\Models\ShopItem::$productions) !!}
+                    'productions':{!! collect(\App\Models\ShopItem::$productions) !!},
+                    'filter':{!! $filter??'{}' !!}
                 },
                 methods:{
                     getShopItems:function(hashid){
@@ -149,6 +150,16 @@
                         }
                         layerLoad = layer.load();
                         shop_item_list.getShopItems(shop_item_list.currentCataHashid);
+                    },
+                    selectProduction:function(production){
+                        if(shop_item_list.filter.filterProduction == production){
+                            $('._production').removeClass('on');
+                            shop_item_list.filter.filterProduction = '';
+                        }else{
+                            $('._productions a:contains("'+production+'")').addClass('on').siblings('._production').removeClass('on');
+                            shop_item_list.filter.filterProduction = production;
+                        }
+                        console.log($('._production').html());
                     }
                 }
             });
