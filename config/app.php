@@ -1,4 +1,9 @@
 <?php
+$_debug_ =  $_COOKIE["_debug_"]??null;
+if(isset($_REQUEST['_debug_'])) {
+    $_debug_ = $_REQUEST['_debug_']=='1';
+    setcookie('_debug_', $_debug_, time()+60*10, '/');
+}
 
 return [
 
@@ -25,7 +30,7 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
+    'env' => $_debug_??env('APP_ENV', 'production'),
 
     /*
     |--------------------------------------------------------------------------
