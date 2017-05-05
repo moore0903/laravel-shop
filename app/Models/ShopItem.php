@@ -91,6 +91,20 @@ class ShopItem extends Model
         return $shopItemList;
     }
 
+    public static function sellCountOrder($page=15){
+        return ShopItem::where('show','=',1)->orderBy(\DB::raw('sellcount_real+sellcount_false'),\DB::raw('desc'))->take($page)->get();
+    }
+
+    public static function like($page=15){
+        if(\Auth::check()){
+            $browse_ids = Browse::where('user_id','=',\Auth::user()->id)->inRandomOrder()->take($page)->select('shop_item_id')->get();
+            $catalog_ids = ShopItem::whereIn('id',$browse_ids->toArray())->select('catalog_id')->get();
+            return ShopItem::whereIn('catalog_id',$catalog_ids->toArray())->distinct()->inRandomOrder()->take($page)->get();
+        }else{
+            return ShopItem::distinct()->inRandomOrder()->take($page)->get();
+        }
+    }
+
     public static $units = [
         '瓶'=>'瓶',
         '箱'=>'箱',

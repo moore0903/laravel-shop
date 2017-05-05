@@ -192,4 +192,10 @@ class HomeController extends Controller
         }
 
     }
+
+    public function imageUpload(Request $request){
+        if(!$request->hasFile('wangEditorH5File')) return 'error|失败原因为：找不到文件';
+        $path = \Storage::putFile('public/editor', $request->file('wangEditorH5File'));
+        return \Storage::url($path);
+    }
 }

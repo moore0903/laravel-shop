@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Address;
+use App\Models\Comment;
 use App\Models\Config;
 use App\Models\Giftcode;
 use App\Models\Order;
@@ -74,7 +75,6 @@ class OrderController extends Controller
         if($request->method() == 'GET'){
             return \Redirect::intended('cart/list')->withInput()->withErrors(['msg' => '请重新下单']);
         }
-        \Log::debug($request->toArray());
         if ($request['useraddress'] != 'since') {
             //获取收货地址
             $address = Address::where('id', $request['useraddress'])->where('user_id', \Auth::user()->id)->first();
@@ -166,13 +166,16 @@ class OrderController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function orderList(Request $request){
-        if($request['stat']){
-            $orderList = Order::where('user_id','=',\Auth::user()->id)->where('stat','=',$request['stat'])->with('details')->orderBy('created_at','desc')->get();
+        $stat = $request['stat']??'all';
+        if($stat != 'all'){
+            $stat = (int)$stat;
+            $orderList = Order::where('user_id','=',\Auth::user()->id)->where('stat','=',$stat)->with('details')->orderBy('created_at','desc')->get();
         }else{
             $orderList = Order::where('user_id','=',\Auth::user()->id)->with('details')->orderBy('created_at','desc')->get();
         }
         return view('order_list',[
-            'orders'=>$orderList
+            'orders'=>$orderList,
+            'stat'=>$stat
         ]);
     }
 
@@ -190,6 +193,53 @@ class OrderController extends Controller
         return ['stat'=>1,'msg'=>'已收货,请评价'];
     }
 
+    /**
+     * 评价
+     * @param Request $request
+     * @return array
+     */
+    public function evaluation(Request $request){
+        if(!\Auth::check()) return back()->withInput($request->toArray())->withErrors(['msg' => '请先登录']);
+        $orderDetailInfo = OrderDetail::with('order')->find($request['detail_id']);
+        if(empty($orderDetailInfo)) return back()->withInput($request->toArray())->withErrors(['msg' => '找不到该订单']);
+        if($orderDetailInfo->order->user_id != \Auth::user()->id)  return back()->withInput($request->toArray())->withErrors(['msg' => '请确认你购买过此商品']);
+        if($request->method() == 'GET'){
+            return view('order_evaluation',[
+                'detail'=>$orderDetailInfo
+            ]);
+        }else{
+            $comment = Comment::create([
+                'user_id'=>\Auth::user()->id,
+                'shop_item_id'=>$orderDetailInfo->shop_item_id,
+                'content'=>$request['content'],
+                'images'=>$request['images'],
+                'star'=>$request['star'],
+                'order_id'=>$orderDetailInfo->order->id,
+                'order_detail_id'=>$request['detail_id']
+            ]);
+            if(!$comment) return back()->withInput($request->toArray())->withErrors(['msg' => '评价失败,请联系管理员!']);
+            $order = Order::find($orderDetailInfo->order_id);
+            if($order->evaluationStat()){
+                $order->stat = Order::STAT_FINISH;
+                $order->save();
+            }
 
+            return redirect('/order/list');
+        }
+    }
+
+    /**
+     * 取消订单
+     * @param Request $request
+     * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function cancel(Request $request){
+        if(!\Auth::check()) return back()->withInput($request->toArray())->withErrors(['msg' => '请先登录']);
+        $order = Order::find($request['id']);
+        if(empty($order)) return back()->withInput($request->toArray())->withErrors(['msg' => '找不到该订单']);
+        $order->stat = Order::STAT_CANCEL;
+        $order->save();
+        return redirect('/order/list');
+    }
 
 }
