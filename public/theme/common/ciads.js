@@ -13,6 +13,9 @@ $(function ($) {
     $(".sxbt").click(function () {
         $(this).parent().parent().hide();
     });
+    $(".sxbt1").click(function () {
+        $(this).parent().parent().parent().hide();
+    });
     $(".c02").click(function () {
         $('.j-ccgg').show();
     });

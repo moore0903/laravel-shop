@@ -45,7 +45,7 @@
     <div class="cpflnr j-ccgg clear">
         <form action="{{url('shop_item/good_list')}}">
             <div class="saixuan scrollbar-none fr">
-                <div class="sxbt"><p class="gb">筛选</div>
+                <div class="sxbt sxbt1"><p class="gb">筛选</div>
                 <div class="sxtitle">价格区间（元）</div>
                 <ul class="sxjg lifl clear">
                     <li><input type="text" :value="filter.lowestPrice?filter.lowestPrice:''" name="lowestPrice" placeholder="最低价"></li>
