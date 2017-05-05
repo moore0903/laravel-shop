@@ -1013,3 +1013,7 @@ ul,ol,dl{ list-style-type:none;}
 .fhanniu a{ background:url(../bg/fhbg2.png) no-repeat; width:19px; height:34px; position:fixed; top:27px; left:30px; z-index:999; display:block; }
 
 .fhsya a{ background:url(../bg/nav5.png) no-repeat; width:37px; height:37px; position:fixed; top:25px; left:685px; z-index:999; display:block; }
+
+.detailxqnr{ overflow:hidden; _height:1px; _overflow:visible; }
+
+.detailxqnr img{ float:left; }
