@@ -138,9 +138,6 @@
 
 @section('script')
     <script>
-        $(function(){
-            $('#thumbs a').touchTouch();
-        });
 
         var item_detail = new Vue({
             el:'#item_detail',
@@ -185,6 +182,29 @@
                     });
                 }
             }
+        });
+
+
+
+        function tabs(tabTit,on,tabCon){
+            $(tabCon).each(function(){
+                $(this).children().eq(0).show();
+            });
+            $(tabTit).each(function(){
+                $(this).children().eq(0).addClass(on);
+            });
+            $(tabTit).children().click(function(){
+                console.log(123);
+                $(this).addClass(on).siblings().removeClass(on);
+                var index = $(tabTit).children().index(this);
+                $(tabCon).children().eq(index).show().siblings().hide();
+            });
+        }
+
+        tabs(".tab-hd,","active",".tab-bd");
+
+        $(function(){
+            $('#thumbs a').touchTouch();
         });
     </script>
 @endsection
