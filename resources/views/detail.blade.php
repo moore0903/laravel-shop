@@ -194,7 +194,6 @@
                 $(this).children().eq(0).addClass(on);
             });
             $(tabTit).children().click(function(){
-                console.log(123);
                 $(this).addClass(on).siblings().removeClass(on);
                 var index = $(tabTit).children().index(this);
                 $(tabCon).children().eq(index).show().siblings().hide();

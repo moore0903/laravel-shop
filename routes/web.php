@@ -29,6 +29,7 @@ Route::get('/oauth/wechat/callback', 'OAuthController@handleWechatCallback');
 Route::get('sendSmsVerify','UserController@sendSMSVerify');
 Route::post('bindphone','UserController@bindphone');
 
+Route::get('user/addCollection','UserController@addCollection');
 
 Auth::routes();
 
@@ -80,7 +81,6 @@ Route::group(
                 Route::get('myGift','UserController@myGift');
                 Route::get('myCollection','UserController@myCollection');
                 Route::get('myBrowse','UserController@myBrowse');
-                Route::get('addCollection','UserController@addCollection');
             }
         );
         Route::group(
