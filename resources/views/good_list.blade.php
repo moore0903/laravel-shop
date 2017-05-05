@@ -153,13 +153,12 @@
                     },
                     selectProduction:function(production){
                         if(shop_item_list.filter.filterProduction == production){
-                            $('._production').removeClass('on');
+                            $('._productions').removeClass('on');
                             shop_item_list.filter.filterProduction = '';
                         }else{
-                            $('._productions a:contains("'+production+'")').addClass('on').siblings('._production').removeClass('on');
+                            $('._productions:contains("'+production+'")').addClass('on').siblings('._productions').removeClass('on');
                             shop_item_list.filter.filterProduction = production;
                         }
-                        console.log($('._production').html());
                     }
                 }
             });
