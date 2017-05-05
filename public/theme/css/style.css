@@ -422,6 +422,7 @@ ul,ol,dl{ list-style-type:none;}
 
 .orderlist li{ font-size:24px; color:#666; }
 
+
 .orderlist li a{ color:#666; display:block; padding: 0 27px; height:86px; line-height:88px; }
 
 .orderlist li.on a{ color:#f22612; border-bottom:2px solid #f22612; }
@@ -486,7 +487,7 @@ ul,ol,dl{ list-style-type:none;}
 
 .setupddlist .bt span a{ color:#999; display:block; background:url(../bg/pbg.png) no-repeat right center; padding-right:28px; }
 
-.setupddlist li{ width:25%; }
+.setupddlist li{ width:20%; }
 
 .setupddlist li a{ height:152px; display:block; position:relative; }
 
@@ -499,6 +500,8 @@ ul,ol,dl{ list-style-type:none;}
 .setupddlist li .tu3{ height:75px; background:url(../bg/szbg4.gif) no-repeat center bottom; display:block; }
 
 .setupddlist li .tu4{ height:75px; background:url(../bg/szbg5.gif) no-repeat center bottom; display:block; }
+
+.setupddlist li .tu5{ height:75px; background:url(../bg/szbg13.gif) no-repeat center bottom; display:block; }
 
 .setupddlist li .name{ font-size:24px; color:#333; text-align:center; height:62px; line-height:62px; }
 
@@ -911,6 +914,8 @@ ul,ol,dl{ list-style-type:none;}
 
 .nbanner img{ float:left; width:750px; height:652px; }
 
+.detailscont{ margin-top:88px; }
+
 .detailscont .box{ display:none; } 
 
 .detailscont .detanrkuai{ padding:20px; background:#fff; position:relative; border-bottom:2px solid #eee; }
@@ -1004,3 +1009,7 @@ ul,ol,dl{ list-style-type:none;}
 .yaddlist .name i{ color:#F00; padding-right:30px; }
 
 .yaddlist .nr{ font-size:24px; }
+
+.fhanniu a{ background:url(../bg/fhbg2.png) no-repeat; width:19px; height:34px; position:fixed; top:27px; left:30px; z-index:999; display:block; }
+
+.fhsya a{ background:url(../bg/nav5.png) no-repeat; width:37px; height:37px; position:fixed; top:25px; left:685px; z-index:999; display:block; }
