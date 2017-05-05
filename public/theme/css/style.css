@@ -737,6 +737,8 @@ ul,ol,dl{ list-style-type:none;}
 
 .cpflnr{ width:750px; height:100%; position:fixed; top:0px; left:0px; background:rgba(0, 0, 0, 0.6); z-index:9999; bottom:0; display:none; }
 
+.cpflnr form{ height:100%; }
+
 .saixuan{ width:560px; height:100%; overflow-y: scroll; background:#fff; }
 
 .saixuan .sxbt{ height:97px; border-bottom:2px solid #dadada; font-size:29px; color:#2d2d2d; line-height:97px; text-align:center; position:relative; } 
@@ -753,7 +755,7 @@ ul,ol,dl{ list-style-type:none;}
 
 .saixuan .sxjg li:nth-child(2){ margin-right:0px; }
 
-.sxanniu{ position:absolute; bottom:0px; right:0px; width:560px; background:#fff; height:50px; }
+.sxanniu{ position:absolute; bottom:0px; right:0px; width:560px; background:#fff; height:70px; }
 
 .sxanniu input{ width:190px; height:70px; background:#F00; font-size:24px; color:#fff; border:none; float:right; cursor:pointer; margin-right:10px; }
 
@@ -761,7 +763,7 @@ ul,ol,dl{ list-style-type:none;}
 
 .cpsxccc li a{ width:170px; height:62px; background:#f4f4f4; font-size:24px; color:#595959; text-align:center; line-height:62px; display:block; margin:12px 8px 0 8px; border-radius:5px; }
 
-.cpsxccc li a.on{ background:#F00; color:#fff; }
+.cpsxccc li.on a{ background:#F00; color:#fff; }
 
 .cplbylist{ padding-bottom:20px; }
 
