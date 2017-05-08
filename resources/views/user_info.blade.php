@@ -3,8 +3,8 @@
 @section('content')
     <div class="wrap fmyh">
         <div class="setuptitle">
-            <p class="szaniu"><a href="#"></a></p>
-            <p class="tu"><img src="{{Auth::user()->headimage??''}}"/></p>
+            <p class="szaniu"><a href="{{url('user/setting')}}"></a></p>
+            <p class="tu"><img src="{{Auth::user()->headimage}}"/></p>
             <p class="name">{{Auth::user()->name}}</p>
         </div>
         <div class="setupddlist">
