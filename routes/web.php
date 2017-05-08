@@ -81,6 +81,10 @@ Route::group(
                 Route::get('myGift','UserController@myGift');
                 Route::get('myCollection','UserController@myCollection');
                 Route::get('myBrowse','UserController@myBrowse');
+                Route::post('upload','UserController@imageUpload');
+                Route::get('setting',function(){
+                    return view('user_setting');
+                });
             }
         );
         Route::group(

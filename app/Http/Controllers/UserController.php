@@ -208,4 +208,13 @@ class UserController extends Controller
 //        return array('stat'=>1);
         return array('stat'=>1,'code'=>$code);   //TODO 上线前将验证码打开
     }
+
+    public function imageUpload(Request $request){
+        if(!$request->hasFile('image')) return ['stat'=>0,'msg'=>'没有选中上传文件'];
+        $path = \Storage::putFile('public/comment', $request->file('image'));
+        $user = User::find(\Auth::user()->id);
+        $user->headimage = asset(\Storage::url($path));
+        $user->save();
+        return ['stat'=>1,'imgUrl'=>$user->headimage];
+    }
 }
