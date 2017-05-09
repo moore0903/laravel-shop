@@ -64,6 +64,8 @@
             layer.msg(error);
         }
 
+        $('.f03').addClass('on');
+
         $('.upload').change(function(){
             layer.load(1);
             $('._commentUpload').ajaxForm(function(data){

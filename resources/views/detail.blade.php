@@ -204,6 +204,7 @@
 
         $(function(){
             $('#thumbs a').touchTouch();
+            $('.f02').addClass('on');
         });
     </script>
 @endsection

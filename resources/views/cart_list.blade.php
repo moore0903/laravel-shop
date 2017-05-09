@@ -161,6 +161,8 @@
             if(error){
                 layer.msg(error);
             }
+
+            $('.f03').addClass('on');
         });
     </script>
 @endsection

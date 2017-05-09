@@ -257,5 +257,7 @@
         }
 
         tabs(".tab-hd,","active",".tab-bd");
+
+        $('.f01').addClass('on');
     </script>
 @endsection

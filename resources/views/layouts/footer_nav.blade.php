@@ -1,5 +1,5 @@
 <ul class="footer fmyh lifl clear">
-    <li class="f01 on"><a href="{{url('/')}}">
+    <li class="f01"><a href="{{url('/')}}">
             <p class="tu"></p>
             <p class="name">首页</p>
         </a></li>

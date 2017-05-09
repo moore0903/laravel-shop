@@ -57,5 +57,6 @@
                 }
             }).submit();
         });
+        $('.f04').addClass('on');
     </script>
 @endsection

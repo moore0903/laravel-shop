@@ -36,6 +36,6 @@
 
 @section('script')
     <script>
-
+        $('.f04').addClass('on');
     </script>
 @endsection

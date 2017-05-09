@@ -163,5 +163,7 @@
                 }
             });
 
+            $('.f02').addClass('on');
+
     </script>
 @endsection

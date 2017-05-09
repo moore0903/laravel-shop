@@ -62,6 +62,7 @@
         if(error){
             layer.msg(error);
         }
+        $('.f03').addClass('on');
         $('._confirmReceipt').click(function(){
             layer.confirm('确定收货?',function(index){
                 layer.close(index);

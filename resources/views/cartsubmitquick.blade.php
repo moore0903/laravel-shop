@@ -424,6 +424,7 @@
             if(remark){
                 cart_submit.remark = remark;
             }
+            $('.f03').addClass('on');
         });
     </script>
 @endsection
