@@ -4,7 +4,11 @@ $(function($){
         $(".detailstitle li").eq(2).addClass("active").siblings().removeClass("active");
 		$(".detailscont .box").eq(2).show().siblings().hide();
     });
-	
+
+	$('.xbmod').click(function(){
+		$(this).addClass('on').siblings().removeClass('on');
+	})
+		
 	$(".dsc").click(function(){
         $(this).toggleClass("on");
 	})

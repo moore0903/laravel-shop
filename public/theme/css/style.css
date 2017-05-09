@@ -406,7 +406,17 @@ ul,ol,dl{ list-style-type:none;}
 
 .personal{ background:#fff; padding:0 18px; margin-top:12px; }
 
-.personal li{ width:680px; border-top:2px solid #f0f0f0; padding:30px 0; font-size:26px; color:#333; background:url(../bg/pbg.png) no-repeat right center; padding-right:34px; line-height:26px; }
+.personal li{ width:680px; border-top:2px solid #f0f0f0; padding:30px 0; font-size:26px; color:#333; background:url(../bg/pbg.png) no-repeat right center; padding-right:34px; line-height:26px; position:relative; }
+
+.personal li .xbqujian{ position:absolute; top:25px; left:510px; color:#999; line-height:37px; }
+
+.personal li .xbqujian1{ position:absolute; top:25px; left:610px; color:#999; line-height:37px; }
+
+.personal li .xbnr{ width:37px; height:37px; overflow: hidden; background: url(../bg/xzbg.png) no-repeat left top; cursor: pointer; margin-left:10px; cursor:pointer; }
+
+.personal li .xbmod.on .xbnr{ background-position: left bottom; }
+
+.personal li input{ width:37px; height:37px; cursor:pointer; }
 
 .personal li span{ color:#999; display:block; }
 
