@@ -3,7 +3,7 @@
 @section('content')
 <div class="wrap fmyh" id="item_detail">
   <p class="fhanniu"><a href="javascript:window.history.go(-1)"></a></p>
-  <p class="fhsya"><a href="#"></a></p>
+  <p class="fhsya"><a href="{{url('/')}}"></a></p>
     <ul class="detailstitle tab-hd lifl clear">
         <li>商品</li>
         <li>详情</li>

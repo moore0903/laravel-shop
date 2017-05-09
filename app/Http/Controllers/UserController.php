@@ -31,7 +31,8 @@ class UserController extends Controller
         return view('user_info',[
             'recomment_shop' => $recomment_shop->count() > 4 ? $recomment_shop->random(4): $recomment_shop,
             'order_no_pay_count' => $order_list->filter(function($order){return $order->stat == Order::STAT_NOTPAY;})->count(),
-            'order_express_count' => $order_list->filter(function($order){return $order->stat == Order::STAT_EXPRESS || $order->stat == Order::STAT_PAYED;})->count(),
+            'order_express_count' => $order_list->filter(function($order){return $order->stat == Order::STAT_EXPRESS;})->count(),
+            'order_payed_count' => $order_list->filter(function($order){return $order->stat == Order::STAT_PAYED;})->count(),
             'order_finish_count' => $order_list->filter(function($order){return $order->stat == Order::STAT_FINISH;})->count(),
             'order_service_count' => $order_list->filter(function($order){return $order->stat == Order::STAT_SERVICE;})->count(),
         ]);
@@ -206,5 +207,14 @@ class UserController extends Controller
         $request->session()->put('verifykey', $request['phone']);
 //        return array('stat'=>1);
         return array('stat'=>1,'code'=>$code);   //TODO 上线前将验证码打开
+    }
+
+    public function imageUpload(Request $request){
+        if(!$request->hasFile('image')) return ['stat'=>0,'msg'=>'没有选中上传文件'];
+        $path = \Storage::putFile('public/comment', $request->file('image'));
+        $user = User::find(\Auth::user()->id);
+        $user->headimage = asset(\Storage::url($path));
+        $user->save();
+        return ['stat'=>1,'imgUrl'=>$user->headimage];
     }
 }
