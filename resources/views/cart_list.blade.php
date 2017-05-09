@@ -24,7 +24,7 @@
                 <div class="gwsl fl">
                     <input class="min" @click="updateCart(cart.__raw_id)" name="" type="button" value="-" />
                     <input class="text_box" name="" type="text" :value="cart.qty" />
-                    <input class="add" @click="addCart(cart.hashid)" name="" type="button" value="+" />
+                    <input class="add" @click="addCart(cart.hashid,cart.__raw_id)" name="" type="button" value="+" />
                 </div>
             </li>
         </ul>
@@ -56,7 +56,7 @@
                 'cart_raw_count':{!! $cart_raw_count??'{}' !!}
             },
             methods:{
-                addCart:function(hashid){
+                addCart:function(hashid,__raw_id){
                     $.ajax({
                         type: "GET",
                         url: "{{ url('cart/add') }}",
@@ -66,6 +66,7 @@
                                 cart_list.cart_totalPrice = data.cart_totalPrice;
                                 cart_list.cart_count = data.cart_count;
                                 cart_list.cart_lists = data.cart_lists;
+                                cart_list.allRawIds()
                             }else{
                                 layer.msg('添加购物车失败');
                             }
@@ -82,6 +83,7 @@
                                 cart_list.cart_totalPrice = data.cart_totalPrice;
                                 cart_list.cart_count = data.cart_count;
                                 cart_list.cart_lists = data.cart_lists;
+                                cart_list.allRawIds();
                             }else{
                                 layer.msg('修改购物车失败');
                             }
@@ -111,6 +113,7 @@
                     window.location.href='{{url("shop_item/good_list")}}';
                 },
                 cartRawId:function(__raw_id){
+                    console.log(123);
                     var index=0,is=0;
                     for(var i = 0;i<this.cart_raw_ids.length;i++){
                         if(this.cart_raw_ids[i] == __raw_id){

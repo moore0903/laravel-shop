@@ -428,6 +428,10 @@ ul,ol,dl{ list-style-type:none;}
 
 .personal li:nth-child(2){ width:714px; padding-right:0px; background:none; }
 
+.personal li.anniuland{ height: 60px; text-align: center; background:none;}
+
+.personal li.anniuland input{ width:242px; font-size: 27px; border: 1px solid #eee; background:#e02933; height:60px; padding:0px; line-height:60px; color:#fff; -webkit-appearance: none; outline: medium; cursor:pointer; border-radius:5px; }
+
 .orderlist{ padding:0 7px; border-top:2px solid #eee; margin-top:18px; background:url(../bg/fbt1.gif) repeat left top; }
 
 .orderlist li{ font-size:24px; color:#666; }
