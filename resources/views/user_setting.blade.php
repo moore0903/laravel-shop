@@ -3,7 +3,7 @@
 @section('content')
     <div class="wrap fmyh">
         <div class="land">
-            <p class="fhaniu"><a href="javascript:window.history.go(-1)"></a></p>
+            <p class="fhaniu"><a href="{{url('user/info')}}"></a></p>
             个人设置
         </div>
         <ul class="personal lifl clear">
