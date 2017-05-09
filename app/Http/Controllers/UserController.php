@@ -209,12 +209,37 @@ class UserController extends Controller
         return array('stat'=>1,'code'=>$code);   //TODO 上线前将验证码打开
     }
 
+    public function setting(){
+        $user = User::find(\Auth::user()->id);
+        return view('user_setting',[
+            'user'=>$user
+        ]);
+    }
+
+    /**
+     * 图片上传
+     * @param Request $request
+     * @return array
+     */
     public function imageUpload(Request $request){
         if(!$request->hasFile('image')) return ['stat'=>0,'msg'=>'没有选中上传文件'];
         $path = \Storage::putFile('public/comment', $request->file('image'));
         $user = User::find(\Auth::user()->id);
         $user->headimage = asset(\Storage::url($path));
-        $user->save();
+//        $user->save();
         return ['stat'=>1,'imgUrl'=>$user->headimage];
+    }
+
+    /**
+     * 修改个人信息
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function editUserInfo(Request $request){
+        $user = User::find(\Auth::user()->id);
+        $user->headimage = $request['headimage'];
+        $user->sex = $request['sex'];
+        $user->save();
+        return redirect('/user/setting');
     }
 }
