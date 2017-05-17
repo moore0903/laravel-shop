@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\SecKill;
 use App\Models\ShopItem;
 use Illuminate\Http\Request;
 use Vinkla\Hashids\Facades\Hashids;
@@ -30,7 +31,11 @@ class CartController extends Controller
         if($cartitem){
             \Cart::remove($cartitem->__raw_id);
         }
-        $cartitem = \Cart::add($shopItem->id,$shopItem->title,$quantity,$shopItem->price,['imgUrl'=>asset('upload/'.$shopItem->img),'url'=>url('/shop_item/detail/'.$shopItem->hashid),'hashid'=>\Hashids::encode($shopItem->id)]);
+        $time = date('Y-m-d h:i:s');
+        $secKill = SecKill::where('shop_item_id','=',$shopItem->id)->where('start_time','<',$time)->where('end_time','>',$time)->first();
+        if(!empty($secKill)) $price = $secKill->sec_kill_price;
+        else $price = $shopItem->price;
+        $cartitem = \Cart::add($shopItem->id,$shopItem->title,$quantity,$price,['imgUrl'=>asset('upload/'.$shopItem->img),'url'=>url('/shop_item/detail/'.$shopItem->hashid),'hashid'=>\Hashids::encode($shopItem->id)]);
         $cartitems[$cartitem->__raw_id] = $cartitem;
         return view('cart_list',[
             'cart_lists'=>collect($cartitems),
@@ -60,7 +65,11 @@ class CartController extends Controller
         $shopItem = ShopItem::where('id','=',$id)->first();
         $stat = 0;
         if(isset($shopItem)){
-            \Cart::add($shopItem->id,$shopItem->title,$request['qty'],$shopItem->price,['imgUrl'=>asset('upload/'.$shopItem->img),'url'=>url('/shop_item/detail/'.$shopItem->hashid),'hashid'=>\Hashids::encode($shopItem->id)]);
+            $time = date('Y-m-d h:i:s');
+            $secKill = SecKill::where('shop_item_id','=',$shopItem->id)->where('start_time','<',$time)->where('end_time','>',$time)->first();
+            if(!empty($secKill)) $price = $secKill->sec_kill_price;
+            else $price = $shopItem->price;
+            \Cart::add($shopItem->id,$shopItem->title,$request['qty'],$price,['imgUrl'=>asset('upload/'.$shopItem->img),'url'=>url('/shop_item/detail/'.$shopItem->hashid),'hashid'=>\Hashids::encode($shopItem->id)]);
             $stat = 1;
         }
         return ['stat'=>$stat,'cart_lists'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_totalPrice'=>\Cart::totalPrice(),'cart_raw_count' => \Cart::count(false)];
