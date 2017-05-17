@@ -34,6 +34,8 @@ Route::group([
 
     $router->resource('order', OrderController::class);
 
+    $router->resource('seckill', SecKillController::class);
+
 
     $router->get('updateSite', 'HomeController@updateSite');
 
