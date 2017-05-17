@@ -169,16 +169,5 @@
             });
 
             $('.f02').addClass('on');
-
-            $(window).scroll(
-                function() {
-                    var scrollTop = $(this).scrollTop();
-                    var scrollHeight = $(document).height();
-                    var windowHeight = $(this).height();
-                    if (scrollTop + windowHeight == scrollHeight) {
-                        // 此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
-                        alert("弹弹弹");
-                    }
-                });
     </script>
 @endsection
