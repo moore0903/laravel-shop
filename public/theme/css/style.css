@@ -102,6 +102,22 @@ ul,ol,dl{ list-style-type:none;}
 
 .seckill .time{ position:absolute; top:32px; right:27px; }
 
+.seckill .time .name{ height:31px; line-height:31px; color:#000; font-size:15px; }
+
+.seckill .time dd i{ float:left; width:31px; height:31px; line-height:31px; display:block; text-align:center; color:#fff; background:#000; }
+
+.seckill .time dd span{ float:left; height:31px; line-height:31px; display:block; padding: 0 6px; }
+
+.xsqg{ position:relative; background:#fff; height:51px; border-bottom:2px solid #eee; }
+
+.xsqg .time{ position:absolute; top:10px; right:27px;  }
+
+.xsqg .time .name{ height:31px; line-height:31px; color:#000; font-size:15px; }
+
+.xsqg .time dd i{ float:left; width:31px; height:31px; line-height:31px; display:block; text-align:center; color:#fff; background:#000; }
+
+.xsqg .time dd span{ float:left; height:31px; line-height:31px; display:block; padding: 0 6px; }
+
 .seckill ul{ margin-top:115px; }
 
 .seckill li{ width:241px; }
@@ -334,6 +350,8 @@ ul,ol,dl{ list-style-type:none;}
 .menu-right ul li a{ height:395px; display:block; }
 .menu-right ul li .tu{ height:265px; overflow:hidden; }
 .menu-right ul li .name{ color:#333; font-size:24px; text-align:left; padding: 0 12px; line-height:33px; }
+.menu-right ul li .namelist{ color:#999; font-size:20px; text-align:left; padding: 0 12px; line-height:33px; }
+.menu-right ul li .namelist i{ padding-left:10px; }
 .menu-right ul li .jige{ padding:0 12px; color:#fa4d3e; font-size:24px; line-height:45px; }
 .menu-right ul li .jige i{ font-size:20px; color:#999; text-decoration: line-through; }
 
@@ -949,6 +967,8 @@ ul,ol,dl{ list-style-type:none;}
 .detailscont .detanrkuai .jiage{ color:#f74f45; font-size:26px; margin-top:10px; }
 
 .detailscont .detanrkuai .jiage i{ font-size:18px; color:#999; text-decoration: line-through; padding-left:25px; }
+
+.detailscont .detanrkuai .jiage span{ color:#fff; background:#f74f45; color:#fff; margin-left:15px; padding:5px; }
 
 .detailscont .detanrkuai .kuaidi{ color:#999; font-size:24px; margin-top:10px; }
 

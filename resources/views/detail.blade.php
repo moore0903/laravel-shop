@@ -27,13 +27,23 @@
                     </div>
                 </section>
             </div>
+            <div class="xsqg">
+      <div class="time clear">
+      <p class="name fl">距开始：</p>
+      <dl class="lifl fl clear">
+        <dd><i>03</i><span>:</span></dd>
+        <dd><i>03</i><span>:</span></dd>
+        <dd><i>03</i></dd>
+      </dl>
+      </div>
+      </div>
             <div class="detanrkuai">
                 <div :class="is_collection?'dsc on':'dsc'" @click="addCollection(item.hashid)">
                     <p class="tu"></p>
                     <p class="nr">收藏</p>
                 </div>
                 <p class="name">@{{ item.title }}</p>
-                <p class="jiage">¥ @{{ item.price }}元<i>¥ @{{ item.original_price }}元</i></p>
+                <p class="jiage">¥ @{{ item.price }}元<span>秒杀价：¥500.0元</span></p>
                 <?php
                 $configs = \App\Models\Config::all();
                 $post_price = $configs->where('key','post_price')->first();

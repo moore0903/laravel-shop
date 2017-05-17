@@ -47,7 +47,14 @@
         <div class="fdm1 clear">
             <div class="seckill fl">
                 <p class="title"></p>
-                <p class="time"><img src="images/img1.jpg" /></p>
+                <div class="time clear">
+                  <p class="name fl">距开始：</p>
+                  <dl class="lifl fl clear">
+                    <dd><i>03</i><span>:</span></dd>
+                    <dd><i>03</i><span>:</span></dd>
+                    <dd><i>03</i></dd>
+                  </dl>
+                  </div>
                 <ul class="lifl clear">
                     @foreach(\App\Models\SecKill::getSecKill(2) as $item)
                     <li>
