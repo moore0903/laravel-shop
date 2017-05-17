@@ -55,6 +55,14 @@
                     <dd><i>03</i></dd>
                   </dl>
                   </div>
+                <div class="time1 clear">
+                  <p class="name fl">距开始：</p>
+                  <dl class="lifl fl clear">
+                    <dd><i>03</i><span>:</span></dd>
+                    <dd><i>03</i><span>:</span></dd>
+                    <dd><i>03</i></dd>
+                  </dl>
+                  </div>
                 <ul class="lifl clear">
                     @foreach(\App\Models\SecKill::getSecKill(2) as $item)
                     <li>
