@@ -49,12 +49,14 @@
                 <p class="title"></p>
                 <p class="time"><img src="images/img1.jpg" /></p>
                 <ul class="lifl clear">
-                    <li><a href="#"><img src="images/img2.jpg" />
-                            <p class="name">秒杀<i>108元</i></p>
-                        </a></li>
-                    <li><a href="#"><img src="images/img2.jpg" />
-                            <p class="name">秒杀<i>108元</i></p>
-                        </a></li>
+                    @foreach(\App\Models\SecKill::getSecKill(2) as $item)
+                    <li>
+                        <a href="{{url('shop_item/detail/'.\Hashids::encode($item->shopItem->id))}}">
+                            <img src="{{asset('upload/'.$item->shopItem->img)}}" width="241" height="207" />
+                            <p class="name">秒杀<i>{{$item->sec_kill_price}}元</i></p>
+                        </a>
+                    </li>
+                    @endforeach
                 </ul>
             </div>
             <div class="coupons fr">

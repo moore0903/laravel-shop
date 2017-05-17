@@ -35,7 +35,12 @@
                 <a :href="item.url">
                     <p class="tu"><img :src="item.imgUrl"/></p>
                     <p class="name">@{{ item.title }}</p>
-                    <p class="jige"><i class="fr">¥ @{{item.original_price}}元</i>¥ @{{item.price}}元</p>
+                    <template v-if="item.sec_kill_price">
+                        <p class="name">秒杀<i>@{{item.sec_kill_price}}元</i></p>
+                    </template>
+                    <template v-else>
+                        <p class="jige"><i class="fr">¥ @{{item.original_price}}元</i>¥ @{{item.price}}元</p>
+                    </template>
                 </a>
             </li>
         </ul>
@@ -165,5 +170,15 @@
 
             $('.f02').addClass('on');
 
+            $(window).scroll(
+                function() {
+                    var scrollTop = $(this).scrollTop();
+                    var scrollHeight = $(document).height();
+                    var windowHeight = $(this).height();
+                    if (scrollTop + windowHeight == scrollHeight) {
+                        // 此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+                        alert("弹弹弹");
+                    }
+                });
     </script>
 @endsection
