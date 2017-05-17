@@ -36,7 +36,7 @@
                     <p class="tu"><img :src="item.imgUrl"/></p>
                     <p class="name">@{{ item.title }}</p>
                     <template v-if="item.sec_kill_price">
-                        <p class="name">秒杀<i>@{{item.sec_kill_price}}元</i></p>
+                        <p class="namelist">秒杀<i>@{{item.sec_kill_price}}元</i></p>
                     </template>
                     <template v-else>
                         <p class="jige"><i class="fr">¥ @{{item.original_price}}元</i>¥ @{{item.price}}元</p>
