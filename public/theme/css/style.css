@@ -98,15 +98,23 @@ ul,ol,dl{ list-style-type:none;}
 
 .seckill{ background:#fff; width:482px; height:352px; position:relative; }
 
-.seckill .title{ background:url(../bg/w1.gif) no-repeat; width:158px; height:53px; position:absolute; top:25px; left:16px; }
+.seckill .title{ background:url(../bg/w1.gif) no-repeat; width:158px; height:53px; position:absolute; top:15px; left:16px; }
 
-.seckill .time{ position:absolute; top:32px; right:27px; }
+.seckill .time{ position:absolute; top:85px; right:27px; }
 
 .seckill .time .name{ height:31px; line-height:31px; color:#000; font-size:15px; }
 
 .seckill .time dd i{ float:left; width:31px; height:31px; line-height:31px; display:block; text-align:center; color:#fff; background:#000; }
 
 .seckill .time dd span{ float:left; height:31px; line-height:31px; display:block; padding: 0 6px; }
+
+.seckill .time1{ position:absolute; top:85px; left:20px; }
+
+.seckill .time1 .name{ height:31px; line-height:31px; color:#000; font-size:15px; }
+
+.seckill .time1 dd i{ float:left; width:31px; height:31px; line-height:31px; display:block; text-align:center; color:#fff; background:#000; }
+
+.seckill .time1 dd span{ float:left; height:31px; line-height:31px; display:block; padding: 0 6px; }
 
 .xsqg{ position:relative; background:#fff; height:51px; border-bottom:2px solid #eee; }
 
@@ -118,7 +126,7 @@ ul,ol,dl{ list-style-type:none;}
 
 .xsqg .time dd span{ float:left; height:31px; line-height:31px; display:block; padding: 0 6px; }
 
-.seckill ul{ margin-top:115px; }
+.seckill ul{ margin-top:128px; }
 
 .seckill li{ width:241px; }
 
