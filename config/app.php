@@ -192,6 +192,7 @@ return [
         Overtrue\LaravelWechat\ServiceProvider::class,
         Overtrue\LaravelPinyin\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Ignited\LaravelOmnipay\LaravelOmnipayServiceProvider::class,
 
     ],
 
@@ -247,6 +248,7 @@ return [
         'EasyWeChat' => Overtrue\LaravelWechat\Facade::class,
         'Pinyin' => Overtrue\LaravelPinyin\Facades\Pinyin::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Omnipay' => Ignited\LaravelOmnipay\Facades\OmnipayFacade::class,
 
     ],
 
