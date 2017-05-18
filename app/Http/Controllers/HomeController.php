@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Browse;
 use App\Models\Catalog;
 use App\Models\Collection;
+use App\Models\SecKill;
 use App\Models\ShopItem;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -90,6 +91,8 @@ class HomeController extends Controller
             $row = \Cart::search(['id'=>$value->id]);
             $row = $row->first();
             $value->rows = $row??'';
+            $secKill = SecKill::where('shop_item_id','=',$value->id)->where('start_time','<',date('Y-m-d h:i:s'))->where('end_time','>',date('Y-m-d h:i:s'))->first();
+            if(!empty($secKill)) $value->sec_kill_price = $secKill->sec_kill_price;
             return $value;
         });
         $configs = \App\Models\Config::all();
@@ -170,6 +173,8 @@ class HomeController extends Controller
             $row = \Cart::search(['id'=>$value->id]);
             $row = $row->first();
             $value->rows = $row??'';
+            $secKill = SecKill::where('shop_item_id','=',$value->id)->where('start_time','<',date('Y-m-d h:i:s'))->where('end_time','>',date('Y-m-d h:i:s'))->first();
+            if(!empty($secKill)) $value->sec_kill_price = $secKill->sec_kill_price;
             return $value;
         });
         return ['stat' => '1','shopItems' => $shopItems->toArray()];
