@@ -33,7 +33,7 @@
             <p class="jige">共{{$orderNum}}件商品，实付<i>¥{{$order->totalpay}}元</i></p>
             <div class="odkuai clear _order_{{$order->id}}">
                 @if($order->stat == \App\Models\Order::STAT_NOTPAY)
-                <p class="od1 fr"><a href="#">立即付款</a></p>
+                <p class="od1 fr"><a href="{{url('/pay/aliPay?order_id='.$order->id)}}">立即付款</a></p>
                 <p class="od2 fr"><a href="{{url('order/cancel').'?id='.$order->id}}">取消订单</a></p>
                 @elseif($order->stat == \App\Models\Order::STAT_PAYED || $order->stat == \App\Models\Order::STAT_EXPRESS)
                     <p class="od1 fr" data-order_id="{{$order->id}}"><a href="javascript:void(0);">确认收货</a></p>
