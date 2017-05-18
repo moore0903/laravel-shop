@@ -51,7 +51,7 @@ Route::group(
 Route::group(
     ['prefix'=>'pay'],
     function(){
-        Route::post('aliPay','PayController@aliPay');
+        Route::get('aliPay','PayController@aliPay');
         Route::post('aliReturnPay','PayController@aliReturnPay');
     }
 );
