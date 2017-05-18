@@ -49,6 +49,15 @@ Route::group(
 );
 
 Route::group(
+    ['prefix'=>'pay'],
+    function(){
+        Route::get('aliPay','PayController@aliPay');
+        Route::any('aliReturnPay','PayController@aliReturnPay');
+        Route::any('aliNotifyPay','PayController@aliNotifyPay');
+    }
+);
+
+Route::group(
     [
         'prefix'=>'gift'
     ],
@@ -82,9 +91,8 @@ Route::group(
                 Route::get('myCollection','UserController@myCollection');
                 Route::get('myBrowse','UserController@myBrowse');
                 Route::post('upload','UserController@imageUpload');
-                Route::get('setting',function(){
-                    return view('user_setting');
-                });
+                Route::get('setting','UserController@setting');
+                Route::post('editUserInfo','UserController@editUserInfo');
             }
         );
         Route::group(
