@@ -49,6 +49,16 @@ class Order extends Model
         return true;
     }
 
+    public function payed($payorder) {
+//        $this->pay_order_id = $payorder->id;
+        $this->paytype = $payorder->paytype;
+        $this->trade_no = $payorder->trade_no;
+        $this->notify_time = $payorder->notify_time;
+        $this->totalget = $payorder->totalget;
+        if($this->stat == Order::STAT_NOTPAY)  $this->stat = Order::STAT_PAYED;
+        $this->save();
+    }
+
 
     /**
      * 订单状态简短介绍
