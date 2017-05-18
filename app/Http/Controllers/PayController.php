@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\PayOrder;
 use Illuminate\Http\Request;
+use Omnipay\Omnipay;
 use Payment\Common\PayException;
 use Payment\Client\Charge;
 
@@ -18,27 +19,22 @@ class PayController extends Controller
 {
     public function aliPay(Request $request){
         $order = Order::find($request['order_id']);
-        $config = require_once('/config/aliconfig.php');
-        $channel = 'ali_wap';
-        $payData = [
-            'body' => '订单编号:'.$order->serial,
-            'subject' => '牛逼公司--付款吧',
-            'order_no' => $order->serial,
-            'timeout_express' => time(data('Y-m-d h:i:s',strtotime('+1 day'))),
-            'amount' => $order->totalpay,
-            'return_param' => 'buy some',
-            'goods_type' => 1,
-            'store_id' => '',// 没有就不设置
-        ];
+        $gateway = Omnipay::create('Alipay_AopPage');
+        $gateway->setSignType(config('aliconfig.sign_type')); // RSA/RSA2/MD5
+        $gateway->setAppId(config('aliconfig.app_id'));
+        $gateway->setPrivateKey(config('aliconfig.rsa_private_key'));
+        $gateway->setAlipayPublicKey(config('aliconfig.ali_public_key'));
+        $gateway->setReturnUrl(config('aliconfig.return_url'));
+        $gateway->setNotifyUrl(config('aliconfig.notify_url'));
 
-        try {
-            $payUrl = Charge::run($channel, $config, $payData);
-        } catch (PayException $e) {
-            // 异常处理
-            exit;
-        }
+        $response = $gateway->purchase()->setBizContent([
+            'subject'      => '订单编号:'.$order->serial,
+            'out_trade_no' => date('YmdHis') . mt_rand(1000, 9999),
+            'total_amount' => $order->totalpay,
+            'product_code' => 'FAST_INSTANT_TRADE_PAY',
+        ])->send();
 
-        echo htmlspecialchars($payUrl);
+        $response->redirect();
     }
 
     /**
