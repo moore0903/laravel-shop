@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\PayOrder;
 use Illuminate\Http\Request;
+use Omnipay\Omnipay;
 
 class PayController extends Controller
 {
@@ -21,31 +22,22 @@ class PayController extends Controller
         $order->notify_time = new \Carbon\Carbon();
         $order->save();
 
-        $inMobile = preg_match('/iPad|iPhone|iPod|iOS|Android|Windows Phone|Mobile/i',$_SERVER['HTTP_USER_AGENT']??'');
-        $paytype = 'Alipay_LegacyExpress';
-        if($inMobile) {
-            $paytype = 'Alipay_LegacyWap';
-        }
-
-        $gateway = Omnipay::create($paytype);
+        $gateway = Omnipay::create('Alipay_AopWap');
         $gateway->setSignType(config('aliconfig.sign_type')); // RSA/RSA2/MD5
         $gateway->setAppId(config('aliconfig.app_id'));
         $gateway->setPrivateKey(config('aliconfig.rsa_private_key'));
         $gateway->setAlipayPublicKey(config('aliconfig.ali_public_key'));
-        $gateway->setReturnUrl(config('aliconfig.return_url'));
         $gateway->setNotifyUrl(config('aliconfig.notify_url'));
 
         $subject = '订单号：'.$order->serial;
 
         $payorder = PayOrder::firstOrCreate([
             'order_id'=>$order->id,
-            'order_serial'=>$order->serial,
             'subject'=>$subject,
             'total'=>$order->total,
             'discount'=>$order->discount,
             'totalpay'=>$order->totalpay,
-            'paytype'=>$paytype,
-            'payaccount'=>$gateway->getPartner(),
+            'paytype'=>'Alipay_AopWap',
         ]);
 
         $response = $gateway->purchase()->setBizContent([
@@ -64,50 +56,31 @@ class PayController extends Controller
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function aliReturnPay(Request $request){
-
-        $inMobile = preg_match('/iPad|iPhone|iPod|iOS|Android|Windows Phone|Mobile/i',$_SERVER['HTTP_USER_AGENT']??'');
-        $paytype = 'Alipay_LegacyExpress';
-        if($inMobile) {
-            $paytype = 'Alipay_LegacyWap';
-        }
-
-        $gateway = Omnipay::create($paytype);
+        $gateway = Omnipay::create('Alipay_AopWap');
         $gateway->setSignType(config('aliconfig.sign_type')); // RSA/RSA2/MD5
         $gateway->setAppId(config('aliconfig.app_id'));
         $gateway->setPrivateKey(config('aliconfig.rsa_private_key'));
         $gateway->setAlipayPublicKey(config('aliconfig.ali_public_key'));
-        $gateway->setReturnUrl(config('aliconfig.return_url'));
         $gateway->setNotifyUrl(config('aliconfig.notify_url'));
 
         $request = $gateway->completePurchase();
-        $request->setParams(array_merge($_POST, $_GET)); //Don't use $_REQUEST for may contain $_COOKIE
-
-        /**
-         * @var AopCompletePurchaseResponse $response
-         */
+        $request->setParams(array_merge($_POST, $_GET));
         try {
             $response = $request->send();
-
             if($response->isPaid()){
+
                 $out_trade_no = explode('_',$_REQUEST['out_trade_no']);
                 $payorder = PayOrder::find(intval($out_trade_no[1]));
                 $payorder->payNotify($_REQUEST['trade_no'], $_REQUEST['notify_time'], $_REQUEST['total_fee']);
-
-                die('success'); //The notify response should be 'success' only
+                return 'success';
             }else{
-                /**
-                 * Payment is not successful
-                 */
-                die('fail'); //The notify response
+                return 'fail';
             }
         } catch (Exception $e) {
-            /**
-             * Payment is not successful
-             */
-            die('fail'); //The notify response
+            return 'fail';
         }
 
-        return redirect('/order/list');
+//        return redirect('/order/list');
     }
 
 
