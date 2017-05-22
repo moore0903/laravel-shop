@@ -113,7 +113,6 @@
                     window.location.href='{{url("shop_item/good_list")}}';
                 },
                 cartRawId:function(__raw_id){
-                    console.log(123);
                     var index=0,is=0;
                     for(var i = 0;i<this.cart_raw_ids.length;i++){
                         if(this.cart_raw_ids[i] == __raw_id){

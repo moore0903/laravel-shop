@@ -22,13 +22,13 @@
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
+    <script type="text/javascript" src="{{ asset('theme/common/jquery-1.7.2.min.js') }}"></script>
 </head>
 
 <body>
 @yield('content')
 
 
-<script type="text/javascript" src="{{ asset('theme/common/jquery-1.7.2.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('theme/common/swiper-3.4.2.jquery.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('theme/common/ciads.js') }}"></script>
 <script type="text/javascript" src="{{ asset('theme/common/tab.js') }}"></script>

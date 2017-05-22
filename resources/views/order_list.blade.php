@@ -36,10 +36,10 @@
                 <p class="od1 fr"><a href="{{url('/pay/aliPay?order_id='.$order->id)}}">立即付款</a></p>
                 <p class="od2 fr"><a href="{{url('order/cancel').'?id='.$order->id}}">取消订单</a></p>
                 @elseif($order->stat == \App\Models\Order::STAT_PAYED || $order->stat == \App\Models\Order::STAT_EXPRESS)
-                    <p class="od1 fr" data-order_id="{{$order->id}}"><a href="javascript:void(0);">确认收货</a></p>
+                    <p class="od1 fr _confirmReceipt" data-order_id="{{$order->id}}"><a href="javascript:void(0);">确认收货</a></p>
                     <p class="od2 fr"><a href="#">查看物流</a></p>
-                @elseif($order->stat == \App\Models\Order::STAT_FINISH)
-                    <p class="od1 fr"><a href="#">申请退货</a></p>
+                @elseif($order->stat == \App\Models\Order::STAT_FINISH || $order->stat == \App\Models\Order::STAT_EVALUATE)
+                    <p class="od1 fr _confirmService" data-order_id="{{$order->id}}"><a href="javascript:void(0);">申请退货</a></p>
                 @else
 
                 @endif
@@ -66,7 +66,7 @@
         $('._confirmReceipt').click(function(){
             layer.confirm('确定收货?',function(index){
                 layer.close(index);
-                var id = $(this).data('order_id');
+                var id = $('._confirmReceipt').data('order_id');
                 $.ajax({
                     type: "GET",
                     url: "{{ url('order/confirmReceipt') }}",
@@ -74,7 +74,24 @@
                     success: function(data){
                         layer.msg(data.msg);
                         if(data.stat == 1){
-                            var evaluationUrl = '{{url('order/evaluation')}}?id='+id;
+                            window.location.reload();
+                        }
+                    }
+                });
+            });
+        });
+
+        $('._confirmService').click(function(){
+            layer.confirm('确定退货?',function(index){
+                layer.close(index);
+                var id = $('._confirmService').data('order_id');
+                $.ajax({
+                    type: "GET",
+                    url: "{{ url('order/confirmService') }}",
+                    data: "id="+id,
+                    success: function(data){
+                        layer.msg(data.msg);
+                        if(data.stat == 1){
                             window.location.reload();
                         }
                     }
