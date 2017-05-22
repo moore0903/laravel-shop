@@ -33,7 +33,6 @@ class PayOrder extends Model
     public function payNotify($trade_no,$notify_time,$total_fee){
         if($this->notify_time>0)    return;
         $this->trade_no = $trade_no;
-        $this->notify_time = $notify_time;
         $this->totalget = $total_fee;
         $this->order->payed($this);
         $this->save();

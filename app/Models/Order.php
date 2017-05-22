@@ -51,7 +51,7 @@ class Order extends Model
 
     public function payed($payorder) {
 //        $this->pay_order_id = $payorder->id;
-        $this->paytype = $payorder->paytype;
+//        $this->paytype = $payorder->paytype;
         $this->trade_no = $payorder->trade_no;
         $this->notify_time = $payorder->notify_time;
         $this->totalget = $payorder->totalget;

@@ -66,7 +66,7 @@ class PayController extends Controller
             'total'=>$order->total,
             'discount'=>$order->discount,
             'totalpay'=>$order->totalpay,
-            'paytype'=>'Alipay_AopWap',
+            'paytype'=>'WechatPay_Js',
         ]);
 
 
