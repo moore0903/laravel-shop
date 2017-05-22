@@ -113,7 +113,7 @@ class PayController extends Controller
                 $order->save();
 
                 $payorder = PayOrder::find(intval($out_trade_no[1]));
-                $payorder->payNotify($_REQUEST['trade_no'], $_REQUEST['notify_time'], $_REQUEST['total_fee']);
+                $payorder->payNotify($_REQUEST['trade_no'], $_REQUEST['notify_time'], $_REQUEST['receipt_amount']);
                 return redirect('/order/list');
 //                return 'success';
             }else{
@@ -150,7 +150,7 @@ class PayController extends Controller
             $order->save();
 
             $payorder = PayOrder::find(intval($out_trade_no[1]));
-            $payorder->payNotify($_REQUEST['trade_no'], $_REQUEST['notify_time'], $_REQUEST['total_fee']);
+            $payorder->payNotify($_REQUEST['transaction_id'],Carbon::createFromFormat('YmdHis', $_REQUEST['time_end']), $_REQUEST['total_fee']/100);
             \Log::debug($response->getData());
             return redirect('/order/list');
         }else{
