@@ -188,9 +188,18 @@ class OrderController extends Controller
         if(!\Auth::check()) return ['stat'=>0,'msg'=>'请先登录!'];
         $orderInfo = Order::find($request['id']);
         if(empty($orderInfo)) return ['stat'=>0,'msg'=>'找不到该订单'];
-        $orderInfo->stat = Order::STAT_FINISH;
+        $orderInfo->stat = Order::STAT_EVALUATE;
         $orderInfo->save();
         return ['stat'=>1,'msg'=>'已收货,请评价'];
+    }
+
+    public function confirmService(Request $request){
+        if(!\Auth::check()) return ['stat'=>0,'msg'=>'请先登录!'];
+        $orderInfo = Order::find($request['id']);
+        if(empty($orderInfo)) return ['stat'=>0,'msg'=>'找不到该订单'];
+        $orderInfo->stat = Order::STAT_SERVICE;
+        $orderInfo->save();
+        return ['stat'=>1,'msg'=>'已提交退货申请,请等待人员联系'];
     }
 
     /**

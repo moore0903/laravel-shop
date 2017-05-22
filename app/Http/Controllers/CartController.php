@@ -40,7 +40,7 @@ class CartController extends Controller
         return view('cart_list',[
             'cart_lists'=>collect($cartitems),
             'cart_count'=>$quantity,
-            'cart_totalPrice'=>$shopItem->price,
+            'cart_totalPrice'=>$price,
             'cart_raw_count' => '1'
         ]);
 

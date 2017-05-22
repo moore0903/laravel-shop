@@ -37,6 +37,7 @@ class HomeController extends Controller
         $id = Hashids::decode($hash_id);
         $shopItem = ShopItem::where('id','=',$id)->first();
         $shopItem->hashid = Hashids::encode($shopItem->id);
+        $secKill = SecKill::where('shop_item_id','=',$shopItem->id)->where('start_time','<',date('Y-m-d h:i:s'))->where('end_time','>',date('Y-m-d h:i:s'))->first();
         if(\Auth::check()){
             Browse::recording(\Auth::user()->id,$shopItem->id);
             $is_collection = Collection::where('user_id','=',\Auth::user()->id)->where('shop_item_id','=',$shopItem->id)->first();
@@ -48,6 +49,7 @@ class HomeController extends Controller
             'itemStar'=>$shopItem->comments->avg('pivot.star')??0,
             'cart'=>collect(['cart_items'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_price_count'=>\Cart::totalPrice()]),
             'is_collection'=>empty($is_collection)?0:1,
+            '$secKill'=>$secKill
         ]);
     }
 
