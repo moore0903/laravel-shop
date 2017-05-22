@@ -105,6 +105,7 @@ Route::group(
                 Route::any('evaluation','OrderController@evaluation');
                 Route::get('cancel','OrderController@cancel');
                 Route::post('commentUpload','HomeController@imageUpload');
+                Route::get('confirmService','OrderController@confirmService');
             }
         );
         Route::group(['prefix'=>'wechat'],function(){
