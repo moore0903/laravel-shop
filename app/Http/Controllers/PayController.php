@@ -107,11 +107,6 @@ class PayController extends Controller
             if($response->isPaid()){
                 $out_trade_no = explode('_',$_REQUEST['out_trade_no']);
 
-                $order = Order::find($out_trade_no[0]);
-                $order->stat = Order::STAT_PAYED;
-                $order->notify_time = new \Carbon\Carbon();
-                $order->save();
-
                 $payorder = PayOrder::find(intval($out_trade_no[1]));
                 $payorder->payNotify($_REQUEST['trade_no'], $_REQUEST['notify_time'], $_REQUEST['receipt_amount']);
                 return redirect('/order/list');
@@ -143,11 +138,6 @@ class PayController extends Controller
 
         if ($response->isPaid()) {
             $out_trade_no = explode('_',$_REQUEST['out_trade_no']);
-
-            $order = Order::find($out_trade_no[0]);
-            $order->stat = Order::STAT_PAYED;
-            $order->notify_time = new \Carbon\Carbon();
-            $order->save();
 
             $payorder = PayOrder::find(intval($out_trade_no[1]));
             $payorder->payNotify($_REQUEST['transaction_id'],Carbon::createFromFormat('YmdHis', $_REQUEST['time_end']), $_REQUEST['total_fee']/100);

@@ -12,6 +12,11 @@ class PayOrder extends Model
         'order_id', 'subject', 'total','discount','totalpay','paytype','trade_no','totalget'
     ];
 
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
+
     public static $aliFundChannel=[
         'COUPON'=>'支付宝红包',
         'ALIPAYACCOUNT'=>'支付宝余额',
