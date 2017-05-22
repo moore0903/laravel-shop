@@ -110,14 +110,14 @@ class PayController extends Controller
                 $payorder = PayOrder::find(intval($out_trade_no[1]));
                 $payorder->payNotify($_REQUEST['trade_no'], $_REQUEST['notify_time'], $_REQUEST['receipt_amount']);
                 //return redirect('/order/list');
-                return 'success';
+                die('success');
             }else{
-                return 'fail';
+                die('fail');
                 //return redirect('/order/list');
             }
         } catch (Exception $e) {
             \Log::debug($e);
-            return 'fail';
+            die('fail');
             //return redirect('/order/list');
         }
 
