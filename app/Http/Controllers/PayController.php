@@ -38,7 +38,7 @@ class PayController extends Controller
 
         $response = $gateway->purchase()->setBizContent([
             'subject'      => '订单编号:'.$order->serial,
-            'out_trade_no' => $payorder->order_serial.'_'.$payorder->id,
+            'out_trade_no' => $payorder->order_id.'_'.$payorder->id,
             'total_amount' => $order->totalpay,
             'product_code' => 'FAST_INSTANT_TRADE_PAY',
         ])->send();
@@ -66,14 +66,14 @@ class PayController extends Controller
             'total'=>$order->total,
             'discount'=>$order->discount,
             'totalpay'=>$order->totalpay,
-            'paytype'=>'Alipay_AopWap',
+            'paytype'=>'WechatPay_Js',
         ]);
 
 
 
         $order = [
             'body'              => '订单编号:'.$order->serial,
-            'out_trade_no'      => $payorder->order_serial.'_'.$payorder->id,
+            'out_trade_no'      => $payorder->order_id.'_'.$payorder->id,
             'total_fee'         => $order->totalpay/100, //=0.01
             'spbill_create_ip'  => 'ip_address',
             'fee_type'          => 'CNY'
@@ -107,21 +107,18 @@ class PayController extends Controller
             if($response->isPaid()){
                 $out_trade_no = explode('_',$_REQUEST['out_trade_no']);
 
-                $order = Order::where('serial','=',$out_trade_no[0])->first();
-                $order->stat = Order::STAT_PAYED;
-                $order->notify_time = new \Carbon\Carbon();
-                $order->save();
-
                 $payorder = PayOrder::find(intval($out_trade_no[1]));
-                $payorder->payNotify($_REQUEST['trade_no'], $_REQUEST['notify_time'], $_REQUEST['total_fee']);
-                return redirect('/order/list');
-//                return 'success';
+                $payorder->payNotify($_REQUEST['trade_no'], $_REQUEST['notify_time'], $_REQUEST['receipt_amount']);
+                //return redirect('/order/list');
+                die('success');
             }else{
-                return redirect('/order/list');
+                die('fail');
+                //return redirect('/order/list');
             }
         } catch (Exception $e) {
             \Log::debug($e);
-            return redirect('/order/list');
+            die('fail');
+            //return redirect('/order/list');
         }
 
     }
@@ -144,13 +141,8 @@ class PayController extends Controller
         if ($response->isPaid()) {
             $out_trade_no = explode('_',$_REQUEST['out_trade_no']);
 
-            $order = Order::where('serial','=',$out_trade_no[0])->first();
-            $order->stat = Order::STAT_PAYED;
-            $order->notify_time = new \Carbon\Carbon();
-            $order->save();
-
             $payorder = PayOrder::find(intval($out_trade_no[1]));
-            $payorder->payNotify($_REQUEST['trade_no'], $_REQUEST['notify_time'], $_REQUEST['total_fee']);
+            $payorder->payNotify($_REQUEST['transaction_id'],Carbon::createFromFormat('YmdHis', $_REQUEST['time_end']), $_REQUEST['total_fee']/100);
             \Log::debug($response->getData());
             return redirect('/order/list');
         }else{
