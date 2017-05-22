@@ -250,7 +250,22 @@ class Order extends Model
         '韵达' => '韵达',
         '国通' => '国通',
         'EMS' => 'EMS',
-        '百世汇通' => '百世汇通',
+        '申通' => '申通',
+    ];
+
+    /**
+     * 快递公司编码
+     * @var array
+     */
+    public static $express_company_coding = [
+        '自提' => '0',
+        '顺丰' => 'shunfeng',
+        '中通' => 'zhongtong',
+        '圆通' => 'yuantong',
+        '韵达' => 'yunda',
+        '国通' => 'guotongkuaidi',
+        'EMS' => 'ems',
+        '申通' => 'shentong',
     ];
 
     const  STAT_NOTPAY = 0;   //未支付
