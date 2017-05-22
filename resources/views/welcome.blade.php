@@ -126,7 +126,7 @@
                                 <p class="w1">推<br/>
                                     荐</p>
                                 <p class="tu"><img src="{{asset('upload/'.$item->img)}}"/></p>
-                                <p class="name">¥{{$item->original_price}}元<i>¥{{$item->price}}元</i></p>
+                                <p class="name">¥{{$item->price}}元<i>¥{{$item->original_price}}元</i></p>
                             </a></li>
                     @endforeach
                 </ul>
