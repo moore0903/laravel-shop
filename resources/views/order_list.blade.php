@@ -37,7 +37,7 @@
                 <p class="od2 fr"><a href="{{url('order/cancel').'?id='.$order->id}}">取消订单</a></p>
                 @elseif($order->stat == \App\Models\Order::STAT_PAYED || $order->stat == \App\Models\Order::STAT_EXPRESS)
                     <p class="od1 fr _confirmReceipt" data-order_id="{{$order->id}}"><a href="javascript:void(0);">确认收货</a></p>
-                    <p class="od2 fr"><a href="#">查看物流</a></p>
+                    <p class="od2 fr"><a href="{{ 'https://m.kuaidi100.com/index_all.html?type='.\App\Models\Order::$express_company_coding[$order->express_company].'&postid='.$order->express_no.'&callbackurl='.url('order/list') }}">查看物流</a></p>
                 @elseif($order->stat == \App\Models\Order::STAT_FINISH || $order->stat == \App\Models\Order::STAT_EVALUATE)
                     <p class="od1 fr _confirmService" data-order_id="{{$order->id}}"><a href="javascript:void(0);">申请退货</a></p>
                 @else
