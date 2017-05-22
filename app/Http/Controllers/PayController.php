@@ -38,7 +38,7 @@ class PayController extends Controller
 
         $response = $gateway->purchase()->setBizContent([
             'subject'      => '订单编号:'.$order->serial,
-            'out_trade_no' => $payorder->order_serial.'_'.$payorder->id,
+            'out_trade_no' => $payorder->order_id.'_'.$payorder->id,
             'total_amount' => $order->totalpay,
             'product_code' => 'FAST_INSTANT_TRADE_PAY',
         ])->send();
@@ -73,7 +73,7 @@ class PayController extends Controller
 
         $order = [
             'body'              => '订单编号:'.$order->serial,
-            'out_trade_no'      => $payorder->order_serial.'_'.$payorder->id,
+            'out_trade_no'      => $payorder->order_id.'_'.$payorder->id,
             'total_fee'         => $order->totalpay/100, //=0.01
             'spbill_create_ip'  => 'ip_address',
             'fee_type'          => 'CNY'
@@ -107,7 +107,7 @@ class PayController extends Controller
             if($response->isPaid()){
                 $out_trade_no = explode('_',$_REQUEST['out_trade_no']);
 
-                $order = Order::where('serial','=',$out_trade_no[0])->first();
+                $order = Order::find($out_trade_no[0]);
                 $order->stat = Order::STAT_PAYED;
                 $order->notify_time = new \Carbon\Carbon();
                 $order->save();
@@ -144,7 +144,7 @@ class PayController extends Controller
         if ($response->isPaid()) {
             $out_trade_no = explode('_',$_REQUEST['out_trade_no']);
 
-            $order = Order::where('serial','=',$out_trade_no[0])->first();
+            $order = Order::find($out_trade_no[0]);
             $order->stat = Order::STAT_PAYED;
             $order->notify_time = new \Carbon\Carbon();
             $order->save();
