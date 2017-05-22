@@ -18,10 +18,6 @@ class PayController extends Controller
     public function aliPay(Request $request){
         $order = Order::find($request['order_id']);
 
-        $order->stat = Order::STAT_PAYED;
-        $order->notify_time = new \Carbon\Carbon();
-        $order->save();
-
         $gateway = Omnipay::create('Alipay_AopWap');
         $gateway->setSignType(config('aliconfig.sign_type')); // RSA/RSA2/MD5
         $gateway->setAppId(config('aliconfig.app_id'));
@@ -51,6 +47,47 @@ class PayController extends Controller
     }
 
     /**
+     * 微信支付
+     * @param Request $request
+     */
+    public function wechatPay(Request $request){
+        $order = Order::find($request['order_id']);
+
+        $gateway    = Omnipay::create('WechatPay_Js');
+        $gateway->setAppId(config('wxconfig.app_id'));
+        $gateway->setMchId(config('wxconfig.mch_id'));
+        $gateway->setApiKey(config('wxconfig.api_key'));
+
+        $subject = '订单号：'.$order->serial;
+
+        $payorder = PayOrder::firstOrCreate([
+            'order_id'=>$order->id,
+            'subject'=>$subject,
+            'total'=>$order->total,
+            'discount'=>$order->discount,
+            'totalpay'=>$order->totalpay,
+            'paytype'=>'Alipay_AopWap',
+        ]);
+
+
+
+        $order = [
+            'body'              => '订单编号:'.$order->serial,
+            'out_trade_no'      => $payorder->order_serial.'_'.$payorder->id,
+            'total_fee'         => $order->totalpay/100, //=0.01
+            'spbill_create_ip'  => 'ip_address',
+            'fee_type'          => 'CNY'
+        ];
+
+        $request  = $gateway->purchase($order);
+        $response = $request->send();
+
+        $response->isSuccessful();
+        \Log::debug($response->getData());
+        $response->getJsOrderData();
+    }
+
+    /**
      * 支付宝回调
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
@@ -68,19 +105,57 @@ class PayController extends Controller
         try {
             $response = $request->send();
             if($response->isPaid()){
-
                 $out_trade_no = explode('_',$_REQUEST['out_trade_no']);
+
+                $order = Order::where('serial','=',$out_trade_no[0])->first();
+                $order->stat = Order::STAT_PAYED;
+                $order->notify_time = new \Carbon\Carbon();
+                $order->save();
+
                 $payorder = PayOrder::find(intval($out_trade_no[1]));
                 $payorder->payNotify($_REQUEST['trade_no'], $_REQUEST['notify_time'], $_REQUEST['total_fee']);
-                return 'success';
+                return redirect('/order/list');
+//                return 'success';
             }else{
-                return 'fail';
+                return redirect('/order/list');
             }
         } catch (Exception $e) {
-            return 'fail';
+            \Log::debug($e);
+            return redirect('/order/list');
         }
 
-//        return redirect('/order/list');
+    }
+
+    /**
+     * 微信支付回调
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function wechatReturnPay(Request $request){
+        $gateway    = Omnipay::create('WechatPay');
+        $gateway->setAppId(config('wxconfig.app_id'));
+        $gateway->setMchId(config('wxconfig.mch_id'));
+        $gateway->setApiKey(config('wxconfig.api_key'));
+
+        $response = $gateway->completePurchase([
+            'request_params' => file_get_contents('php://input')
+        ])->send();
+
+        if ($response->isPaid()) {
+            $out_trade_no = explode('_',$_REQUEST['out_trade_no']);
+
+            $order = Order::where('serial','=',$out_trade_no[0])->first();
+            $order->stat = Order::STAT_PAYED;
+            $order->notify_time = new \Carbon\Carbon();
+            $order->save();
+
+            $payorder = PayOrder::find(intval($out_trade_no[1]));
+            $payorder->payNotify($_REQUEST['trade_no'], $_REQUEST['notify_time'], $_REQUEST['total_fee']);
+            \Log::debug($response->getData());
+            return redirect('/order/list');
+        }else{
+            return redirect('/order/list');
+        }
     }
 
 
