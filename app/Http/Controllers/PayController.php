@@ -185,10 +185,10 @@ class PayController extends Controller
 
         if ($response->isPaid()) {
             $data = $response->getData();
+            \Log::debug($response->getData());
             $out_trade_no = explode('_',$data['out_trade_no']);
             $payorder = PayOrder::find(intval($out_trade_no[1]));
             $payorder->payNotify($data['transaction_id'],\Carbon::createFromFormat('YmdHis', $data['time_end']), $data['total_fee']/100);
-            \Log::debug($response->getData());
             return '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
         }else{
             return '<xml><return_code><![CDATA[FAIL]]></return_code><return_msg><![CDATA[error]]></return_msg></xml>';
