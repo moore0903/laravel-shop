@@ -187,7 +187,7 @@ class PayController extends Controller
             $data = $request->getData();
             $out_trade_no = explode('_',$data['out_trade_no']);
             $payorder = PayOrder::find(intval($out_trade_no[1]));
-            $payorder->payNotify($_REQUEST['transaction_id'],Carbon::createFromFormat('YmdHis', $_REQUEST['time_end']), $_REQUEST['total_fee']/100);
+            $payorder->payNotify(data['transaction_id'],Carbon::createFromFormat('YmdHis', data['time_end']), data['total_fee']/100);
             \Log::debug($response->getData());
             return redirect('/order/list');
         }else{
