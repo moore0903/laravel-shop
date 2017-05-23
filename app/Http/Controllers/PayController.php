@@ -62,7 +62,7 @@ class PayController extends Controller
             $paytype = 'WechatPay_Js';
             $openid = $request->session()->get('openid');
             if(empty($openid)){
-                return redirect('redirectToWechat');
+                return redirect('oauth/wechat');
             }
             $gateway    = Omnipay::create('WechatPay_Js');
         }else{
