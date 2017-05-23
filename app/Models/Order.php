@@ -254,19 +254,39 @@ class Order extends Model
     ];
 
     /**
-     * 快递公司编码
-     * @var array
+     * 订单状态简短介绍
+     * @param $stat
+     * @return string
      */
-    public static $express_company_coding = [
-        '自提' => '0',
-        '顺丰' => 'shunfeng',
-        '中通' => 'zhongtong',
-        '圆通' => 'yuantong',
-        '韵达' => 'yunda',
-        '国通' => 'guotongkuaidi',
-        'EMS' => 'ems',
-        '申通' => 'shentong',
-    ];
+    public static function express_coding($stat) {
+        switch($stat) {
+            case '顺丰':
+                return 'shunfeng';
+                break;
+            case '中通':
+                return 'zhongtong';
+                break;
+            case '圆通':
+                return 'yuantong';
+                break;
+            case '韵达':
+                return 'yunda';
+                break;
+            case '国通':
+                return 'guotongkuaidi';
+                break;
+            case 'EMS':
+                return 'ems';
+                break;
+            case '申通':
+                return 'shentong';
+                break;
+            default:
+                return '自提';
+                break;
+        }
+    }
+
 
     const  STAT_NOTPAY = 0;   //未支付
     const  STAT_PAYED = 1;  //已支付
