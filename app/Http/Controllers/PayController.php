@@ -89,7 +89,7 @@ class PayController extends Controller
     }
 
     /**
-     * 支付宝回调
+     * 支付宝回调(同步)
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
@@ -110,7 +110,7 @@ class PayController extends Controller
                 $out_trade_no = explode('_',$_REQUEST['out_trade_no']);
 
                 $payorder = PayOrder::find(intval($out_trade_no[1]));
-                $payorder->payNotify($_REQUEST['trade_no'], $_REQUEST['notify_time'], $_REQUEST['receipt_amount']);
+                $payorder->payNotify($_REQUEST['trade_no'], $_REQUEST['timestamp'], $_REQUEST['total_amount']);
                 return redirect('/order/list');
             }else{
                 return redirect('/order/list');
@@ -122,7 +122,7 @@ class PayController extends Controller
     }
 
     /**
-     * 支付宝回调
+     * 支付宝回调(异步)
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
