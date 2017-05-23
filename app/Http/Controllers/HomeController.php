@@ -49,7 +49,7 @@ class HomeController extends Controller
             'itemStar'=>$shopItem->comments->avg('pivot.star')??0,
             'cart'=>collect(['cart_items'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_price_count'=>\Cart::totalPrice()]),
             'is_collection'=>empty($is_collection)?0:1,
-            '$secKill'=>$secKill
+            'secKill'=>$secKill
         ]);
     }
 
