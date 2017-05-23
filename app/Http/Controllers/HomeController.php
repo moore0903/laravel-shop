@@ -72,7 +72,7 @@ class HomeController extends Controller
             $shopItemQuery = $shopItemQuery->where('title','like','%'.$request['search'].'%')->where('detail','like','%'.$request['search'].'%');
         }
         if($request['catalog_id']){
-            $shopItemQuery = $shopItemQuery->where('catalog_id','=',$request['catalog_id']);
+            $shopItemQuery = $shopItemQuery->where('catalog_id','=',\Hashids::decode($request['catalog_id']));
         }
         if($request['lowestPrice']){
             $shopItemQuery = $shopItemQuery->where('price','>',$request['lowestPrice']);
