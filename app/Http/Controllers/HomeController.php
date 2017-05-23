@@ -67,12 +67,14 @@ class HomeController extends Controller
             return $value;
         });
         $maxid = 0xffffffff;
-        $shopItemQuery = ShopItem::where('id','<',$maxid);
+        $shopItemQuery = ShopItem::where('id','<',$maxid)->where('show','=','1');
         if($request['search']){
             $shopItemQuery = $shopItemQuery->where('title','like','%'.$request['search'].'%')->where('detail','like','%'.$request['search'].'%');
         }
         if($request['catalog_id']){
-            $shopItemQuery = $shopItemQuery->where('catalog_id','=',\Hashids::decode($request['catalog_id']));
+            $catalog_id = Hashids::decode($request['catalog_id']);
+            $catalog_ids = Catalog::where('id','=',$catalog_id)->orWhere('parent_id','=',$catalog_id)->select('id')->get();
+            $shopItemQuery = $shopItemQuery->whereIn('catalog_id',array_flatten($catalog_ids->toArray()));
         }
         if($request['lowestPrice']){
             $shopItemQuery = $shopItemQuery->where('price','>',$request['lowestPrice']);
