@@ -54,6 +54,8 @@ Route::group(
         Route::get('aliPay','PayController@aliPay');
         Route::any('aliReturnPay','PayController@aliReturnPay');
         Route::any('aliNotifyPay','PayController@aliNotifyPay');
+        Route::get('wechatPay','PayController@wechatPay');
+        Route::any('wechatReturnPay','PayController@wechatReturnPay');
     }
 );
 
