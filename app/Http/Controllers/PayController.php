@@ -59,7 +59,7 @@ class PayController extends Controller
         $gateway->setMchId(config('wxconfig.mch_id'));
         $gateway->setApiKey(config('wxconfig.api_key'));
         $gateway->setNotifyUrl(config('wxconfig.notify_url'));
-        $gateway->setReturnUrl(config('wxconfig.return_url'));
+        //$gateway->setReturnUrl(config('wxconfig.return_url'));
 
         $subject = '订单号：'.$order->serial;
 
@@ -163,35 +163,6 @@ class PayController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function wechatReturnPay(Request $request){
-        $gateway    = Omnipay::create('WechatPay');
-        $gateway->setAppId(config('wxconfig.app_id'));
-        $gateway->setMchId(config('wxconfig.mch_id'));
-        $gateway->setApiKey(config('wxconfig.api_key'));
-        $gateway->setNotifyUrl(config('wxconfig.notify_url'));
-        $gateway->setReturnUrl(config('wxconfig.return_url'));
-
-        $response = $gateway->completePurchase([
-            'request_params' => file_get_contents('php://input')
-        ])->send();
-
-        if ($response->isPaid()) {
-            $out_trade_no = explode('_',$_REQUEST['out_trade_no']);
-
-            $payorder = PayOrder::find(intval($out_trade_no[1]));
-            $payorder->payNotify($_REQUEST['transaction_id'],Carbon::createFromFormat('YmdHis', $_REQUEST['time_end']), $_REQUEST['total_fee']/100);
-            \Log::debug($response->getData());
-            return redirect('/order/list');
-        }else{
-            return redirect('/order/list');
-        }
-    }
-
-    /**
-     * 微信支付回调
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
     public function wechatNotifyPay(Request $request){
         $gateway    = Omnipay::create('WechatPay');
         $gateway->setAppId(config('wxconfig.app_id'));
@@ -210,9 +181,9 @@ class PayController extends Controller
             $payorder = PayOrder::find(intval($out_trade_no[1]));
             $payorder->payNotify($_REQUEST['transaction_id'],Carbon::createFromFormat('YmdHis', $_REQUEST['time_end']), $_REQUEST['total_fee']/100);
             \Log::debug($response->getData());
-            die('success');
+            return redirect('/order/list');
         }else{
-            die('fail');
+            return redirect('/order/list');
         }
     }
 
