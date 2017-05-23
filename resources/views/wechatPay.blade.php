@@ -31,6 +31,12 @@
                     onBridgeReady();
                 }
             </script>
+        @elseif($inMobile && 0)
+            <?php
+            $response_data = $response->getData();
+            $url = $response_data['mweb_url'];
+            ?>
+            <a class="btn btn-warning" href="{{$url}}&redirect_url={{urlencode(url('/user/order/detail?id='.$order->id))}}">点击打开微信支付</a> 如果没有成功调起微信APP，请使用其他支付方式。
         @else
             <div class="qrcode" qrcode='{{$response->getCodeUrl()}}' label='微信扫码支付' labelimg="qr_wx" style="margin-top: 20px;margin: 0 auto;"></div>
             <p>
