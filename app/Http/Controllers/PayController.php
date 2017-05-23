@@ -174,21 +174,23 @@ class PayController extends Controller
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function wechatNotifyPay(Request $request){
-        $gateway    = Omnipay::create('WechatPay');
+        $gateway    = Omnipay::create('WechatPay_Native');
         $gateway->setAppId(config('wxconfig.app_id'));
         $gateway->setMchId(config('wxconfig.mch_id'));
         $gateway->setApiKey(config('wxconfig.api_key'));
         $gateway->setNotifyUrl(config('wxconfig.notify_url'));
-        $response = $gateway->completePurchase([
-            'request_params' => file_get_contents('php://input')
-        ])->send();
+        $params = file_get_contents('php://input');
+        $request = $gateway->completePurchase([
+            'request_params' =>$params
+        ]);
+        $response = $request->send();
 
         if ($response->isPaid()) {
-            $data = $response->getData();
-            \Log::debug($response->getData());
+            $data = $request->getData();
+            \Log::debug($request->getData());
             $out_trade_no = explode('_',$data['out_trade_no']);
             $payorder = PayOrder::find(intval($out_trade_no[1]));
-            $payorder->payNotify($data['transaction_id'],\Carbon::createFromFormat('YmdHis', $data['time_end']), $data['total_fee']/100);
+            $payorder->payNotify($data['transaction_id'],Carbon::createFromFormat('YmdHis', $data['time_end']), $data['total_fee']/100);
             return '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
         }else{
             return '<xml><return_code><![CDATA[FAIL]]></return_code><return_msg><![CDATA[error]]></return_msg></xml>';
