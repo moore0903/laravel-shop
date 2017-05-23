@@ -24,6 +24,7 @@ class PayController extends Controller
         $gateway->setPrivateKey(config('aliconfig.rsa_private_key'));
         $gateway->setAlipayPublicKey(config('aliconfig.ali_public_key'));
         $gateway->setNotifyUrl(config('aliconfig.notify_url'));
+        $gateway->setReturnUrl(config('aliconfig.return_url'));
 
         $subject = '订单号：'.$order->serial;
 
@@ -99,6 +100,39 @@ class PayController extends Controller
         $gateway->setPrivateKey(config('aliconfig.rsa_private_key'));
         $gateway->setAlipayPublicKey(config('aliconfig.ali_public_key'));
         $gateway->setNotifyUrl(config('aliconfig.notify_url'));
+        $gateway->setReturnUrl(config('aliconfig.return_url'));
+
+        $request = $gateway->completePurchase();
+        $request->setParams(array_merge($_POST, $_GET));
+        try {
+            $response = $request->send();
+            if($response->isPaid()){
+                $out_trade_no = explode('_',$_REQUEST['out_trade_no']);
+
+                $payorder = PayOrder::find(intval($out_trade_no[1]));
+                $payorder->payNotify($_REQUEST['trade_no'], $_REQUEST['notify_time'], $_REQUEST['receipt_amount']);
+                return redirect('/order/list');
+            }else{
+                return redirect('/order/list');
+            }
+        } catch (Exception $e) {
+            \Log::debug($e);
+            return redirect('/order/list');
+        }
+    }
+
+    /**
+     * 支付宝回调
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function aliNotifyPay(Request $request){
+        $gateway = Omnipay::create('Alipay_AopWap');
+        $gateway->setSignType(config('aliconfig.sign_type')); // RSA/RSA2/MD5
+        $gateway->setAppId(config('aliconfig.app_id'));
+        $gateway->setPrivateKey(config('aliconfig.rsa_private_key'));
+        $gateway->setAlipayPublicKey(config('aliconfig.ali_public_key'));
+        $gateway->setNotifyUrl(config('aliconfig.notify_url'));
 
         $request = $gateway->completePurchase();
         $request->setParams(array_merge($_POST, $_GET));
@@ -120,7 +154,6 @@ class PayController extends Controller
             die('fail');
             //return redirect('/order/list');
         }
-
     }
 
     /**
