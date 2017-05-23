@@ -50,44 +50,54 @@ class PayController extends Controller
     /**
      * 微信支付
      * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function wechatPay(Request $request){
         $order = Order::find($request['order_id']);
-
-        $gateway    = Omnipay::create('WechatPay_Js');
+        $paytype = 'WechatPay_Native';
+        $inMobile = preg_match('/iPad|iPhone|iPod|iOS|Android|Windows Phone|Mobile/i',$_SERVER['HTTP_USER_AGENT']??'') ;// strpos(($_SERVER['HTTP_USER_AGENT']??''),'MicroMessenger')!==FALSE;
+        $inWechat = strpos(($_SERVER['HTTP_USER_AGENT']??''),'MicroMessenger')!==FALSE;
+        if($inWechat){
+            $paytype = 'WechatPay_Js';
+            $openid = $request->session()->get('openid');
+            //TODO 未登录
+            $gateway    = Omnipay::create('WechatPay_Js');
+        }else{
+            $gateway    = Omnipay::create('WechatPay_Native');
+        }
         $gateway->setAppId(config('wxconfig.app_id'));
         $gateway->setMchId(config('wxconfig.mch_id'));
         $gateway->setApiKey(config('wxconfig.api_key'));
         $gateway->setNotifyUrl(config('wxconfig.notify_url'));
-        //$gateway->setReturnUrl(config('wxconfig.return_url'));
 
         $subject = '订单号：'.$order->serial;
-
         $payorder = PayOrder::firstOrCreate([
             'order_id'=>$order->id,
             'subject'=>$subject,
             'total'=>$order->total,
             'discount'=>$order->discount,
             'totalpay'=>$order->totalpay,
-            'paytype'=>'WechatPay_Js',
+            'paytype'=>$paytype,
         ]);
-
-
 
         $order = [
             'body'              => '订单编号:'.$order->serial,
             'out_trade_no'      => $payorder->order_id.'_'.$payorder->id,
-            'total_fee'         => $order->totalpay/100, //=0.01
-            'spbill_create_ip'  => 'ip_address',
-            'fee_type'          => 'CNY'
+            'total_fee'         => intval($payorder->totalpay*100), //=0.01
+            'spbill_create_ip'  => $_SERVER['SERVER_ADDR']??(isset($_SERVER['HOSTNAME'])?gethostbyname($_SERVER['HOSTNAME']):'127.0.0.1'),
+            'fee_type'          => 'CNY',
         ];
 
+        if($inWechat) {
+            $order['openid'] = $openid;
+        }
         $request  = $gateway->purchase($order);
         $response = $request->send();
 
-        $response->isSuccessful();
-        \Log::debug($response->getData());
-        $response->getJsOrderData();
+        return view('wechatPay',['response'=>$response,'inWechat'=>$inWechat,'inMobile'=>$inMobile]);
+
+
+
     }
 
     /**
@@ -169,7 +179,6 @@ class PayController extends Controller
         $gateway->setMchId(config('wxconfig.mch_id'));
         $gateway->setApiKey(config('wxconfig.api_key'));
         $gateway->setNotifyUrl(config('wxconfig.notify_url'));
-        $gateway->setReturnUrl(config('wxconfig.return_url'));
 
         $response = $gateway->completePurchase([
             'request_params' => file_get_contents('php://input')
