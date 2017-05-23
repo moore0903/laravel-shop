@@ -61,7 +61,9 @@ class PayController extends Controller
         if($inWechat){
             $paytype = 'WechatPay_Js';
             $openid = $request->session()->get('openid');
-            //TODO 未登录
+            if(empty($openid)){
+                return redirect('redirectToWechat');
+            }
             $gateway    = Omnipay::create('WechatPay_Js');
         }else{
             $gateway    = Omnipay::create('WechatPay_Native');
@@ -156,16 +158,13 @@ class PayController extends Controller
 
                 $payorder = PayOrder::find(intval($out_trade_no[1]));
                 $payorder->payNotify($_REQUEST['trade_no'], $_REQUEST['notify_time'], $_REQUEST['receipt_amount']);
-                //return redirect('/order/list');
                 die('success');
             }else{
                 die('fail');
-                //return redirect('/order/list');
             }
         } catch (Exception $e) {
             \Log::debug($e);
             die('fail');
-            //return redirect('/order/list');
         }
     }
 
