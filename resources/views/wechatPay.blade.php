@@ -32,7 +32,7 @@
                 }
             </script>
         @else
-            <div class="qrcode" qrcode='{{$response->getCodeUrl()}}' label='微信扫码支付' labelimg="qr_wx" style="margin-top: 20px;"></div>
+            <div class="qrcode" qrcode='{{$response->getCodeUrl()}}' label='微信扫码支付' labelimg="qr_wx" style="margin-top: 20px;margin: 0 auto;"></div>
             <p>
             <p><a class="btn btn-warning" onclick="window.parent.location.href='{{url('/order/list')}}'">已支付完成</a></p>
             <p style="font-size: 12px;color: #cccccc;">若返回后仍显示待支付状态，请过几分钟后再刷新试试。</p>

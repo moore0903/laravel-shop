@@ -179,14 +179,13 @@ class PayController extends Controller
         $gateway->setMchId(config('wxconfig.mch_id'));
         $gateway->setApiKey(config('wxconfig.api_key'));
         $gateway->setNotifyUrl(config('wxconfig.notify_url'));
-
         $response = $gateway->completePurchase([
             'request_params' => file_get_contents('php://input')
         ])->send();
 
         if ($response->isPaid()) {
-            $out_trade_no = explode('_',$_REQUEST['out_trade_no']);
-
+            $data = $request->getData();
+            $out_trade_no = explode('_',$data['out_trade_no']);
             $payorder = PayOrder::find(intval($out_trade_no[1]));
             $payorder->payNotify($_REQUEST['transaction_id'],Carbon::createFromFormat('YmdHis', $_REQUEST['time_end']), $_REQUEST['total_fee']/100);
             \Log::debug($response->getData());
