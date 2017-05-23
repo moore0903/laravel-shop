@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\PayOrder;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Omnipay\Omnipay;
 
@@ -60,7 +61,9 @@ class PayController extends Controller
         if($inWechat){
             $paytype = 'WechatPay_Js';
             $openid = $request->session()->get('openid');
-            //TODO 未登录
+            if(empty($openid)){
+                return redirect('oauth/wechat');
+            }
             $gateway    = Omnipay::create('WechatPay_Js');
         }else{
             $gateway    = Omnipay::create('WechatPay_Native');
@@ -155,16 +158,13 @@ class PayController extends Controller
 
                 $payorder = PayOrder::find(intval($out_trade_no[1]));
                 $payorder->payNotify($_REQUEST['trade_no'], $_REQUEST['notify_time'], $_REQUEST['receipt_amount']);
-                //return redirect('/order/list');
                 die('success');
             }else{
                 die('fail');
-                //return redirect('/order/list');
             }
         } catch (Exception $e) {
             \Log::debug($e);
             die('fail');
-            //return redirect('/order/list');
         }
     }
 
@@ -179,20 +179,19 @@ class PayController extends Controller
         $gateway->setMchId(config('wxconfig.mch_id'));
         $gateway->setApiKey(config('wxconfig.api_key'));
         $gateway->setNotifyUrl(config('wxconfig.notify_url'));
-
         $response = $gateway->completePurchase([
             'request_params' => file_get_contents('php://input')
         ])->send();
 
         if ($response->isPaid()) {
-            $out_trade_no = explode('_',$_REQUEST['out_trade_no']);
-
+            $data = $response->getData();
+            $out_trade_no = explode('_',$data['out_trade_no']);
             $payorder = PayOrder::find(intval($out_trade_no[1]));
-            $payorder->payNotify($_REQUEST['transaction_id'],Carbon::createFromFormat('YmdHis', $_REQUEST['time_end']), $_REQUEST['total_fee']/100);
+            $payorder->payNotify($data['transaction_id'],\Carbon::createFromFormat('YmdHis', $data['time_end']), $data['total_fee']/100);
             \Log::debug($response->getData());
-            return redirect('/order/list');
+            return '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
         }else{
-            return redirect('/order/list');
+            return '<xml><return_code><![CDATA[FAIL]]></return_code><return_msg><![CDATA[error]]></return_msg></xml>';
         }
     }
 
