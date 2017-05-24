@@ -43,7 +43,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => $_debug_??env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -192,7 +192,8 @@ return [
         Overtrue\LaravelWechat\ServiceProvider::class,
         Overtrue\LaravelPinyin\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-        Ignited\LaravelOmnipay\LaravelOmnipayServiceProvider::class,
+        Arcanedev\LogViewer\LogViewerServiceProvider::class,
+		Ignited\LaravelOmnipay\LaravelOmnipayServiceProvider::class,
 
     ],
 
