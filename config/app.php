@@ -192,6 +192,7 @@ return [
         Overtrue\LaravelWechat\ServiceProvider::class,
         Overtrue\LaravelPinyin\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Arcanedev\LogViewer\LogViewerServiceProvider::class,
 
     ],
 
