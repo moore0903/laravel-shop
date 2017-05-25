@@ -41,7 +41,6 @@
                         <p class="od1 fr"><a href="{{url('/pay/wechatPay?order_id='.$order->id)}}">立即付款</a></p>
                     @else
                         <p class="od1 fr"><a href="{{url('/pay/aliPay?order_id='.$order->id)}}">立即付款</a></p>
-                    @else
                     @endif
                 <p class="od2 fr"><a href="{{url('order/cancel').'?id='.$order->id}}">取消订单</a></p>
                 @elseif($order->stat == \App\Models\Order::STAT_PAYED || $order->stat == \App\Models\Order::STAT_EXPRESS)
