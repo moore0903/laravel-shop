@@ -127,7 +127,9 @@ class PayController extends Controller
         try {
             $response = $request->send();
             if($response->isPaid()){
-
+                $order = Order::find($out_trade_no[0]);
+                $order->paytype = '支付宝支付';
+                $order->save();
                 $payorder = PayOrder::find(intval($out_trade_no[1]));
                 $payorder->payNotify($_REQUEST['trade_no'], $_REQUEST['timestamp'], $_REQUEST['total_amount']);
                 return redirect('/order/list');
@@ -159,6 +161,9 @@ class PayController extends Controller
         try {
             $response = $request->send();
             if($response->isPaid()){
+                $order = Order::find($out_trade_no[0]);
+                $order->paytype = '支付宝支付';
+                $order->save();
                 $payorder = PayOrder::find(intval($out_trade_no[1]));
                 $payorder->payNotify($_REQUEST['trade_no'], $_REQUEST['notify_time'], $_REQUEST['receipt_amount']);
                 die('success');
@@ -190,8 +195,10 @@ class PayController extends Controller
 
         if ($response->isPaid()) {
             $data = $request->getData();
-            \Log::debug($request->getData());
             $out_trade_no = explode('_',$data['out_trade_no']);
+            $order = Order::find($out_trade_no[0]);
+            $order->paytype = '微信支付';
+            $order->save();
             $payorder = PayOrder::find(intval($out_trade_no[1]));
             $payorder->payNotify($data['transaction_id'],Carbon::createFromFormat('YmdHis', $data['time_end']), $data['total_fee']/100);
             return '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
