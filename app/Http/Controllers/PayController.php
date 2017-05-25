@@ -19,10 +19,10 @@ class PayController extends Controller
     public function aliPay(Request $request){
         $order = Order::find($request['order_id']);
         $paytype = 'Alipay_AopPage';
-        $inMobile = preg_match('/iPad|iPhone|iPod|iOS|Android|Windows Phone|Mobile/i',$_SERVER['HTTP_USER_AGENT']??'') ;
-        if($inMobile){
+//        $inMobile = preg_match('/iPad|iPhone|iPod|iOS|Android|Windows Phone|Mobile/i',$_SERVER['HTTP_USER_AGENT']??'') ;
+//        if($inMobile){
             $paytype = 'Alipay_AopWap';
-        }
+//        }
         $gateway    = Omnipay::create($paytype);
         $gateway->setSignType(config('aliconfig.sign_type')); // RSA/RSA2/MD5
         $gateway->setAppId(config('aliconfig.app_id'));
