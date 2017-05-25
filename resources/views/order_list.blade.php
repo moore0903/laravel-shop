@@ -33,10 +33,14 @@
             <p class="jige">共{{$orderNum}}件商品，实付<i>¥{{$order->totalpay}}元</i></p>
             <div class="odkuai clear _order_{{$order->id}}">
                 @if($order->stat == \App\Models\Order::STAT_NOTPAY)
-                    @if($order->paytype == '支付宝支付')
-                        <p class="od1 fr"><a href="{{url('/pay/aliPay?order_id='.$order->id)}}">立即付款</a></p>
-                    @elseif($order->paytype == '微信支付')
+                    <?php
+                    $inMobile = preg_match('/iPad|iPhone|iPod|iOS|Android|Windows Phone|Mobile/i',$_SERVER['HTTP_USER_AGENT']??'') ;
+                    $inWechat = strpos(($_SERVER['HTTP_USER_AGENT']??''),'MicroMessenger')!==FALSE;
+                    ?>
+                    @if($inWechat)
                         <p class="od1 fr"><a href="{{url('/pay/wechatPay?order_id='.$order->id)}}">立即付款</a></p>
+                    @else
+                        <p class="od1 fr"><a href="{{url('/pay/aliPay?order_id='.$order->id)}}">立即付款</a></p>
                     @else
                     @endif
                 <p class="od2 fr"><a href="{{url('order/cancel').'?id='.$order->id}}">取消订单</a></p>
