@@ -18,10 +18,10 @@ class PayController extends Controller
 {
     public function aliPay(Request $request){
         $order = Order::find($request['order_id']);
-        $paytype = 'Alipay_AopPage';
+//        $paytype = 'Alipay_AopPage';
 //        $inMobile = preg_match('/iPad|iPhone|iPod|iOS|Android|Windows Phone|Mobile/i',$_SERVER['HTTP_USER_AGENT']??'') ;
 //        if($inMobile){
-            $paytype = 'Alipay_AopWap';
+        $paytype = 'Alipay_AopWap';
 //        }
         $gateway    = Omnipay::create($paytype);
         $gateway->setSignType(config('aliconfig.sign_type')); // RSA/RSA2/MD5
@@ -113,8 +113,7 @@ class PayController extends Controller
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function aliReturnPay(Request $request){
-        $out_trade_no = explode('_',$_REQUEST['out_trade_no']);
-        $gateway = Omnipay::create($out_trade_no[2]);
+        $gateway = Omnipay::create('Alipay_AopWap');
         $gateway->setSignType(config('aliconfig.sign_type')); // RSA/RSA2/MD5
         $gateway->setAppId(config('aliconfig.app_id'));
         $gateway->setPrivateKey(config('aliconfig.rsa_private_key'));
@@ -127,6 +126,7 @@ class PayController extends Controller
         try {
             $response = $request->send();
             if($response->isPaid()){
+                $out_trade_no = explode('_',$_REQUEST['out_trade_no']);
                 $order = Order::find($out_trade_no[0]);
                 $order->paytype = '支付宝支付';
                 $order->save();
@@ -148,8 +148,7 @@ class PayController extends Controller
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function aliNotifyPay(Request $request){
-        $out_trade_no = explode('_',$_REQUEST['out_trade_no']);
-        $gateway = Omnipay::create($out_trade_no[2]);
+        $gateway = Omnipay::create('Alipay_AopWap');
         $gateway->setSignType(config('aliconfig.sign_type')); // RSA/RSA2/MD5
         $gateway->setAppId(config('aliconfig.app_id'));
         $gateway->setPrivateKey(config('aliconfig.rsa_private_key'));
@@ -161,6 +160,7 @@ class PayController extends Controller
         try {
             $response = $request->send();
             if($response->isPaid()){
+                $out_trade_no = explode('_',$_REQUEST['out_trade_no']);
                 $order = Order::find($out_trade_no[0]);
                 $order->paytype = '支付宝支付';
                 $order->save();
