@@ -18,8 +18,12 @@ class PayController extends Controller
 {
     public function aliPay(Request $request){
         $order = Order::find($request['order_id']);
-
-        $gateway = Omnipay::create('Alipay_AopWap');
+        $paytype = 'Alipay_AopPage';
+        $inMobile = preg_match('/iPad|iPhone|iPod|iOS|Android|Windows Phone|Mobile/i',$_SERVER['HTTP_USER_AGENT']??'') ;
+        if($inMobile){
+            $paytype = 'Alipay_AopWap';
+        }
+        $gateway    = Omnipay::create($paytype);
         $gateway->setSignType(config('aliconfig.sign_type')); // RSA/RSA2/MD5
         $gateway->setAppId(config('aliconfig.app_id'));
         $gateway->setPrivateKey(config('aliconfig.rsa_private_key'));
@@ -40,7 +44,7 @@ class PayController extends Controller
 
         $response = $gateway->purchase()->setBizContent([
             'subject'      => '订单编号:'.$order->serial,
-            'out_trade_no' => $payorder->order_id.'_'.$payorder->id,
+            'out_trade_no' => $payorder->order_id.'_'.$payorder->id.'_'.$paytype,
             'total_amount' => $order->totalpay,
             'product_code' => 'FAST_INSTANT_TRADE_PAY',
         ])->send();
@@ -109,7 +113,8 @@ class PayController extends Controller
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function aliReturnPay(Request $request){
-        $gateway = Omnipay::create('Alipay_AopWap');
+        $out_trade_no = explode('_',$_REQUEST['out_trade_no']);
+        $gateway = Omnipay::create($out_trade_no[2]);
         $gateway->setSignType(config('aliconfig.sign_type')); // RSA/RSA2/MD5
         $gateway->setAppId(config('aliconfig.app_id'));
         $gateway->setPrivateKey(config('aliconfig.rsa_private_key'));
@@ -122,8 +127,9 @@ class PayController extends Controller
         try {
             $response = $request->send();
             if($response->isPaid()){
-                $out_trade_no = explode('_',$_REQUEST['out_trade_no']);
-
+                $order = Order::find($out_trade_no[0]);
+                $order->paytype = '支付宝支付';
+                $order->save();
                 $payorder = PayOrder::find(intval($out_trade_no[1]));
                 $payorder->payNotify($_REQUEST['trade_no'], $_REQUEST['timestamp'], $_REQUEST['total_amount']);
                 return redirect('/order/list');
@@ -142,7 +148,8 @@ class PayController extends Controller
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function aliNotifyPay(Request $request){
-        $gateway = Omnipay::create('Alipay_AopWap');
+        $out_trade_no = explode('_',$_REQUEST['out_trade_no']);
+        $gateway = Omnipay::create($out_trade_no[2]);
         $gateway->setSignType(config('aliconfig.sign_type')); // RSA/RSA2/MD5
         $gateway->setAppId(config('aliconfig.app_id'));
         $gateway->setPrivateKey(config('aliconfig.rsa_private_key'));
@@ -154,8 +161,9 @@ class PayController extends Controller
         try {
             $response = $request->send();
             if($response->isPaid()){
-                $out_trade_no = explode('_',$_REQUEST['out_trade_no']);
-
+                $order = Order::find($out_trade_no[0]);
+                $order->paytype = '支付宝支付';
+                $order->save();
                 $payorder = PayOrder::find(intval($out_trade_no[1]));
                 $payorder->payNotify($_REQUEST['trade_no'], $_REQUEST['notify_time'], $_REQUEST['receipt_amount']);
                 die('success');
@@ -187,8 +195,10 @@ class PayController extends Controller
 
         if ($response->isPaid()) {
             $data = $request->getData();
-            \Log::debug($request->getData());
             $out_trade_no = explode('_',$data['out_trade_no']);
+            $order = Order::find($out_trade_no[0]);
+            $order->paytype = '微信支付';
+            $order->save();
             $payorder = PayOrder::find(intval($out_trade_no[1]));
             $payorder->payNotify($data['transaction_id'],Carbon::createFromFormat('YmdHis', $data['time_end']), $data['total_fee']/100);
             return '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
