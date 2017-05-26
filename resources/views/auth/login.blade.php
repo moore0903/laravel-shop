@@ -51,7 +51,7 @@
                                 if(data.stat == 1){
                                     layer.msg('发送成功');
                                     console.log(data.code);
-                                    login.verifycode = data.code;
+                                    //login.verifycode = data.code;
                                 }else{
                                     layer.msg(data.msg);
                                 }
