@@ -198,9 +198,9 @@ class UserController extends Controller
         $code = str_repeat('0',4-strlen($code)).$code;
         $msg = '您好，您的验证码是'.$code.'【久诚久酒业】';
         $resstr = NewSms($request['phone'], $msg);
-        if($resstr < 0) {
-            return array('stat'=>0,'msg'=>'短信发送失败.');
-        }
+//        if($resstr < 0) {
+//            return array('stat'=>0,'msg'=>'短信发送失败.');
+//        }
         \Log::debug($resstr);
         \Log::debug($code);
         $request->session()->put('verifycode', $code);
