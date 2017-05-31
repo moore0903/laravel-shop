@@ -197,7 +197,7 @@ class UserController extends Controller
         $code = ''.mt_rand(0,9999);
         $code = str_repeat('0',4-strlen($code)).$code;
         $msg = '您好，您的验证码是'.$code.'【久诚久酒业】';
-        $resstr = NewSms($request['phone'], $msg);
+        $resstr = NewSms(config('smsconfig.id'),config('smsconfig.pwd'),$request['phone'], $msg);
 //        if($resstr < 0) {
 //            return array('stat'=>0,'msg'=>'短信发送失败.');
 //        }

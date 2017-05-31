@@ -6,12 +6,10 @@
  * Time: 14:45
  */
 
-function NewSms($phone,$msg)
+function NewSms($id,$pwd,$phone,$msg)
 {
     $url="http://service.winic.org:8009/sys_port/gateway/index.asp?";
     $data = "id=%s&pwd=%s&to=%s&content=%s&time=";
-    $id = 'jiuchengjiu';
-    $pwd = 'x891465';
     $to = $phone;
     $content = iconv("UTF-8","GB2312",$msg);
     $rdata = sprintf($data, $id, $pwd, $to, $content);

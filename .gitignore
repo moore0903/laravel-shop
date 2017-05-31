@@ -14,4 +14,5 @@ composer.lock
 /config/socialite.php
 /config/wxconfig.php
 /config/aliconfig.php
+/config/smsconfig.php
 up-rewrite.conf
