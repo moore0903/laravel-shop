@@ -10,6 +10,8 @@ namespace App\Http\Controllers;
 
 
 use App\Models\ThirdUser;
+use App\User;
+use Illuminate\Http\Request;
 use Overtrue\LaravelSocialite\Socialite;
 
 class OAuthController extends Controller
@@ -34,6 +36,29 @@ class OAuthController extends Controller
     {
         $user = Socialite::driver('github')->user();
         $this->authHandle('github',$user->getId(),$user->getName(),$user->getNickname(),$user->getAvatar(),$user->getOriginal());
+        return \Redirect::intended(\Session::pull('url.intended', '/'));
+    }
+
+    /**
+     * Redirect the user to the Wechat authentication page.
+     *
+     * @return Response
+     */
+    public function redirectToWechat()
+    {
+        return Socialite::driver('wechat')->scopes(['snsapi_userinfo'])->redirect();
+    }
+
+    /**
+     * Obtain the user information from Wechat.
+     *
+     * @return Response
+     */
+    public function handleWechatCallback(Request $request)
+    {
+        $user = Socialite::driver('wechat')->user();
+        $this->authHandle('wechat',$user->getId(),$user->getName(),$user->getNickname(),$user->getAvatar(),$user->getOriginal());
+        $request->session()->put('openid', $user->getId());
         return \Redirect::intended(\Session::pull('url.intended', '/'));
     }
 

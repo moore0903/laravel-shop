@@ -13,6 +13,10 @@ class Catalog extends Model
 
     protected $table = 'catalogs';
 
+    protected $fillable = [
+        'title', 'order', 'parent_id','url','catalog_tpl','content_tpl','img'
+    ];
+
     public function article()
     {
         return $this->hasMany(Article::class,'catalog_id');
@@ -40,7 +44,11 @@ class Catalog extends Model
         }
         return $result;
     }
-    
 
-    
+    public static function parentCatalog($catalog_id,$page=5){
+        return Catalog::where('parent_id','=',$catalog_id)->take($page)->get();
+    }
+
+
+
 }

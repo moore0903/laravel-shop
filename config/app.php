@@ -1,4 +1,9 @@
 <?php
+$_debug_ =  $_COOKIE["_debug_"]??null;
+if(isset($_REQUEST['_debug_'])) {
+    $_debug_ = $_REQUEST['_debug_']=='1';
+    setcookie('_debug_', $_debug_, time()+60*10, '/');
+}
 
 return [
 
@@ -12,7 +17,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Laravel',
+    'name' => env('APP_NAME', 'Laravel'),
 
     /*
     |--------------------------------------------------------------------------
@@ -25,7 +30,7 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
+    'env' => $_debug_??env('APP_ENV', 'production'),
 
     /*
     |--------------------------------------------------------------------------
@@ -38,7 +43,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => $_debug_??env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -186,6 +191,9 @@ return [
         Vinkla\Hashids\HashidsServiceProvider::class,
         Overtrue\LaravelWechat\ServiceProvider::class,
         Overtrue\LaravelPinyin\ServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+        Arcanedev\LogViewer\LogViewerServiceProvider::class,
+        Ignited\LaravelOmnipay\LaravelOmnipayServiceProvider::class,
 
     ],
 
@@ -236,10 +244,11 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Socialite' => Overtrue\LaravelSocialite\Socialite::class,
-        'Cart'      => Overtrue\LaravelShoppingCart\Facade::class,
+        'Cart' => Overtrue\LaravelShoppingCart\Facade::class,
         'Hashids' => Vinkla\Hashids\Facades\Hashids::class,
         'EasyWeChat' => Overtrue\LaravelWechat\Facade::class,
         'Pinyin' => Overtrue\LaravelPinyin\Facades\Pinyin::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 

@@ -11,4 +11,7 @@ Homestead.yaml
 .up-rewrite.conf
 .uini
 composer.lock
-/composer.lock
+/config/socialite.php
+/config/wxconfig.php
+/config/aliconfig.php
+up-rewrite.conf

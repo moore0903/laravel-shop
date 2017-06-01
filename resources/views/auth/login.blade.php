@@ -63,6 +63,7 @@
                             <div class="col-md-8 col-md-offset-4">
                                 第三方登录
                                 <a class="btn btn-link" href="{{ url('/oauth/github') }}"><img src="{{ asset('images/invertocat.png') }}"/></a>
+                                <a class="btn btn-link" href="{{ url('/oauth/wechat') }}"><img src="{{ asset('images/invertocat.png') }}"/></a>
                             </div>
                         </div>
                     </form>

@@ -9,6 +9,10 @@ class Article extends Model
 {
     protected $table = 'articles';
 
+    protected $fillable = [
+        'title', 'content', 'img','author','browse','hot','new','recommend','content_tpl','is_display','catalog_id'
+    ];
+
     public function catalog()
     {
         return $this->belongsTo(Catalog::class,'catalog_id');
@@ -30,7 +34,7 @@ class Article extends Model
         return $options;
     }
 
-    
 
-    
+
+
 }

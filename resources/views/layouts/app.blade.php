@@ -1,56 +1,75 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="robots" content="all" />
-    <link rel="start" href="" title="Home" />
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-    <meta id="viewport" name="viewport" content="width=750, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="HandheldFriendly" content="true"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <link href="{{ asset('theme/css/style.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('theme/css/flexslider.css') }}" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="{{ asset('js/vue.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('theme/common/jquery-1.7.2.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('theme/common/jquery.tools.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('theme/common/ciads.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('theme/common/tab.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('theme/common/jquery.flexslider.js') }}"></script>
+
+    <!-- Styles -->
+    <link href="/css/app.css" rel="stylesheet">
+
     <!-- Scripts -->
     <script>
-        window.Laravel = {!! json_encode([
+        window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
-        ]) !!};
+        ]); ?>
     </script>
 </head>
-
 <body>
 <div class="wrap">
     @yield('header')
 
-    @yield('banner')
+                <!-- Collapsed Hamburger -->
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+                    <span class="sr-only">Toggle Navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
 
-    @yield('search')
+                <!-- Branding Image -->
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    {{ config('app.name', 'Laravel') }}
+                </a>
+            </div>
 
-    @yield('content')
+            <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                <!-- Left Side Of Navbar -->
+                <ul class="nav navbar-nav">
+                    &nbsp;
+                </ul>
 
     @yield('bottom_bar')
 
-    <div class="fbottom"></div>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="{{ url('/logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        Logout
+                                    </a>
+
+                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                        {{ csrf_field() }}
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    @endif
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    @yield('content')
 </div>
-<div class="stop"><img src="{{ asset('theme/bg/stop.png') }}" width="85" /></div>
-<script type="text/javascript">
-    $(window).load(function(){
-        $('.flexslider').flexslider({
-            animation: "slide",
-            start: function(slider){
-                $('body').removeClass('loading');
-            }
-        });
-    });
-</script>
+
+<!-- Scripts -->
+<script src="/js/app.js"></script>
 </body>
 </html>

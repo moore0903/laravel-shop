@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Config;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Column;
 use Encore\Admin\Layout\Content;
@@ -15,9 +16,12 @@ use Encore\Admin\Widgets\Chart\Pie;
 use Encore\Admin\Widgets\Chart\PolarArea;
 use Encore\Admin\Widgets\Chart\Radar;
 use Encore\Admin\Widgets\Collapse;
+use Encore\Admin\Widgets\Form;
 use Encore\Admin\Widgets\InfoBox;
 use Encore\Admin\Widgets\Tab;
 use Encore\Admin\Widgets\Table;
+use Illuminate\Support\MessageBag;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -111,5 +115,87 @@ class HomeController extends Controller
 
             $content->row((new Box('Table', new Table($headers, $rows)))->style('info')->solid());
         });
+    }
+
+    /**
+     * 网站更新
+     * @return Content
+     */
+    public function updateSite() {
+        set_time_limit(1800);
+        ini_set('memory_limit','1024M');
+        return Admin::content(function (Content $content) {
+
+            $content->header('代码更新');
+            $content->description('代码更新');
+
+            $headers = ['记录'];
+            $out = [];
+            $stat = null;
+            $s = DIRECTORY_SEPARATOR=="\\"? 'cmd /c "'.base_path('update.bat').'"2>&1' : 'sudo -u root "'.base_path('update.sh').'"2>&1';
+            $last = exec($s,$out,$stat);
+            \Log::debug($s);
+            \Log::debug($out);
+            \Log::debug($stat);
+            \Log::debug($last);
+            foreach($out as $line){
+                if(empty($line)) continue;
+                $rows[] = [$line];
+            }
+
+            $content->row((new Box('Table', new Table($headers, $rows)))->style('info')->solid());
+        });
+    }
+
+    /**
+     * 网站配置更新
+     * @param Request $request
+     * @return Content|\Illuminate\Http\RedirectResponse
+     */
+    public function updateConfig(Request $request){
+        if($request->method() == 'GET'){
+            return Admin::content(function (Content $content) {
+                $content->header('网站配置');
+                $form = new Form();
+                $configs = Config::all();
+                $form->action(url(config('admin.prefix').'/updateConfig'));
+                $post_price = $configs->where('key','post_price')->first();
+                $include_postage = $configs->where('key','include_postage')->first();
+                $since_address = $configs->where('key','since_address')->first();
+                $since_realname = $configs->where('key','since_realname')->first();
+                $since_phone = $configs->where('key','since_phone')->first();
+                $search_key = $configs->where('key','search_key')->first();
+                $form->currency('key[post_price]', '运费')->symbol('￥')->default(!empty($post_price)? $post_price->value : '0.00');
+                $form->currency('key[include_postage]', '满X包邮')->symbol('￥')->default(!empty($include_postage)? $include_postage->value : '0.00');
+                $form->text('key[since_address]', '自提点')->default(!empty($since_address)? $since_address->value : '');
+                $form->text('key[since_realname]', '自提点联系人')->default(!empty($since_realname)? $since_realname->value : '');
+                $form->mobile('key[since_phone]', '自提点电话')->default(!empty($since_phone)? $since_phone->value : '');
+                $form->text('key[search_key]', '搜索关键字以,隔开')->default(!empty($search_key)? $search_key->value : '');
+                $content->row(new Box('网站配置', $form));
+            });
+        }elseif($request->method() == 'POST'){
+            $keys = $request['key'];
+            foreach($keys as $key=>$value){
+                $configInfo = Config::where('key','=',$key)->first();
+                if(!empty($configInfo->value)){
+                    \DB::table('configs')->where('key','=',$key)->update(['value'=>$value]);
+                }else{
+                    Config::insert(['key'=>$key,'value'=>$value]);
+                }
+            }
+            $success = new MessageBag([
+                'title'   => '保存成功',
+                'message' => '更新成功',
+            ]);
+
+            return back()->with(compact('success'));
+        }
+
+    }
+
+    public function imageUpload(Request $request){
+        if(!$request->hasFile('wangEditorH5File')) return 'error|失败原因为：找不到文件';
+        $path = \Storage::putFile('public/editor', $request->file('wangEditorH5File'));
+        return \Storage::url($path);
     }
 }
