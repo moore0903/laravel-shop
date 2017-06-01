@@ -2,11 +2,13 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="{{ asset('theme/common/jquery-1.7.2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('theme/common/tab.js') }}"></script>
     <meta name="robots" content="all" />
     <link rel="start" href="" title="Home" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-    <meta id="viewport" name="viewport" content="width=750, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta id="viewport" name="viewport" content="width=750, user-scalable=0">
     <meta name="HandheldFriendly" content="true"/>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -22,7 +24,6 @@
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
-    <script type="text/javascript" src="{{ asset('theme/common/jquery-1.7.2.min.js') }}"></script>
 </head>
 
 <body>
@@ -31,7 +32,6 @@
 
 <script type="text/javascript" src="{{ asset('theme/common/swiper-3.4.2.jquery.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('theme/common/ciads.js') }}"></script>
-<script type="text/javascript" src="{{ asset('theme/common/tab.js') }}"></script>
 <script type="text/javascript" src="{{ asset('theme/common/jquery.flexslider.js') }}"></script>
 <script type="text/javascript" src="{{ asset('theme/common/fs_forse.js') }}"></script>
 <script type="text/javascript" src="{{ asset('packages/layer/layer.js') }}"></script>
