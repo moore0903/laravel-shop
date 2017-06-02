@@ -12,7 +12,7 @@
     <meta name="HandheldFriendly" content="true"/>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>久诚久</title>
     <link href="{{ asset('theme/css/style.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('theme/css/flexslider.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('theme/css/swiper.min.css') }}" rel="stylesheet" type="text/css" />
