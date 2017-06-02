@@ -36,6 +36,8 @@ Route::group([
 
     $router->resource('seckill', SecKillController::class);
 
+    $router->resource('user', UserController::class);
+
 
     $router->get('updateSite', 'HomeController@updateSite');
 
