@@ -69,7 +69,7 @@
                     <input type="text" name="remark" :value="remark" placeholder="给商家留言（60字内）">
                 </div>
                 <ul class="diszflist lifl clear">
-                    <li @click="payTypeShow()"><a href="javascript:void(0);"><span class="fr">@{{ pay_type_zh }}</span>支付方式</a></li>
+                    {{--<li @click="payTypeShow()"><a href="javascript:void(0);"><span class="fr">@{{ pay_type_zh }}</span>支付方式</a></li>--}}
                     <li @click="giftShow()"><a href="javascript:void(0);"><span class="fr">@{{ gift_zh }}</span>我的优惠券</a></li>
                 </ul>
                 <ul class="disspnr lifl clear">

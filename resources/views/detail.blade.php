@@ -70,7 +70,7 @@
                         <dl class="lifl fr clear" v-for="star in itemStar">
                             <dd></dd>
                         </dl>
-                        <i class="fr">@{{ itemStar }}</i></div>
+                        <i class="fr">综合评分</i></div>
                     <ul class="lifl clear" v-for="(comment,index) in comments">
                         <li v-if="index < 1">
                             <div class="debtkuai">
@@ -110,7 +110,7 @@
                         <dl class="lifl fr clear" v-for="star in itemStar">
                             <dd></dd>
                         </dl>
-                        <i class="fr">@{{ itemStar }}</i></div>
+                        <i class="fr">综合评分</i></div>
                     <ul class="lifl clear" v-for="(comment,index) in comments">
                         <li>
                             <div class="debtkuai">

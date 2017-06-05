@@ -43,7 +43,7 @@
                         <p class="od1 fr"><a href="{{url('/pay/aliPay?order_id='.$order->id)}}">立即付款</a></p>
                     @endif
                 <p class="od2 fr"><a href="{{url('order/cancel').'?id='.$order->id}}">取消订单</a></p>
-                @elseif($order->stat == \App\Models\Order::STAT_PAYED || $order->stat == \App\Models\Order::STAT_EXPRESS)
+                @elseif($order->stat == \App\Models\Order::STAT_EXPRESS)
                     <p class="od1 fr _confirmReceipt" data-order_id="{{$order->id}}"><a href="javascript:void(0);">确认收货</a></p>
                     @if($order->express_company != '' && $order->express_company != '自提')
                         <p class="od2 fr"><a href="{{ 'https://m.kuaidi100.com/index_all.html?type='.\App\Models\Order::express_coding($order->express_company).'&postid='.$order->express_no.'&callbackurl='.url('order/list') }}">查看物流</a></p>
