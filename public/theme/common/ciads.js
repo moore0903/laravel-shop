@@ -47,8 +47,8 @@ $(function($){
 	/*商品评价*/
 	$(".order-list-Below ul li").click(
 		function(){
-			var num = $(this).index()+2;
-			var len = $(this).index();
+			var num = $(this).index()+1;
+			var len = $(this).index()+1;
 			var thats = $(this).parent(".order-list-Below ul").find("li");
 			if($(thats).eq(len).attr("class")=="on"){
 				if($(thats).eq(num).attr("class")=="on"){
