@@ -105,14 +105,6 @@ class OrderController extends Controller
                 $filter->like('phone','收货电话');
                 $filter->is('stat', '状态')->select(Order::$stat);
             });
-            $grid->actions(function ($actions) {
-                $actions->disableDelete();
-            });
-            $grid->tools(function ($tools) {
-                $tools->batch(function ($batch) {
-                    $batch->disableDelete();
-                });
-            });
             $grid->disableCreation();
         });
     }
