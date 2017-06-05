@@ -79,7 +79,7 @@ class SecKillController extends Controller
                 return ShopItem::find($shop_item_id)->title;
             });
             $grid->start_time('开始时间');
-            $grid->start_time('结束时间');
+            $grid->end_time('结束时间');
             $grid->sec_kill_price('秒杀价');
 
 //            $grid->created_at();
