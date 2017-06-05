@@ -57,8 +57,8 @@ class OAuthController extends Controller
     public function handleWechatCallback(Request $request)
     {
         $user = Socialite::driver('wechat')->user();
-        $this->authHandle('wechat',$user->getId(),$user->getName(),$user->getNickname(),$user->getAvatar(),$user->getOriginal());
         $request->session()->put('openid', $user->getId());
+        $this->authHandle('wechat',$user->getId(),$user->getName(),$user->getNickname(),$user->getAvatar(),$user->getOriginal());
         return \Redirect::intended(\Session::pull('url.intended', '/'));
     }
 

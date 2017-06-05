@@ -4,7 +4,7 @@
 <div class="wrap fmyh" id="cart_submit">
     <div v-show="is_main_show == 1">
         <div class="land">
-            <p class="fhaniu"><a href="javascript:window.history.go(-1)"></a></p>
+            <p class="fhaniu"><a href="javascript:" onclick="self.location=document.referrer;"></a></p>
             填写订单</div>
         <form method="post" action="{{url('order/add')}}" id="orderAdd">
             <div class="distribution">

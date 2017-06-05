@@ -174,6 +174,7 @@
                         success: function (data) {
                             if (data.stat == 1) {
                                 item_detail.cart.cart_count = data.cart_count;
+                                layer.msg('已添加到购物车')
                             } else {
                                 layer.msg('添加购物车失败');
                             }

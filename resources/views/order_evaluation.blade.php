@@ -3,7 +3,7 @@
 @section('content')
 <div class="wrap fmyh">
     <div class="land">
-        <p class="fhaniu"><a href="javascript:window.history.go(-1)"></a></p>
+        <p class="fhaniu"><a href="javascript:" onclick="self.location=document.referrer;"></a></p>
         发布评价</div>
     <div class="ecvkuai">
     <form method="post" action="{{url('order/evaluation')}}">
