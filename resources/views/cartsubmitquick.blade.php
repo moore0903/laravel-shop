@@ -267,7 +267,7 @@
                         cart_submit.gift_zh = '满' + gift.discountnlimit +'减' + gift.discountn +'元';
                         cart_submit.discount = gift.discountn;
                     }else{
-                        layer.msg('该优惠券满'+gift.discountnlimit+'元才可使用!');
+                        layer.msg('<span style="font-size: 30px;">该优惠券满'+gift.discountnlimit+'元才可使用!</span>');
                     }
                 },
                 delAddress:function(id){  //删除收货地址
@@ -281,7 +281,7 @@
                                 if(data.stat == 1){
                                     cart_submit.address_list = data.address_list;
                                 }else{
-                                    layer.msg(data.msg);
+                                    layer.msg('<span style="font-size: 30px;">'+data.msg+'</span>');
                                 }
                             }
                         });
@@ -305,13 +305,13 @@
                     var address = $('input[name="add_address_address"]').val();
                     var _token = '{{ csrf_token() }}';
                     if(realname == null || realname == ''){
-                        layer.msg('请填写收货人!');
+                        layer.msg('<span style="font-size: 30px;">请填写收货人!</span>');
                         return;
                     }else if(phone == null || phone == ''){
-                        layer.msg('请输入联系电话');
+                        layer.msg('<span style="font-size: 30px;">请输入联系电话</span>');
                         return;
                     }else if(address == null || address == ''){
-                        layer.msg('请输入收货地址!');
+                        layer.msg('<span style="font-size: 30px;">请输入收货地址!</span>');
                         return;
                     }
                     $.post("{{url('user/addAddress')}}", { realname: realname, phone: phone, address: address, _token: _token},
@@ -322,7 +322,7 @@
                                 cart_submit.is_show_type('is_main_show');
                                 $('input[name="useraddress"]').val(data.data.id);
                             }else{
-                                layer.msg(data.msg);
+                                layer.msg('<span style="font-size: 30px;">'+data.msg+'</span>');
                             }
                         });
                 },
@@ -337,13 +337,13 @@
                     var id = $('input[name="update_address_id"]').val();
                     var _token = '{{ csrf_token() }}';
                     if(realname == null || realname == ''){
-                        layer.msg('请填写收货人!');
+                        layer.msg('<span style="font-size: 30px;">请填写收货人!</span>');
                         return;
                     }else if(phone == null || phone == ''){
-                        layer.msg('请输入联系电话');
+                        layer.msg('<span style="font-size: 30px;">请输入联系电话</span>');
                         return;
                     }else if(address == null || address == ''){
-                        layer.msg('请输入收货地址!');
+                        layer.msg('<span style="font-size: 30px;">请输入收货地址!</span>');
                         return;
                     }
                     $.post("{{url('user/updateAddress')}}", { realname: realname, phone: phone, address: address, _token: _token, id: id},
@@ -354,7 +354,7 @@
                                 cart_submit.is_show_type('is_main_show');
                                 $('input[name="useraddress"]').val(data.data.id);
                             }else{
-                                layer.msg(data.msg);
+                                layer.msg('<span style="font-size: 30px;">'+data.msg+'</span>');
                             }
                         });
                 },
@@ -372,7 +372,7 @@
                 formSubmit:function(){  //提交表单
                     var address = $('input[name="useraddress"]').val();
                     if(address == '' || address == null || address == 0){
-                        layer.msg('请选择送货地址');
+                        layer.msg('<span style="font-size: 30px;">请选择送货地址</span>');
                         return;
                     }
                     $('#orderAdd').submit();

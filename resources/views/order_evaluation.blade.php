@@ -61,7 +61,7 @@
         ?>
         var error = '{{$error}}';
         if(error){
-            layer.msg(error);
+            layer.msg('<span style="font-size: 30px;">'+error+'</span>');
         }
 
         $('.f03').addClass('on');
@@ -76,7 +76,7 @@
                     $('.upload').hide();
                     $('.fileUpload').removeClass('btn-primary');
                 }else{
-                    layer.msg(data.msg);
+                    layer.msg('<span style="font-size: 30px;">'+data.msg+'</span>');
                 }
             }).submit();
         });
@@ -90,7 +90,7 @@
                     url: "{{ url('order/confirmReceipt') }}",
                     data: "id="+id,
                     success: function(data){
-                        layer.msg(data.msg);
+                        layer.msg('<span style="font-size: 30px;">'+data.msg+'</span>');
                         if(data.stat == 1){
                             window.location.reload();
                         }

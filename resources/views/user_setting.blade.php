@@ -53,7 +53,7 @@
                     $('img._headimage').attr('src', data.imgUrl);
                     $('input[name="headimage"]').val(data.imgUrl);
                 } else {
-                    layer.msg(data.msg);
+                    layer.msg('<span style="font-size: 30px;">'+data.msg+'</span>');
                 }
             }).submit();
         });

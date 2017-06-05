@@ -174,16 +174,16 @@
                         success: function (data) {
                             if (data.stat == 1) {
                                 item_detail.cart.cart_count = data.cart_count;
-                                layer.msg('已添加到购物车')
+                                layer.msg('<span style="font-size: 30px;">已添加到购物车</span>')
                             } else {
-                                layer.msg('添加购物车失败');
+                                layer.msg('<span style="font-size: 30px;">添加购物车失败</span>');
                             }
                         }
                     });
                 },
                 addCollection: function (hashid) {
                     if (this.is_collection) {
-                        layer.msg('您已收藏过该商品');
+                        layer.msg('<span style="font-size: 30px;">您已收藏过该商品</span>');
                         return;
                     }
                     $.ajax({
@@ -195,7 +195,7 @@
                                 item_detail.is_collection = 1;
 
                             }
-                            layer.msg(data.msg);
+                            layer.msg('<span style="font-size: 30px;">'+data.msg+'</span>');
                         }
                     });
                 }

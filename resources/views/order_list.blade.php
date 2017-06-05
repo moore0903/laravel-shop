@@ -70,7 +70,7 @@
         ?>
         var error = '{{$error}}';
         if(error){
-            layer.msg(error);
+            layer.msg('<span style="font-size: 30px;">'+error+'</span>');
         }
         $('.f03').addClass('on');
         $('._confirmReceipt').click(function(){
@@ -82,7 +82,7 @@
                     url: "{{ url('order/confirmReceipt') }}",
                     data: "id="+id,
                     success: function(data){
-                        layer.msg(data.msg);
+                        layer.msg('<span style="font-size: 30px;">'+data.msg+'</span>');
                         if(data.stat == 1){
                             window.location.reload();
                         }
@@ -100,7 +100,7 @@
                     url: "{{ url('order/confirmService') }}",
                     data: "id="+id,
                     success: function(data){
-                        layer.msg(data.msg);
+                        layer.msg('<span style="font-size: 30px;">'+data.msg+'</span>');
                         if(data.stat == 1){
                             window.location.reload();
                         }

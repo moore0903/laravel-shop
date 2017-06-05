@@ -40,14 +40,14 @@
                     function(result){
                         layer.close(layerLoad);
                         if(!result.stat){
-                            layer.msg(result.msg);
+                            layer.msg('<span style="font-size: 30px;">'+result.msg+'</span>');
                             if(result.url){
-                                layer.msg(result.msg, function(){
+                                layer.msg('<span style="font-size: 30px;">'+result.msg+'</span>', function(){
                                     window.location.href=result.url;
                                 });
                             }
                         }else{
-                            layer.msg(result.msg);
+                            layer.msg('<span style="font-size: 30px;">'+result.msg+'</span>');
                         }
                     });
             });

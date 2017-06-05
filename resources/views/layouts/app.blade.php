@@ -46,6 +46,10 @@
     });
 </script>
 <script type="text/javascript">
+    layer.config({
+//        area: '90%',
+        style:['font-size: 30px;']
+    });
     $(window).load(function(){
         $('.flexslider').flexslider({
             animation: "slide",

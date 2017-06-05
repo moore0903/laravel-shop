@@ -120,7 +120,7 @@
                                     shop_item_list.shopItems = data.shopItems;
                                     shop_item_list.currentCataHashid = hashid;
                                 }else{
-                                    layer.msg(data.msg);
+                                    layer.msg('<span style="font-size: 30px;">'+data.msg+'</span>');
                                 }
                             });
                     },
@@ -131,7 +131,7 @@
                                 if(data.stat){
                                     shop_item_list.subCatalog = data.catalogs;
                                 }else{
-                                    layer.msg(data.msg);
+                                    layer.msg('<span style="font-size: 30px;">'+data.msg+'</span>');
                                 }
                             });
                     },

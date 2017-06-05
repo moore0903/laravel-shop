@@ -68,7 +68,7 @@
                                 cart_list.cart_lists = data.cart_lists;
                                 cart_list.allRawIds()
                             }else{
-                                layer.msg('添加购物车失败');
+                                layer.msg('<span style="font-size: 30px;">添加购物车失败</span>');
                             }
                         }
                     });
@@ -85,7 +85,7 @@
                                 cart_list.cart_lists = data.cart_lists;
                                 cart_list.allRawIds();
                             }else{
-                                layer.msg('修改购物车失败');
+                                layer.msg('<span style="font-size: 30px;">修改购物车失败</span>');
                             }
                         }
                     });
@@ -103,7 +103,7 @@
                                     cart_list.cart_count = data.cart_count;
                                     cart_list.cart_lists = data.cart_lists;
                                 }else{
-                                    layer.msg('删除购物车失败');
+                                    layer.msg('<span style="font-size: 30px;">删除购物车失败</span>');
                                 }
                             }
                         });
@@ -141,7 +141,7 @@
                 },
                 formSubmit:function(){
                     if(this.cart_raw_ids.length <= 0){
-                        layer.msg('请选择购物车中要购买的商品');
+                        layer.msg('<span style="font-size: 30px;">请选择购物车中要购买的商品</span>');
                         return;
                     }
                     window.location.href='{{url("order/cartsubmitquick")}}'+'?rowids='+$('input[name="rowids"]').val();
@@ -158,7 +158,7 @@
                 ?>
             var error = '{{$error}}';
             if(error){
-                layer.msg(error);
+                layer.msg('<span style="font-size: 30px;">'+error+'</span>');
             }
 
             $('.f03').addClass('on');

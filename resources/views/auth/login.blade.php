@@ -39,7 +39,7 @@
                     var phone = $('input[name="phone"]').val();
                     this.verifykey = phone;
                     if(phone == null || phone == ''){
-                        layer.msg('请填写手机号');
+                        layer.msg('<span style="font-size: 30px;">请填写手机号</span>');
                         return;
                     }
                     if(is_send){
@@ -49,11 +49,11 @@
                             data: "phone="+phone,
                             success: function(data){
                                 if(data.stat == 1){
-                                    layer.msg('发送成功');
+                                    layer.msg('<span style="font-size: 30px;">发送成功</span>');
                                     console.log(data.code);
                                     login.verifycode = data.code;
                                 }else{
-                                    layer.msg(data.msg);
+                                    layer.msg('<span style="font-size: 30px;">'+data.msg+'</span>');
                                 }
                             }
                         });
@@ -80,7 +80,7 @@
             var verifycode = '{{$verifycode}}';
             var verifykey = '{{$verifykey}}';
             if(error){
-                layer.msg(error);
+                layer.msg('<span style="font-size: 30px;">'+error+'</span>');
             }
             if(verifycode){
                 login.verifycode = verifycode;
