@@ -38,13 +38,13 @@
                         <p class="tu3"></p>
                         <p class="name">待评价</p>
                     </a></li>
-                <li><a href="{{url('order/list').'?stat='.\App\Models\Order::STAT_SERVICE}}">
+                <!--<li><a href="{{url('order/list').'?stat='.\App\Models\Order::STAT_SERVICE}}">
                         @if($order_service_count > 0)
                             <p class="sz">{{$order_service_count}}</p>
                         @endif
                         <p class="tu4"></p>
                         <p class="name">退货</p>
-                    </a></li>
+                    </a></li>-->
             </ul>
         </div>
         <ul class="setuplmlist lifl clear">
@@ -65,7 +65,7 @@
             <li><a href="#">
                     <p class="s05"><span class="name">我的微店</span></p>
                 </a></li>
-            <li><a href="#">
+            <li><a href="tel:4008299519">
                     <p class="s06"><span class="name">联系客服</span></p>
                 </a></li>
         </ul>
