@@ -21,7 +21,7 @@
                                 <p class="name fl on">
                                     <input name="distribution" type="radio" value="since" checked @click="updateDistribution('since')">
                                 </p>
-                                门店自提</li>
+                                门店配送</li>
                         </ul>
                     </div>
                     <div class="disdzkuai">

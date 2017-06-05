@@ -11,7 +11,7 @@
         <li @if($stat == \App\Models\Order::STAT_PAYED) class="on" @endif><a href="{{url('order/list').'?stat='.\App\Models\Order::STAT_PAYED}}">待发货</a></li>
         <li @if($stat == \App\Models\Order::STAT_EXPRESS) class="on" @endif><a href="{{url('order/list').'?stat='.\App\Models\Order::STAT_EXPRESS}}">待收货</a></li>
         <li @if($stat == \App\Models\Order::STAT_EVALUATE) class="on" @endif><a href="{{url('order/list').'?stat='.\App\Models\Order::STAT_EVALUATE}}">待评价</a></li>
-        <li @if($stat == \App\Models\Order::STAT_SERVICE) class="on" @endif><a href="{{url('order/list').'?stat='.\App\Models\Order::STAT_SERVICE}}">退换货</a></li>
+        <!--<li @if($stat == \App\Models\Order::STAT_SERVICE) class="on" @endif><a href="{{url('order/list').'?stat='.\App\Models\Order::STAT_SERVICE}}">退换货</a></li>-->
     </ul>
     <ul class="odlist lifl clear">
         @foreach($orders as $order)
