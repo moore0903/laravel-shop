@@ -17,7 +17,9 @@
         @foreach($orders as $order)
             <?php $orderNum = 0;?>
         <li>
-            <p class="bt"><span class="fr">{{\App\Models\Order::statDescribe($order->stat)}}</span>订单状态：{{\App\Models\Order::statString($order->stat)}}</p>
+            <p class="bt">
+            <i class="cgya">12345678901234</i>
+            <span class="fr">{{\App\Models\Order::statDescribe($order->stat)}}</span>订单状态：{{\App\Models\Order::statString($order->stat)}}</p>
             @foreach($order->details as $detail)
             <div class="evaxont clear">
                 <p class="tu fl"><img width="125px" src="{{asset('upload'.'/'.$detail->thumbnail)}}"></p>

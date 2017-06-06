@@ -469,9 +469,11 @@ ul,ol,dl{ list-style-type:none;}
 
 .odlist li{ width:750px; background:#fff; margin-top:12px; }
 
-.odlist li .bt{ height:90px; line-height:90px; border-bottom:2px solid #eee; padding:0 20px; color:#e02934; font-size:26px; }
+.odlist li .bt{ height:90px; line-height:90px; border-bottom:2px solid #eee; padding:0 20px; color:#e02934; font-size:26px; position:relative; }
 
 .odlist li .bt span{ color:#666; }
+
+.odlist li .bt i{ position:absolute; top:0px; left:280px; color:#666; display:block; }
 
 .odlist li .evaxont{ padding:25px 20px; border-bottom:2px solid #eee; position:relative; }
 
