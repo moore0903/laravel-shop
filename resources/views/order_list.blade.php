@@ -18,7 +18,7 @@
             <?php $orderNum = 0;?>
         <li>
             <p class="bt">
-            <i class="cgya">12345678901234</i>
+            <i class="cgya">{{$order->serial}}</i>
             <span class="fr">{{\App\Models\Order::statDescribe($order->stat)}}</span>订单状态：{{\App\Models\Order::statString($order->stat)}}</p>
             @foreach($order->details as $detail)
             <div class="evaxont clear">

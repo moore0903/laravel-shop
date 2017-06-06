@@ -127,7 +127,7 @@ class OrderController extends Controller
 
         $order = Order::create([
             'user_id' => \Auth::user()->id,
-            'serial' => date('YmdHis') . str_random(6),
+            'serial' => date('YmdHis') . rand(100,999),
             'address' => empty($address) ? $since_address->value : $address->area . ' ' . $address->address,
             'realname' => empty($address) ? $since_realname->value : $address->realname,
             'phone' => empty($address) ? $since_phone->value : $address->phone,
