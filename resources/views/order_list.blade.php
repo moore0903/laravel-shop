@@ -32,7 +32,7 @@
                 <?php $orderNum += $detail->product_num?>
             @endforeach
             <p class="jige">共{{$orderNum}}件商品，实付<i>¥{{$order->totalpay}}元</i>
-            <span class="cgya">{{$order->serial}}</span>
+            <span class="cgya">订单编号:{{$order->serial}}</span>
             </p>
             <div class="odkuai clear _order_{{$order->id}}">
                 @if($order->stat == \App\Models\Order::STAT_NOTPAY)
