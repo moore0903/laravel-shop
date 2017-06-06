@@ -473,7 +473,7 @@ ul,ol,dl{ list-style-type:none;}
 
 .odlist li .bt span{ color:#666; }
 
-.odlist li .bt i{ position:absolute; top:0px; left:280px; color:#666; display:block; }
+.odlist li .bt i{ position:absolute; top:0px; left:280px; color:#666; display:block; font-weight:bold; }
 
 .odlist li .evaxont{ padding:25px 20px; border-bottom:2px solid #eee; position:relative; }
 
