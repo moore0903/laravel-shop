@@ -18,7 +18,6 @@
             <?php $orderNum = 0;?>
         <li>
             <p class="bt">
-            <i class="cgya">{{$order->serial}}</i>
             <span class="fr">{{\App\Models\Order::statDescribe($order->stat)}}</span>订单状态：{{\App\Models\Order::statString($order->stat)}}</p>
             @foreach($order->details as $detail)
             <div class="evaxont clear">
@@ -32,7 +31,9 @@
             </div>
                 <?php $orderNum += $detail->product_num?>
             @endforeach
-            <p class="jige">共{{$orderNum}}件商品，实付<i>¥{{$order->totalpay}}元</i></p>
+            <p class="jige">共{{$orderNum}}件商品，实付<i>¥{{$order->totalpay}}元</i>
+            <span class="cgya">{{$order->serial}}</span>
+            </p>
             <div class="odkuai clear _order_{{$order->id}}">
                 @if($order->stat == \App\Models\Order::STAT_NOTPAY)
                     <?php
