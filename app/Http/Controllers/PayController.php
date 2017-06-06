@@ -129,6 +129,7 @@ class PayController extends Controller
                 $out_trade_no = explode('_',$_REQUEST['out_trade_no']);
                 $order = Order::find($out_trade_no[0]);
                 $order->paytype = '支付宝支付';
+                $order->notify_time = $_REQUEST['timestamp'];
                 $order->save();
                 $payorder = PayOrder::find(intval($out_trade_no[1]));
                 $payorder->payNotify($_REQUEST['trade_no'], $_REQUEST['timestamp'], $_REQUEST['total_amount']);
@@ -163,6 +164,7 @@ class PayController extends Controller
                 $out_trade_no = explode('_',$_REQUEST['out_trade_no']);
                 $order = Order::find($out_trade_no[0]);
                 $order->paytype = '支付宝支付';
+                $order->notify_time = $_REQUEST['notify_time'];
                 $order->save();
                 $payorder = PayOrder::find(intval($out_trade_no[1]));
                 $payorder->payNotify($_REQUEST['trade_no'], $_REQUEST['notify_time'], $_REQUEST['receipt_amount']);
@@ -198,6 +200,7 @@ class PayController extends Controller
             $out_trade_no = explode('_',$data['out_trade_no']);
             $order = Order::find($out_trade_no[0]);
             $order->paytype = '微信支付';
+            $order->notify_time = Carbon::createFromFormat('YmdHis', $data['time_end']);
             $order->save();
             $payorder = PayOrder::find(intval($out_trade_no[1]));
             $payorder->payNotify($data['transaction_id'],Carbon::createFromFormat('YmdHis', $data['time_end']), $data['total_fee']/100);
