@@ -475,11 +475,11 @@ ul,ol,dl{ list-style-type:none;}
 
 .odlist li .evaxont{ padding:25px 20px; border-bottom:2px solid #eee; position:relative; }
 
-.odlist li .jige{ padding:20px; text-align:right; font-size:24px; color:#666; position:absolute; }
+.odlist li .jige{ padding:20px; text-align:right; font-size:24px; color:#666; position:relative; }
 
 .odlist li .jige i{ color:#f74f45; padding-left:10px; }
 
-.odlist li .jige .cgya{ position:absolute; top:0px; left:280px; color:#666; display:block; font-weight:bold; }
+.odlist li .jige .cgya{ position:absolute; top:20px; left:0px; color:#666; display:block; font-weight:bold; }
 
 .odlist li .odkuai{ padding:0 20px 20px 20px; }
 
