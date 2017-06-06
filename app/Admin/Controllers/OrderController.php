@@ -130,9 +130,7 @@ class OrderController extends Controller
             $form->display('total', '原价');
             $form->currency('discount','优惠');
             $form->currency('totalpay','现价');
-            $form->display('paytype','支付类型')->with(function($paytype){
-                return Order::paytypeString($paytype);
-            });
+            $form->display('paytype','支付类型');
             $form->display('trade_no','支付编号');
             $form->display('notify_time','支付时间');
             $form->display('totalget','支付金额');
