@@ -469,17 +469,17 @@ ul,ol,dl{ list-style-type:none;}
 
 .odlist li{ width:750px; background:#fff; margin-top:12px; }
 
-.odlist li .bt{ height:90px; line-height:90px; border-bottom:2px solid #eee; padding:0 20px; color:#e02934; font-size:26px; position:relative; }
+.odlist li .bt{ height:90px; line-height:90px; border-bottom:2px solid #eee; padding:0 20px; color:#e02934; font-size:26px; }
 
 .odlist li .bt span{ color:#666; }
 
-.odlist li .bt i{ position:absolute; top:0px; left:280px; color:#666; display:block; font-weight:bold; }
-
 .odlist li .evaxont{ padding:25px 20px; border-bottom:2px solid #eee; position:relative; }
 
-.odlist li .jige{ padding:20px; text-align:right; font-size:24px; color:#666; }
+.odlist li .jige{ padding:20px; text-align:right; font-size:24px; color:#666; position:relative; }
 
 .odlist li .jige i{ color:#f74f45; padding-left:10px; }
+
+.odlist li .jige .cgya{ position:absolute; top:20px; left:20px; color:#666; display:block; font-weight:bold; }
 
 .odlist li .odkuai{ padding:0 20px 20px 20px; }
 
