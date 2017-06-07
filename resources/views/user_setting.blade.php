@@ -13,7 +13,7 @@
                     <img class="_headimage" src="{{$user->headimage}}"/>
                     </span>头像
                 </li>
-                <li><span class="fr">{{$user->phone}}</span>手机号码</li>
+                <li><span class="fr">{{$user->name}}</span>手机号码</li>
                 {{--<li><span class="fr">小蜜蜂9214</span>昵称</li>--}}
                 <li>性别
                     <div class="xbqujian xbmod clear @if($user->sex == 1) on @endif">
