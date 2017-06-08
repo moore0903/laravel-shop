@@ -132,6 +132,8 @@ ul,ol,dl{ list-style-type:none;}
 
 .seckill li a{ display:block; position:relative; height:207px; overflow:hidden; }
 
+.seckill li a img{ width:100%; height:100%; }
+
 .seckill li .name{ position:absolute; bottom:0px; right:8px; font-size:22px; text-align:center; color:#fff; background:url(../bg/bg3.png) no-repeat; width:89px; height:69px; padding-top:20px; line-height:26px; }
 
 .seckill li .name i{ display:block; font-size:20px; }
@@ -161,6 +163,8 @@ ul,ol,dl{ list-style-type:none;}
 .tjcp .swiper-slide .w2{ background:url(../bg/tjbg1.png) no-repeat; width:47px; height:67px; overflow:hidden; position:absolute; top:0px; left:16px; text-align:center; color:#fff; font-size:18px; line-height:23px; padding-top:6px; }
 
 .tjcp .swiper-slide .tu{ width:204px; height:240px; overflow:hidden; }
+
+.tjcp .swiper-slide .tu img{ width:100%; height:100%; }
 
 .tjcp .swiper-slide .name{ font-size:24px; color:#fa4d3e; text-align:center; line-height:30px; padding-top:6px; }
 
@@ -212,7 +216,9 @@ ul,ol,dl{ list-style-type:none;}
 
 .farea .falist li .tu{ text-align:center; height:105px; overflow:hidden; }
 
-.farea .falist li .name{ height:70px; line-height:70px; font-size:26px; color:#666; text-align:center; }
+.farea .falist li .tu img{ width:100%; height:100%; }
+
+.farea .falist li .name{ height:70px; line-height:70px; font-size:26px; color:#666; text-align:center; overflow:hidden; }
 
 .farea1 .title{ background:url(../bg/fbg2.gif) no-repeat; height:76px; overflow:hidden; }
 
@@ -262,6 +268,8 @@ ul,ol,dl{ list-style-type:none;}
 .cplove .cplist li a{ height:485px; display:block; position:relative; }
 
 .cplove .cplist li .tu{ height:342px; overflow:hidden; }
+
+.cplove .cplist li .tu img{ width:100%; height:100%; }
 
 .cplove .cplist li .name{ padding:12px 35px 0 35px; color:#333; font-size:26px; line-height:30px; text-align:left; }
 
