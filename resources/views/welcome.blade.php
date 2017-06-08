@@ -88,7 +88,7 @@
                         <li data-sec_kill_countdown_name="">
                             <a href="{{url('shop_item/detail/'.\Hashids::encode($item->shopItem->id))}}">
                                 <img src="{{asset('upload/'.$item->shopItem->img)}}" width="241" height="207"/>
-                                <p class="name">秒杀<i>{{$item->sec_kill_price}}元</i></p>
+                                <p class="name">秒杀<i>{{$item->sec_kill_price}}</i></p>
                                 <span style="display: none;" class="_sec_kill"></span>
                             </a>
                         </li>

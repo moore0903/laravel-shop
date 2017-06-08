@@ -63,7 +63,6 @@
                 <ul class="detalist lifl clear">
                     <li>正品保证</li>
                     <li>极速达</li>
-                    <li>正品保证</li>
                 </ul>
                 <div class="detasppjnr">
                     <div class="title">商品评价（{{$commentCount}}）
