@@ -51,7 +51,7 @@
                                 if(data.stat == 1){
                                     layer.msg('<span style="font-size: 30px;">发送成功</span>');
                                     console.log(data.code);
-                                    login.verifycode = data.code;
+                                    //login.verifycode = data.code;
                                 }else{
                                     layer.msg('<span style="font-size: 30px;">'+data.msg+'</span>');
                                 }
