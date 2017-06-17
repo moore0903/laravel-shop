@@ -1067,6 +1067,6 @@ ul,ol,dl{ list-style-type:none;}
 
 .fhsya a{ background:url(../bg/nav5.png) no-repeat; width:37px; height:37px; position:fixed; top:25px; left:685px; z-index:999; display:block; }
 
-.detailxqnr{ overflow:hidden; _height:1px; _overflow:visible; }
+.detailxqnr{ overflow:hidden; _height:1px; _overflow:visible; width:100%; }
 
-.detailxqnr img{ float:left; }
+.detailxqnr img{ float:left; width:100%; display:block; overflow:hidden; border:none; margin:0px; padding:0px;vertical-align: middle; height:auto; min-height:1px; }
