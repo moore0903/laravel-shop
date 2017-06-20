@@ -171,7 +171,7 @@ class OrderController extends Controller
         if($inMobile && $inWechat){
             $openid = $request->session()->get('openid');
             if(empty($openid)){
-                return redirect('oauth/wechatGetOpenid');
+                return redirect('oauth/wechat');
             }
         }
         $stat = $request['stat']??'all';
