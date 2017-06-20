@@ -69,7 +69,7 @@ class OAuthController extends Controller
      */
     public function redirectToWechatGetOpenid()
     {
-        return Socialite::driver('wechat')->scopes(['snsapi_userinfo'])->redirect();
+        return Socialite::driver('wechat_openid')->scopes(['snsapi_userinfo'])->redirect();
     }
 
     /**
@@ -79,7 +79,7 @@ class OAuthController extends Controller
      */
     public function handleWechatCallbackGetOpenid(Request $request)
     {
-        $user = Socialite::driver('wechat')->user();
+        $user = Socialite::driver('wechat_openid')->user();
         $request->session()->put('openid', $user->getId());
         return \Redirect::intended('order/list');
     }
