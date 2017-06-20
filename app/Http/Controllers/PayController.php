@@ -133,13 +133,16 @@ class PayController extends Controller
                 $order->save();
                 $payorder = PayOrder::find(intval($out_trade_no[1]));
                 $payorder->payNotify($_REQUEST['trade_no'], $_REQUEST['timestamp'], $_REQUEST['total_amount']);
-                return redirect('/order/list');
+                die('success');
+//                return redirect('/order/list');
             }else{
-                return redirect('/order/list');
+                die('fail');
+//                return redirect('/order/list');
             }
         } catch (Exception $e) {
             \Log::debug($e);
-            return redirect('/order/list');
+            die('fail');
+//            return redirect('/order/list');
         }
     }
 
