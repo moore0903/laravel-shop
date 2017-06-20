@@ -68,6 +68,10 @@
             <li><a href="tel:4008299519">
                     <p class="s06"><span class="name">联系客服</span></p>
                 </a></li>
+            <li><form action="{{url('/logout')}}" method="post">
+                    <p class="s05"><input type="submit" class="name" value="退出登录"/></p>
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                </form></li>
         </ul>
         <div class="setuptjkuai">
             <div class="title"></div>

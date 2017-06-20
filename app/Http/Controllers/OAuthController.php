@@ -58,30 +58,9 @@ class OAuthController extends Controller
     {
         $user = Socialite::driver('wechat')->user();
         $request->session()->put('openid', $user->getId());
-        $this->authHandle('wechat',$user->getId(),$user->getName(),$user->getNickname(),$user->getAvatar(),$user->getOriginal());
-        return \Redirect::intended(\Session::pull('url.intended', '/'));
-    }
-
-    /**
-     * Redirect the user to the Wechat authentication page.
-     *
-     * @return Response
-     */
-    public function redirectToWechatGetOpenid()
-    {
-        return Socialite::driver('wechat_openid')->scopes(['snsapi_userinfo'])->redirect();
-    }
-
-    /**
-     * Obtain the user information from Wechat.
-     *
-     * @return Response
-     */
-    public function handleWechatCallbackGetOpenid(Request $request)
-    {
-        $user = Socialite::driver('wechat_openid')->user();
-        $request->session()->put('openid', $user->getId());
         return \Redirect::intended('order/list');
+//        $this->authHandle('wechat',$user->getId(),$user->getName(),$user->getNickname(),$user->getAvatar(),$user->getOriginal());
+//        return \Redirect::intended(\Session::pull('url.intended', '/'));
     }
 
     public function authHandle($platform,$standardId,$nickName,$name,$avatar,$extdata){
