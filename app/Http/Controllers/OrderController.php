@@ -166,6 +166,14 @@ class OrderController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function orderList(Request $request){
+        $inMobile = preg_match('/iPad|iPhone|iPod|iOS|Android|Windows Phone|Mobile/i',$_SERVER['HTTP_USER_AGENT']??'') ;// strpos(($_SERVER['HTTP_USER_AGENT']??''),'MicroMessenger')!==FALSE;
+        $inWechat = strpos(($_SERVER['HTTP_USER_AGENT']??''),'MicroMessenger')!==FALSE;
+        if($inMobile && $inWechat){
+            $openid = $request->session()->get('openid');
+            if(empty($openid)){
+                return redirect('oauth/wechatGetOpenid');
+            }
+        }
         $stat = $request['stat']??'all';
         if($stat != 'all'){
             $stat = (int)$stat;

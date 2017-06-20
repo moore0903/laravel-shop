@@ -25,6 +25,9 @@ Route::get('/oauth/github/callback', 'OAuthController@handleGitHubCallback');
 Route::get('/oauth/wechat', 'OAuthController@redirectToWechat');
 Route::get('/oauth/wechat/callback', 'OAuthController@handleWechatCallback');
 
+Route::get('/oauth/wechatGetOpenid', 'OAuthController@redirectToWechatGetOpenid');
+Route::get('/oauth/wechat/callbackGetOpenid', 'OAuthController@handleWechatCallbackGetOpenid');
+
 
 Route::get('sendSmsVerify','UserController@sendSMSVerify');
 Route::post('bindphone','UserController@bindphone');
