@@ -147,6 +147,19 @@ class ShopItemController extends Controller
 
             $form->switch('show','显示')->default(true);
 
+            $form->saving(function (Form $form) {
+                \Log::debug('保存前回调');
+                \Log::debug($form->img);
+                \Log::debug($form->images);
+            });
+
+            //保存后回调
+            $form->saved(function (Form $form) {
+                \Log::debug('保存后回调');
+                \Log::debug($form->img);
+                \Log::debug($form->images);
+            });
+
 //            $form->display('created_at', 'Created At');
 //            $form->display('updated_at', 'Updated At');
         });
