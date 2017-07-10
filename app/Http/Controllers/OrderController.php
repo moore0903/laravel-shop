@@ -16,6 +16,7 @@ use App\Models\Giftcode;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\ShopItem;
+use App\Models\ThirdUser;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -156,6 +157,16 @@ class OrderController extends Controller
         if ($order->totalpay == 0) $order->stat = Order::STAT_PAYED;
 
         $order->save();
+
+        ThirdUser::templateNotice('1',[
+            'first'=>'有一条新订单,请注意查看',
+            'tradeDateTime'=>Carbon::now()->toDateTimeString(),
+            'orderType'=>'常规订单',
+            'customerInfo'=> $order->realname.' '.$order->phone,
+            'orderItemName'=>'购买金额',
+            'orderItemData'=>max(0, $total - $order->discount + $post_price).'元',
+            'remark'=>'平台有一条新订单,请注意查看'
+        ]);
 
         return redirect('/order/list');
     }
