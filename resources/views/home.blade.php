@@ -113,7 +113,7 @@
 
 @section('bottom_bar')
     <ul class="footer fmyh lifl clear" id="vue_cart">
-        <li class="f01"><a href="{{ url('/good_list') }}">
+        <li class="f01"><a href="{{ url('/shop_item/good_list') }}">
                 <p class="tu"></p>
                 <p class="name">选菜点菜</p>
             </a></li>

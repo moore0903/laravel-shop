@@ -112,10 +112,6 @@
                 cart_price_count : {!! \Cart::totalPrice() !!}
             },
         });
-
-        $(function(){
-
-        });
     </script>
 @endsection
 
