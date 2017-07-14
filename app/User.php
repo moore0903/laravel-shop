@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Address;
 use App\Models\ShopItem;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -48,11 +49,20 @@ class User extends Authenticatable
     }
 
     /**
-     * 收藏
+     * 足迹
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function browses()
     {
         return $this->belongsToMany(ShopItem::class,'browse','user_id','shop_item_id');
+    }
+
+    /**
+     * 收货人列表
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function address()
+    {
+        return $this->hasMany(Address::class,'user_id');
     }
 }

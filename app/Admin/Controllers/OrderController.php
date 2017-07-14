@@ -105,14 +105,6 @@ class OrderController extends Controller
                 $filter->like('phone','收货电话');
                 $filter->is('stat', '状态')->select(Order::$stat);
             });
-            $grid->actions(function ($actions) {
-                $actions->disableDelete();
-            });
-            $grid->tools(function ($tools) {
-                $tools->batch(function ($batch) {
-                    $batch->disableDelete();
-                });
-            });
             $grid->disableCreation();
         });
     }
@@ -138,9 +130,7 @@ class OrderController extends Controller
             $form->display('total', '原价');
             $form->currency('discount','优惠');
             $form->currency('totalpay','现价');
-            $form->display('paytype','支付类型')->with(function($paytype){
-                return Order::paytypeString($paytype);
-            });
+            $form->display('paytype','支付类型');
             $form->display('trade_no','支付编号');
             $form->display('notify_time','支付时间');
             $form->display('totalget','支付金额');
