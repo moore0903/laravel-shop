@@ -56,11 +56,11 @@
                     $.ajax({
                         type: "GET",
                         url: "{{ url('cart/add') }}",
-                        data: "qty="+qty+"&has_id="+has_id,
+                        data: "qty="+qty+"&hash_id="+has_id,
                         success: function(data){
                             if(data.stat == 1){
                                 vue_cart.cart_count = data.cart_count;
-                                vue_shop_item_cart.cart_price_count = data.cart_price_count;
+//                                vue_shop_item_cart.cart_price_count = data.cart_price_count;
                             }else{
                                 alert('添加购物车失败');
                             }
@@ -79,7 +79,7 @@
                 <p class="tu"></p>
                 <p class="name">选菜点菜</p>
             </a></li>
-        <li class="f02"><a href="#">
+        <li class="f02"><a href="{{ url('/cart/list') }}">
                 <p class="tu"></p>
                 <p class="name">购物车<span v-if="cart_count > 0">(@{{ cart_count }})</span></p>
             </a></li>

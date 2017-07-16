@@ -306,3 +306,25 @@ ul,ol,dl{ list-style-type:none;}
 .cpanniu i{ color:#ff0000; }
 
 .cpanniu .anniu input{ font-size:28px; color:#fff; background:#2bb889; border:none; padding:6px 10px; cursor:pointer; outline: medium; -webkit-appearance: none; }
+
+.shopping{ background:url(../bg/shbg.gif) no-repeat center bottom; height:405px; }
+
+.evaanniu{ text-align:center; margin-top:80px; padding-bottom:30px; }
+
+.evaanniu input{ width:242px; background:#2bb889; height:60px; padding:0px; line-height:60px; color:#fff; -webkit-appearance: none; outline: medium; cursor:pointer; border-radius:5px; border:none; cursor:pointer; font-size:24px; }
+
+.odlist li{ width:750px; background:#fff; margin-top:12px; }
+
+.odlist li .evaxont{ padding:25px 20px; border-bottom:2px solid #eee; position:relative; }
+
+.evaxont .tu{ width:125px; height:125px; overflow:hidden; border:1px solid #f2f2f2; overflow:hidden; }
+
+.evaxont .name{ margin-left:145px; font-size:24px; color:#333; }
+
+.evaxont .sla{ margin-left:145px; font-size:22px; color:#999; margin-top:12px; }
+
+.evaxont .jya{ margin-left:145px; font-size:22px; color:#f74f45; margin-top:23px; }
+
+.evaxont .jya span{ color:#999; }
+
+.about{ color:#999; font-size:24px; line-height:36px; padding:25px; }

@@ -18,7 +18,10 @@
             <p class="fh"><a href="javascript:window.history.go(-1)"></a></p>
             购物车</div>
         <template v-if="cart_count <= 0">
-            购物车为空
+            <div class="shopping"></div>
+            <div class="evaanniu">
+                <input name="" onclick="window.location='{{ url('/shop_item/good_list') }}'" type="button" value="去购物">
+            </div>
         </template>
         <template v-else>
             <ul class="gwclist fmyh lifl clear">

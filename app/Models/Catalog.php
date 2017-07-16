@@ -49,6 +49,16 @@ class Catalog extends Model
         return Catalog::where('parent_id','=',$catalog_id)->take($page)->get();
     }
 
+    public static function getCatalog(){
+        $catalogs = Catalog::where('parent_id','=','0')->get();
+        $catalogs = $catalogs->map(function($value){
+            $value->hashid = \Hashids::encode($value->id);
+            $value->attr = Catalog::where('parent_id','=',$value->id)->get();
+            return $value;
+        });
+        return $catalogs;
+    }
+
 
 
 }

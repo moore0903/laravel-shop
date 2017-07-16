@@ -32,13 +32,13 @@
                 </ul>
             </div>
             <dl v-for="catalog in catalogs" :class="'j-content lifl clear _catalog_'+catalog.hashid">
-                <dd v-for="attr in catalog.attr"><a href="#">@{{ attr.title }}</a></dd>
+                <dd v-for="attr in catalog.attr"><a v-bind:href="attr.url">@{{ attr.title }}</a></dd>
             </dl>
         </div>
         <div class="cpmain">
             <ul class="cplist fmyh lifl clear">
                 <li v-for="item in shopItem">
-                    <a href="#">
+                    <a v-bind:href="item.url">
                         <p class="tu fl"><img :src="'{{asset('upload/').'/'}}'+item.img"></p>
                         <p class="name">@{{ item.title }}</p>
                         <p class="nr">@{{ item.short_title }}</p>
@@ -71,6 +71,7 @@
             methods:{
                 sidebar:function(hashid){
                     $('._cata_'+hashid).addClass('active').siblings('.top_catalogs').removeClass('active');
+                    console.log($('._catalog_'+hashid).toggle());
                     $('._catalog_'+hashid).toggle().siblings('.j-content').hide();
                 },
                 addCart:function(hashid){

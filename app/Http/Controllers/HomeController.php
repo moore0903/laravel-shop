@@ -64,6 +64,10 @@ class HomeController extends Controller
         $catalogs = $catalogs->map(function($value){
             $value->hashid = \Hashids::encode($value->id);
             $value->attr = Catalog::where('parent_id','=',$value->id)->get();
+            $value->attr = $value->attr->map(function($attr){
+                $attr->url = url('/shop_item/good_list').'?catalog_id='.\Hashids::encode($attr->id);
+                return $attr;
+            });
             return $value;
         });
         $maxid = 0xffffffff;
