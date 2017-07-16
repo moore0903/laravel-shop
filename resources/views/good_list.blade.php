@@ -71,7 +71,6 @@
             methods:{
                 sidebar:function(hashid){
                     $('._cata_'+hashid).addClass('active').siblings('.top_catalogs').removeClass('active');
-                    console.log($('._catalog_'+hashid).toggle());
                     $('._catalog_'+hashid).toggle().siblings('.j-content').hide();
                 },
                 addCart:function(hashid){
