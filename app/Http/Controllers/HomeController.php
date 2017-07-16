@@ -95,6 +95,7 @@ class HomeController extends Controller
             $row = \Cart::search(['id'=>$value->id]);
             $row = $row->first();
             $value->rows = $row??'';
+            $value->raw_id = $row?$row->__raw_id:'';
             $secKill = SecKill::where('shop_item_id','=',$value->id)->where('start_time','<',date('Y-m-d h:i:s'))->where('end_time','>',date('Y-m-d h:i:s'))->first();
             if(!empty($secKill)) $value->sec_kill_price = $secKill->sec_kill_price;
             return $value;
@@ -111,6 +112,7 @@ class HomeController extends Controller
             'searches' => collect($search),
             'filter' => collect(['lowestPrice'=>$request['lowestPrice'],'highestPrice'=>$request['highestPrice'],'filterProduction'=>$request['filterProduction']])
         ];
+        \Log::debug($shopItem->toArray());
 
         if(!empty($request['is_api'])) return $returnData;
         return view('good_list',$returnData);

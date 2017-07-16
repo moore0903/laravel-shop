@@ -47,7 +47,7 @@
                     <div class="sla">
                         <p class="name fl">选择数量：</p>
                         <div class="gwsl fl">
-                            <input class="min" @click="delCart(item.rows.__raw_id?item.rows.__raw_id:'')" name="" type="button" value="-"/>
+                            <input class="min" @click="delCart(item.raw_id?item.raw_id:'')" name="" type="button" value="-"/>
                             <input class="text_box" name="" type="text" :value="item.rows.qty?item.rows.qty:'0'"/>
                             <input class="add" @click="addCart(item.hashid)" name="" type="button" value="+"/>
                         </div>
@@ -58,7 +58,7 @@
     </div>
     <div class="cpanniu fmyh clear" id="shop_item_cart"> 合计：<i>@{{ cart_price_count }}</i>元
         <p class="anniu fr">
-            <input name="" type="button" value="选好了">
+            <input name="" onclick="window.location='{{ url('/cart/list') }}'" type="button" value="选好了">
         </p>
     </div>
     <script>
@@ -77,10 +77,10 @@
                     $.ajax({
                         type: "GET",
                         url: "{{ url('cart/add') }}",
-                        data: "qty=1&has_id="+hashid,
+                        data: "qty=1&hash_id="+hashid,
                         success: function(data){
                             if(data.stat == 1){
-                                vue_shop_item_cart.cart_price_count = data.cart_price_count;
+                                vue_shop_item_cart.cart_price_count = data.cart_totalPrice;
 
                             }else{
                                 alert('添加购物车失败');
@@ -92,10 +92,10 @@
                     $.ajax({
                         type: "GET",
                         url: "{{ url('cart/update') }}",
-                        data: "type=minus&row_id="+__raw_id,
+                        data: "type=minus&raw_id="+__raw_id,
                         success: function(data){
                             if(data.stat == 1){
-                                vue_shop_item_cart.cart_price_count = data.cart_price_count;
+                                vue_shop_item_cart.cart_price_count = data.cart_totalPrice;
 
                             }else{
                                 alert('修改购物车失败');

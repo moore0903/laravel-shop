@@ -33,7 +33,6 @@
 <script type="text/javascript" src="/theme/common/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="/theme/common/jquery.tools.min.js"></script>
 <script type="text/javascript" src="/theme/common/ciads.js"></script>
-<script type="text/javascript" src="/theme/common/tab.js"></script>
 <script type="text/javascript" src="/theme/common/jquery.flexslider.js"></script>
 <script type="text/javascript">
     $(window).load(function(){
