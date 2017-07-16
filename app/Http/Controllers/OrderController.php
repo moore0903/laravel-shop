@@ -32,36 +32,36 @@ class OrderController extends Controller
         }
         $address_list = Address::where('user_id', '=', \Auth::user()->id)->orderBy('created_at')->get();
         $now = date('Y-m-d H:i:s');
-        $gift_list = Giftcode::where('user_id', '=', \Auth::user()->id)->where('start_time','<',$now)->where('end_time','>=',$now)->whereColumn('usecountmax','>','usecount')->get();
-        $cart_list = [];
-        $cartids = explode(',', $request['rowids']);
-        foreach ($cartids as $cartid) {
-            $cart_list[$cartid] = \Cart::get($cartid);
-        }
-        $dillCart = collect(\Cart::all())->diffKeys(collect($cart_list));
-        foreach ($dillCart as $raw_id => $cart) {
-            \Cart::remove($raw_id);
-        }
-        //物流费用
-        $configs = \App\Models\Config::all();
-        $post_price = $configs->where('key', 'post_price')->first();
-        $include_postage = $configs->where('key', 'include_postage')->first();
-        $since_address = $configs->where('key', 'since_address')->first();
-        $since_realname = $configs->where('key', 'since_realname')->first();
-        $since_phone = $configs->where('key', 'since_phone')->first();
-        $postage = 0.00;
-        if (!empty($post_price) && (empty($include_postage) || (!empty($include_postage) && \Cart::totalPrice() < $include_postage->value))) {
-            $postage = $post_price->value;
-        }
+//        $gift_list = Giftcode::where('user_id', '=', \Auth::user()->id)->where('start_time','<',$now)->where('end_time','>=',$now)->whereColumn('usecountmax','>','usecount')->get();
+//        $cart_list = [];
+//        $cartids = explode(',', $request['rowids']);
+//        foreach ($cartids as $cartid) {
+//            $cart_list[$cartid] = \Cart::get($cartid);
+//        }
+//        $dillCart = collect(\Cart::all())->diffKeys(collect($cart_list));
+//        foreach ($dillCart as $raw_id => $cart) {
+//            \Cart::remove($raw_id);
+//        }
+//        //物流费用
+//        $configs = \App\Models\Config::all();
+//        $post_price = $configs->where('key', 'post_price')->first();
+//        $include_postage = $configs->where('key', 'include_postage')->first();
+//        $since_address = $configs->where('key', 'since_address')->first();
+//        $since_realname = $configs->where('key', 'since_realname')->first();
+//        $since_phone = $configs->where('key', 'since_phone')->first();
+//        $postage = 0.00;
+//        if (!empty($post_price) && (empty($include_postage) || (!empty($include_postage) && \Cart::totalPrice() < $include_postage->value))) {
+//            $postage = $post_price->value;
+//        }
         return view('cartsubmitquick', [
             'address_list' => $address_list,
             'address' => $address_list->first(),
-            'gift_list' => $gift_list,
+//            'gift_list' => $gift_list,
             'cart_list' => \Cart::all(),
             'cart_count' => \Cart::count(),
             'cart_totalPrice' => \Cart::totalPrice(),
-            'postage' => $postage,
-            'since' => collect(['address' => $since_address->value??'', 'realname' => $since_realname->value??'', 'phone' => $since_phone->value??''])
+//            'postage' => $postage,
+//            'since' => collect(['address' => $since_address->value??'', 'realname' => $since_realname->value??'', 'phone' => $since_phone->value??''])
         ]);
     }
 

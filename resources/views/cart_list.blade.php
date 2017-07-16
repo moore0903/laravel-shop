@@ -39,7 +39,7 @@
                 <label id="total">@{{ cart_totalPrice }}</label>
                 元 </p>
             <div class="gwcbottom">
-                <input type="button" value="确认提交">
+                <input type="button" onclick="window.location='{{ url('/order/cartsubmitquick') }}'" value="确认提交">
             </div>
         </template>
     </div>

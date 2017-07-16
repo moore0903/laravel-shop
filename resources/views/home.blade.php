@@ -72,7 +72,7 @@
         <div class="bt">菜品推荐</div>
         <ul class="lifl clear">
             @foreach(\App\Models\ShopItem::shopItemList(0,true,0,3) as $item)
-            <li><a href="{{ url('/shopItem/detail').'/'.\Hashids::encode($item->id) }}">
+            <li><a href="{{ url('/shop_item/detail').'/'.\Hashids::encode($item->id) }}">
                     <p class="tu fl"><img src="{{ asset('upload/'.$item->img) }}"/></p>
                     <p class="name">{{ $item->title }}</p>
                     <p class="nr">{{ $item->short_title }}</p>
