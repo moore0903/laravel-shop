@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Browse;
 use App\Models\Catalog;
 use App\Models\Collection;
+use App\Models\Page;
 use App\Models\SecKill;
 use App\Models\ShopItem;
 use Illuminate\Http\Request;
@@ -194,6 +195,13 @@ class HomeController extends Controller
         if(!$request->hasFile('image')) return ['stat'=>0,'msg'=>'没有选中上传文件'];
         $path = \Storage::putFile('public/comment', $request->file('image'));
         return ['stat'=>1,'imgUrl'=>\Storage::url($path),'path'=>$path];
+    }
+
+    public function page($id){
+        $page = Page::find($id);
+        return view('page',[
+            'page'=>$page
+        ]);
     }
 
 

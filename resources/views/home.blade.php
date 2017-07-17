@@ -57,11 +57,11 @@
                 <p class="tu"><img src="{{ asset('images/m02.png') }}"/></p>
                 <p class="name">菜单</p>
             </a></li>
-        <li><a href="#">
+        <li><a href="{{url('/page/1')}}">
                 <p class="tu"><img src="{{ asset('images/m03.png') }}"/></p>
                 <p class="name">联系我们</p>
             </a></li>
-        <li><a href="#">
+        <li><a href="{{url('/user/info')}}">
                 <p class="tu"><img src="{{ asset('images/m04.png') }}"/></p>
                 <p class="name">个人中心</p>
             </a></li>

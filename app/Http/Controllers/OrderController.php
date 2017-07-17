@@ -75,12 +75,19 @@ class OrderController extends Controller
         if($request->method() == 'GET'){
             return \Redirect::intended('cart/list')->withInput()->withErrors(['msg' => '请重新下单']);
         }
-        if ($request['useraddress'] != 'since') {
-            //获取收货地址
-            $address = Address::where('id', $request['useraddress'])->where('user_id', \Auth::user()->id)->first();
-            if (!$address) {
-                return back()->withInput($request->toArray())->withErrors(['msg' => '请选择一个地址']);
-            }
+        $address = Address::where('user_id', \Auth::user()->id)->where('realname',$request['realname'])
+            ->where('address',$request['address'])->where('phone',$request['phone'])
+            ->where('company_name',$request['company_name'])->first();
+        if(empty($address->toArray())){
+            $data = [
+                'user_id' => \Auth::user()->id,
+                'realname' => $request['realname'],
+                'address' => $request['address'],
+                'phone' => $request['phone'],
+                'company_name' => $request['company_name']
+            ];
+            $id = Address::insertGetId($data);
+            $address = collect($data);
         }
         //获取优惠券
         if (!empty($request['gift'])) {
@@ -97,11 +104,11 @@ class OrderController extends Controller
         if (\Cart::count() <= 0) return \Redirect::intended('cart/list')->withInput()->withErrors(['msg' => '由于长时间未操作,购物车已过期,请重新下单']);
 
         $orders = $shopItems = [];
-        $configs = Config::all();
-        $post_price = $request['postage'];
-        $since_address = $configs->where('key', 'since_address')->first();
-        $since_realname = $configs->where('key', 'since_realname')->first();
-        $since_phone = $configs->where('key', 'since_phone')->first();
+//        $configs = Config::all();
+//        $post_price = $request['postage'];
+//        $since_address = $configs->where('key', 'since_address')->first();
+//        $since_realname = $configs->where('key', 'since_realname')->first();
+//        $since_phone = $configs->where('key', 'since_phone')->first();
         $total = \Cart::totalPrice();
         $discount = 0;
 
@@ -128,15 +135,14 @@ class OrderController extends Controller
         $order = Order::create([
             'user_id' => \Auth::user()->id,
             'serial' => date('YmdHis') . str_random(6),
-            'address' => empty($address) ? $since_address->value : $address->area . ' ' . $address->address,
-            'realname' => empty($address) ? $since_realname->value : $address->realname,
-            'phone' => empty($address) ? $since_phone->value : $address->phone,
+            'address' => $address->address,
+            'realname' => $address->realname,
+            'phone' => $address->phone,
+            'company_name' => $address->company_name,
             'stat' => Order::STAT_NOTPAY,
             'remark' => $request['remark'],
             'giftcode_id' => !empty($gift) ? $gift->id : 0,
             'memo' => '',
-            'post_price' => $post_price,
-            'paytype'=>Order::paytypeString($request['paytype']),
 
         ]);
 
@@ -152,7 +158,7 @@ class OrderController extends Controller
         $order->details()->saveMany($details);
         $order->total = $total;
         $order->discount = $discount;
-        $order->totalpay = max(0, $total - $order->discount + $post_price);
+        $order->totalpay = max(0, $total);
         if ($order->totalpay == 0) $order->stat = Order::STAT_PAYED;
 
         $order->save();

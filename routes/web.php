@@ -19,6 +19,8 @@ Route::get('/', 'HomeController@index');
 
 Route::get('/article/{id}', 'ArticlesController@detail');
 
+Route::get('/page/{id}','HomeController@page');
+
 Route::get('/oauth/github', 'OAuthController@redirectToGitHub');
 Route::get('/oauth/github/callback', 'OAuthController@handleGitHubCallback');
 
