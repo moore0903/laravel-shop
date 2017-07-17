@@ -86,7 +86,7 @@ class OrderController extends Controller
                 'company_name' => $request['company_name']
             ];
             $id = Address::insertGetId($data);
-            $address = collect($data);
+            $address = Address::find($id);
         }
         //获取优惠券
         if (!empty($request['gift'])) {
@@ -162,7 +162,7 @@ class OrderController extends Controller
 
         $order->save();
 
-        return redirect('/order/list');
+        return redirect('/order/info');
     }
 
     /**
