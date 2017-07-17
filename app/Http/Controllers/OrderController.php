@@ -32,12 +32,13 @@ class OrderController extends Controller
         }
         $address = Address::where('user_id', '=', \Auth::user()->id)->orderBy('created_at')->first();
         if(empty($address)){
-            $address = [
+            $data = [
                 'realname' => '',
                 'address' => '',
                 'phone' => '',
                 'company_name' => ''
             ];
+            $address = collect($data);
         }
         $now = date('Y-m-d H:i:s');
 //        $gift_list = Giftcode::where('user_id', '=', \Auth::user()->id)->where('start_time','<',$now)->where('end_time','>=',$now)->whereColumn('usecountmax','>','usecount')->get();
