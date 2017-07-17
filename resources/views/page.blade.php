@@ -17,7 +17,7 @@
         <p class="fh"><a href="javascript:window.history.go(-1)"></a></p>
         {{ $page->title }}</div>
     <div class="about">
-        {{ $page->content }}
+        {!! $page->content !!}
     </div>
 @endsection
 
