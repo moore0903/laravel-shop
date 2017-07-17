@@ -19,9 +19,9 @@
     <ul class="odlist lifl clear">
         @foreach($order_list as $order)
         <li>
-            @foreach($order->detail as $detail)
+            @foreach($order->details as $detail)
             <div class="evaxont clear">
-                <p class="tu fl"><img src="{{ $detail->thumbnail }}"></p>
+                <p class="tu fl"><img src="{{ asset('upload/'.$detail->thumbnail) }}"></p>
                 <p class="name">{{$detail->product_title}}</p>
                 <p class="sla">数量 x{{ $detail->product_num }}</p>
                 <p class="jya">¥{{ $detail->product_price }}元</p>
