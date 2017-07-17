@@ -31,7 +31,7 @@ class OrderController extends Controller
             return \Redirect::intended('cart/list')->withInput()->withErrors(['msg' => '请重新下单']);
         }
         $address = Address::where('user_id', '=', \Auth::user()->id)->orderBy('created_at')->first();
-        if(empty($address->toArray())){
+        if(empty($address)){
             $address = [
                 'realname' => '',
                 'address' => '',
@@ -85,7 +85,7 @@ class OrderController extends Controller
         $address = Address::where('user_id', \Auth::user()->id)->where('realname',$request['realname'])
             ->where('address',$request['address'])->where('phone',$request['phone'])
             ->where('company_name',$request['company_name'])->first();
-        if(empty($address->toArray())){
+        if(empty($address)){
             $data = [
                 'user_id' => \Auth::user()->id,
                 'realname' => $request['realname'],
