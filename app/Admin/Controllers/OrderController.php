@@ -80,12 +80,12 @@ class OrderController extends Controller
             $grid->realname('收货人')->editable();
             $grid->phone('联系电话')->editable()->prependIcon('phone');
             $grid->address('收货地址')->editable('textarea');
-            $grid->stat('当前状态')->editable('select', array_combine(Order::$stat_keys, Order::$stat_values));
-            $grid->total('原价');
-            $grid->discount('优惠')->editable();
+//            $grid->stat('当前状态')->editable('select', array_combine(Order::$stat_keys, Order::$stat_values));
+//            $grid->total('原价');
+//            $grid->discount('优惠')->editable();
             $grid->totalpay('现价')->editable();
-            $grid->paytype('支付类型');
-            $grid->totalget('支付金额')->editable();
+//            $grid->paytype('支付类型');
+//            $grid->totalget('支付金额')->editable();
             $grid->column('订单详情')->expand(function () {
                 $details = $this->details;
                 $details = $details->map(function($item){
@@ -97,14 +97,14 @@ class OrderController extends Controller
                 })->prepend(['商品名称','购买数量','商品价格'])->toArray();
                 return new Table([], $details);
             }, '查看详情');
-            $grid->column('物流信息')->express(function(){
-                return [$this->express_company, $this->express_no];
-            });
-            $grid->filter(function ($filter) {
-                $filter->like('realname','收货人');
-                $filter->like('phone','收货电话');
-                $filter->is('stat', '状态')->select(Order::$stat);
-            });
+//            $grid->column('物流信息')->express(function(){
+//                return [$this->express_company, $this->express_no];
+//            });
+//            $grid->filter(function ($filter) {
+//                $filter->like('realname','收货人');
+//                $filter->like('phone','收货电话');
+//                $filter->is('stat', '状态')->select(Order::$stat);
+//            });
             $grid->disableCreation();
         });
     }
