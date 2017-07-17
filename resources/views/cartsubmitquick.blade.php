@@ -20,19 +20,19 @@
         <ul class="memberlist fmyh lifl clear">
             <li class="me1">
                 <p class="name fl">填写姓名</p>
-                <p class="nr fl"><input name="realname" value="{{$address->realname}}" type="text"></p>
+                <p class="nr fl"><input name="realname" value="{{$address ? $address->realname : ''}}" type="text"></p>
             </li>
             <li class="me2">
                 <p class="name fl">联系电话</p>
-                <p class="nr fl"><input name="phone" value="{{$address->phone}}" type="text"></p>
+                <p class="nr fl"><input name="phone" value="{{$address ? $address->phone : ''}}" type="text"></p>
             </li>
             <li class="me3">
                 <p class="name fl">公司名称</p>
-                <p class="nr fl"><input name="company_name" value="{{$address->company_name}}" type="text"></p>
+                <p class="nr fl"><input name="company_name" value="{{$address ? $address->company_name : ''}}" type="text"></p>
             </li>
             <li class="me4">
                 <p class="name fl">配送地址</p>
-                <p class="nr fl"><input name="address" value="{{$address->address}}" type="text"></p>
+                <p class="nr fl"><input name="address" value="{{$address ? $address->address : ''}}" type="text"></p>
             </li>
         </ul>
         <div class="memberbottom">

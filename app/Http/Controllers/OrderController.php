@@ -31,16 +31,7 @@ class OrderController extends Controller
             return \Redirect::intended('cart/list')->withInput()->withErrors(['msg' => '请重新下单']);
         }
         $address = Address::where('user_id', '=', \Auth::user()->id)->orderBy('created_at')->first();
-        if(empty($address)){
-            $data = [
-                'realname' => '',
-                'address' => '',
-                'phone' => '',
-                'company_name' => ''
-            ];
-            $address = collect($data);
-        }
-        $now = date('Y-m-d H:i:s');
+//        $now = date('Y-m-d H:i:s');
 //        $gift_list = Giftcode::where('user_id', '=', \Auth::user()->id)->where('start_time','<',$now)->where('end_time','>=',$now)->whereColumn('usecountmax','>','usecount')->get();
 //        $cart_list = [];
 //        $cartids = explode(',', $request['rowids']);
