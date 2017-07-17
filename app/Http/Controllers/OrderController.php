@@ -162,7 +162,7 @@ class OrderController extends Controller
 
         $order->save();
 
-        return redirect('/order/info');
+        return redirect('/user/info');
     }
 
     /**

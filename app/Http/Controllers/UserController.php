@@ -26,7 +26,7 @@ class UserController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function info(){
-        $order_list = Order::where('user_id','=',\Auth::user()->id)->get();
+        $order_list = Order::where('user_id','=',\Auth::user()->id)->with('detail')->get();
 //        $recomment_shop = ShopItem::where('recommend','=','1')->get();
         return view('user_info',[
 //            'recomment_shop' => $recomment_shop->count() > 4 ? $recomment_shop->random(4): $recomment_shop,
