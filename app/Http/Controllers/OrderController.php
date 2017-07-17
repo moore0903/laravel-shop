@@ -30,7 +30,15 @@ class OrderController extends Controller
         if(\Cart::count() <= 0){
             return \Redirect::intended('cart/list')->withInput()->withErrors(['msg' => '请重新下单']);
         }
-        $address_list = Address::where('user_id', '=', \Auth::user()->id)->orderBy('created_at')->get();
+        $address = Address::where('user_id', '=', \Auth::user()->id)->orderBy('created_at')->first();
+        if(empty($address->toArray())){
+            $address = [
+                'realname' => '',
+                'address' => '',
+                'phone' => '',
+                'company_name' => ''
+            ];
+        }
         $now = date('Y-m-d H:i:s');
 //        $gift_list = Giftcode::where('user_id', '=', \Auth::user()->id)->where('start_time','<',$now)->where('end_time','>=',$now)->whereColumn('usecountmax','>','usecount')->get();
 //        $cart_list = [];
@@ -54,8 +62,7 @@ class OrderController extends Controller
 //            $postage = $post_price->value;
 //        }
         return view('cartsubmitquick', [
-            'address_list' => $address_list,
-            'address' => $address_list->first(),
+            'address' => $address,
 //            'gift_list' => $gift_list,
             'cart_list' => \Cart::all(),
             'cart_count' => \Cart::count(),
