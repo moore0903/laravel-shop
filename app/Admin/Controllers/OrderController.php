@@ -131,18 +131,18 @@ class OrderController extends Controller
             $form->text('address','收货地址');
             $form->text('realname','收货人');
             $form->mobile('phone','联系人电话');
-            $form->select('stat','订单状态')->options(Order::$stat);
-            $form->display('total', '原价');
-            $form->currency('discount','优惠');
+//            $form->select('stat','订单状态')->options(Order::$stat);
+//            $form->display('total', '原价');
+//            $form->currency('discount','优惠');
             $form->currency('totalpay','现价');
-            $form->display('paytype','支付类型');
-            $form->display('trade_no','支付编号');
-            $form->display('notify_time','支付时间');
-            $form->display('totalget','支付金额');
-            $form->textarea('remark','用户备注');
+//            $form->display('paytype','支付类型');
+//            $form->display('trade_no','支付编号');
+//            $form->display('notify_time','支付时间');
+//            $form->display('totalget','支付金额');
+//            $form->textarea('remark','用户备注');
             $form->textarea('memo','管理员备注');
-            $form->select('express_company','快递公司')->options(Order::$express_company);
-            $form->text('express_no','快递单号');
+//            $form->select('express_company','快递公司')->options(Order::$express_company);
+//            $form->text('express_no','快递单号');
 
             $form->display('created_at', '创建时间');
             $form->display('updated_at', '修改时间');
