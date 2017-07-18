@@ -97,6 +97,8 @@ class OrderController extends Controller
                 })->prepend(['商品名称','购买数量','商品价格'])->toArray();
                 return new Table([], $details);
             }, '查看详情');
+
+            $grid->created_at('下单时间');
 //            $grid->column('物流信息')->express(function(){
 //                return [$this->express_company, $this->express_no];
 //            });
