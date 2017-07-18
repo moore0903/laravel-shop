@@ -22,7 +22,7 @@
             @foreach($order->details as $detail)
             <div class="evaxont clear">
                 <p class="tu fl"><img src="{{ asset('upload/'.$detail->thumbnail) }}"></p>
-                <p class="name">{{$detail->product_title}}</p>
+                <p class="name">{{$detail->product_title}}  {{$detail->created_at}}</p>
                 <p class="sla">数量 x{{ $detail->product_num }}</p>
                 <p class="jya">¥{{ $detail->product_price }}元</p>
             </div>
