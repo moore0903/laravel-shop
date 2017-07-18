@@ -46,6 +46,7 @@ class LoginController extends Controller
     public function showLoginForm(){
         $inMobile = preg_match('/iPad|iPhone|iPod|iOS|Android|Windows Phone|Mobile/i',$_SERVER['HTTP_USER_AGENT']??'') ;// strpos(($_SERVER['HTTP_USER_AGENT']??''),'MicroMessenger')!==FALSE;
         $inWechat = strpos(($_SERVER['HTTP_USER_AGENT']??''),'MicroMessenger')!==FALSE;
+        return redirect('oauth/wechat');
         if($inMobile && $inWechat){
             return redirect('oauth/wechat');
         }
