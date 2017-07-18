@@ -75,6 +75,9 @@ class OrderController extends Controller
     {
         return Admin::grid(Order::class, function (Grid $grid) {
             $grid->model()->orderBy('id','desc');
+            $grid->filter(function($filter) {
+                $filter->between('created_at', '下单时间')->datetime();
+            });
             $grid->id('ID');
             $grid->serial('订单编号')->editable();
             $grid->realname('收货人')->editable();
