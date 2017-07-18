@@ -129,14 +129,14 @@ class ShopItemController extends Controller
             $form->text('title', '标题');
             $form->text('short_title', '简短介绍');
             $form->select('catalog_id','分类')->options(Catalog::selectOptions());
-            $form->number('count', '库存')->default('100');
-            $form->currency('original_price', '原价')->symbol('￥');
+//            $form->number('count', '库存')->default('100');
+//            $form->currency('original_price', '原价')->symbol('￥');
             $form->currency('price', '现价')->symbol('￥');
-            $form->number('sellcount_false','虚假销量');
+//            $form->number('sellcount_false','虚假销量');
             $form->number('unit_number','单位数量');
             $form->select('units','计量单位')->options(ShopItem::$units);
 //            $form->currency('shipping', '运费')->symbol('￥')->default('0.00');
-            $form->select('production','产地')->options(ShopItem::$productions);
+//            $form->select('production','产地')->options(ShopItem::$productions);
             $form->image('img', '图片')->uniqueName();
             $form->editor('detail', '内容')->attribute(['style' => 'height:400px;max-height:500px;']);
 
