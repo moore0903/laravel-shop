@@ -187,7 +187,7 @@ ul,ol,dl{ list-style-type:none;}
 
 .gwclist li .name{ width:260px; text-align:center; font-size:32px; color:#000; }
 
-.gwclist li .nr{ width:150px; font-size:32px; color:#666; }
+.gwclist li .nr{ font-size:32px; color:#666; }
 
 .gwclist li .nr span{ color:#ff0000; } 
 
