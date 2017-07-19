@@ -73,7 +73,7 @@ class UserController extends Controller
     protected function grid()
     {
         return Admin::grid(User::class, function (Grid $grid) {
-//            $grid->model();
+            $grid->model()->orderBy('id','desc');
             $grid->id('ID')->sortable();
             $grid->name('名称');
             $grid->headimage('头像')->image('',80,80);
