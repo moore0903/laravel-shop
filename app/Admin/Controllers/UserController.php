@@ -120,6 +120,8 @@ class UserController extends Controller
 
             $form->display('id', 'ID');
 
+            $form->switch('is_buy','是否可购买')->default(true);
+
             $form->display('created_at', 'Created At');
             $form->display('updated_at', 'Updated At');
         });
