@@ -81,13 +81,11 @@ class UserController extends Controller
             $grid->created_at('注册时间');
 
             $states = [
-                'on' => ['text' => 'YES'],
-                'off' => ['text' => 'NO'],
+                'on' => ['value'=>'1','text' => 'YES'],
+                'off' => ['value'=>'0','text' => 'NO'],
             ];
 
-            $grid->column('是否可购买')->switchGroup([
-                'is_buy' => '可购买'
-            ],$states);
+            $grid->is_buy('是否可购买')->switch($states);
 
 //            $grid->column('收货地址')->expand(function () {
 //                $address = $this->address;

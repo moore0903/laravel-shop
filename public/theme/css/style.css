@@ -207,13 +207,15 @@ ul,ol,dl{ list-style-type:none;}
 
 .gwcbottom input{ background:url(../bg/nbg5.gif) no-repeat; width:157px; height:49px; border:none; cursor:pointer; outline:none; margin-top:30px; color:#fff; font-size:24px; }
 
-.spxqtitle{ position:fixed; top:0px; left:0px; height:80px; background:#2bb889; font-size:32px; color:#fff; padding:20px 0 0 22px; width:728px; z-index:9999999999; }
+.spxqtitle{ position:fixed; top:0px; left:0px; height:80px; background:#2bb889; font-size:32px; color:#fff; padding:20px 0 0 62px; width:688px; z-index:9999999999; }
 
-.spxqnrkuai{ background:#eef9f6; width:685px; height:40px; -moz-border-radius:10px; -webkit-border-radius:10px; border-radius:10px; padding:10px 0 10px 20px; }
+.spxqtitle .spnav a{ background:url(../bg/fhbg.png) no-repeat; width:27px; height:45px; display:block; position:absolute; top:28px; left:20px; }
 
-.spxqnrkuai .name{ height:40px; width:600px; }
+.spxqnrkuai{ background:#eef9f6; width:645px; height:40px; -moz-border-radius:10px; -webkit-border-radius:10px; border-radius:10px; padding:10px 0 10px 20px; }
 
-.spxqnrkuai .name input{ color:#838383; font-size:30px; height:38px; line-height:38px; border:1px solid #eef9f6; background:#eef9f6; width:598px; -webkit-appearance: none; outline: medium; }
+.spxqnrkuai .name{ height:40px; width:560px; }
+
+.spxqnrkuai .name input{ color:#838383; font-size:30px; height:38px; line-height:38px; border:1px solid #eef9f6; background:#eef9f6; width:558px; -webkit-appearance: none; outline: medium; }
 
 .spxqnrkuai .nr{ width:28px; height:28px; margin-left:20px; }
 

@@ -10,6 +10,7 @@
 
 @section('search')
     <div class="spxqtitle fmyh" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+        <div class="spnav"><a href="javascript:window.history.go(-1)"></a></div>
         <div class="spxqnrkuai clear">
             <p class="name fl">
                 <input type="text" name="text" placeholder="请输入你想要的菜品！">

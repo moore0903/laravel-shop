@@ -15,7 +15,7 @@
 @section('content')
     <div id="cart_list">
         <div class="membertitle fmyh">
-            <p class="fh"><a href="javascript:window.history.go(-1)"></a></p>
+            <p class="fh"><a href="{{url('/shop_item/good_list')}}"></a></p>
             购物车</div>
         <template v-if="cart_count <= 0">
             <div class="shopping"></div>
