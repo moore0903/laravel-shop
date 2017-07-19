@@ -82,31 +82,31 @@ class ShopItemController extends Controller
             $grid->id('ID')->sortable();
             $grid->title('标题')->editable();
             $grid->catalog()->title('分类');
-            $grid->count('库存')->editable();
+//            $grid->count('库存')->editable();
             $grid->price('现价')->editable();
-            $grid->sellcount_real('真实销量');
-            $grid->sellcount_false('虚假销量')->editable();
+//            $grid->sellcount_real('真实销量');
+//            $grid->sellcount_false('虚假销量')->editable();
 
-            $states = [
-                'on' => ['text' => 'YES'],
-                'off' => ['text' => 'NO'],
-            ];
-
-            $grid->column('是否显示')->switchGroup([
-                'show' => '显示'
-            ],$states);
-
-            $grid->column('是否推荐')->switchGroup([
-                'recommend' => '推荐'
-            ],$states);
-
-            $grid->column('收藏数')->display(function(){
-                return '<a href="'.url('admin/shopitem/collection').'?id='.$this->id.'">'.Collection::shopItemCollectionCount($this->id) ?? '0'.'</a>';
-            });
-
-            $grid->column('评论数')->display(function(){
-                return '<a href="'.url('admin/shopitem/comment').'?id='.$this->id.'">'.Comment::shopItemCommentCount($this->id) ?? '0'.'</a>';
-            });
+//            $states = [
+//                'on' => ['text' => 'YES'],
+//                'off' => ['text' => 'NO'],
+//            ];
+//
+//            $grid->column('是否显示')->switchGroup([
+//                'show' => '显示'
+//            ],$states);
+//
+//            $grid->column('是否推荐')->switchGroup([
+//                'recommend' => '推荐'
+//            ],$states);
+//
+//            $grid->column('收藏数')->display(function(){
+//                return '<a href="'.url('admin/shopitem/collection').'?id='.$this->id.'">'.Collection::shopItemCollectionCount($this->id) ?? '0'.'</a>';
+//            });
+//
+//            $grid->column('评论数')->display(function(){
+//                return '<a href="'.url('admin/shopitem/comment').'?id='.$this->id.'">'.Comment::shopItemCommentCount($this->id) ?? '0'.'</a>';
+//            });
 
 
             $grid->sort('排序号')->editable();
@@ -127,7 +127,7 @@ class ShopItemController extends Controller
 
             $form->display('id', 'ID');
             $form->text('title', '标题');
-            $form->text('short_title', '简短介绍');
+//            $form->text('short_title', '简短介绍');
             $form->select('catalog_id','分类')->options(Catalog::selectOptions());
 //            $form->number('count', '库存')->default('100');
 //            $form->currency('original_price', '原价')->symbol('￥');

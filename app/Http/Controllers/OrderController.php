@@ -27,6 +27,9 @@ class OrderController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function cartsubmitquick(Request $request){
+        if(!\Auth::user()->is_buy){
+            return \Redirect::intended('/')->withInput()->withErrors(['msg' => '您没有权限购买,请联系管理员']);
+        }
         if(\Cart::count() <= 0){
             return \Redirect::intended('cart/list')->withInput()->withErrors(['msg' => '请重新下单']);
         }
