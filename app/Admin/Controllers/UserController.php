@@ -80,12 +80,15 @@ class UserController extends Controller
 
             $grid->created_at('注册时间');
 
+
             $states = [
-                '1'  => ['text' => '打开', 'color' => 'primary'],
-                '0' => ['text' => '关闭', 'color' => 'default'],
+                'on' => ['text' => 'YES'],
+                'off' => ['text' => 'NO'],
             ];
 
-            $grid->is_buy('是否可购买')->switch($states);
+            $grid->column('是否可购买')->switchGroup([
+                'is_buy' => '可购买'
+            ],$states);
 
 //            $grid->column('收货地址')->expand(function () {
 //                $address = $this->address;
