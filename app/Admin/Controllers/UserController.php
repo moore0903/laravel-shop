@@ -81,8 +81,8 @@ class UserController extends Controller
             $grid->created_at('注册时间');
 
             $states = [
-                'on'  => ['value' => 1, 'text' => '打开', 'color' => 'primary'],
-                'off' => ['value' => 0, 'text' => '关闭', 'color' => 'default'],
+                '1'  => ['text' => '打开', 'color' => 'primary'],
+                '0' => ['text' => '关闭', 'color' => 'default'],
             ];
 
             $grid->is_buy('是否可购买')->switch($states);
