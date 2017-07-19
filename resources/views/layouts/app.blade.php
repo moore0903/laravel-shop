@@ -15,6 +15,7 @@
     <link href="/theme/css/style.css" rel="stylesheet" type="text/css" />
     <link href="/theme/css/flexslider.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="/js/vue.js"></script>
+    <script type="text/javascript" src="/packages/layer/layer.js"></script>
 </head>
 
 <body>
