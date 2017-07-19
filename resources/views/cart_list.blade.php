@@ -87,6 +87,20 @@
     }
     });
 
+    $(function(){
+            <?php
+            $error = '';
+            if(isset($errors)){
+                $error = $errors->first();
+            }
+            ?>
+        var error = '{{$error}}';
+        if(error){
+            layer.msg('<span style="font-size: 30px;">'+error+'</span>');
+        }
+
+    });
+
 </script>
 @endsection
 
