@@ -16,6 +16,7 @@ use App\Models\Giftcode;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\ShopItem;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -27,7 +28,8 @@ class OrderController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function cartsubmitquick(Request $request){
-        if(!\Auth::user()->is_buy){
+        $users = User::find(\Auth::user()->id);
+        if(!$users->is_buy){
             return \Redirect::intended('cart/list')->withInput()->withErrors(['msg' => '您没有权限购买,请联系管理员']);
         }
         if(\Cart::count() <= 0){
