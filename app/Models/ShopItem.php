@@ -105,6 +105,10 @@ class ShopItem extends Model
         }
     }
 
+    public static function getUnitsById($id){
+        return ShopItem::find($id)->units;
+    }
+
     public static $units = [
         '瓶'=>'瓶',
         '箱'=>'箱',

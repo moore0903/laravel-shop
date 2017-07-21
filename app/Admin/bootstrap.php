@@ -40,3 +40,4 @@ Column::extend('prependIcon', function ($value, $icon) {
 
 Admin::css('/packages/pace/pace.css');
 Admin::js('/packages/pace/pace.min.js');
+app('view')->prependNamespace('admin', resource_path('views/admin'));

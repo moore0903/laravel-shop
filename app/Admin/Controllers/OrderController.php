@@ -12,6 +12,7 @@ use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use Encore\Admin\Widgets\Table;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -104,6 +105,9 @@ class OrderController extends Controller
             }, '查看详情');
 
             $grid->created_at('下单时间');
+            $grid->column('打印')->display(function(){
+                return '<a href="'.url('admin/order/orderPrint').'?id='.$this->id.'" target="_blank">点击打印</a>';
+            });
 //            $grid->column('物流信息')->express(function(){
 //                return [$this->express_company, $this->express_no];
 //            });
@@ -114,6 +118,7 @@ class OrderController extends Controller
 //            });
             $grid->disableExport();
             $grid->disableCreation();
+            \Log::debug($this->getData());
         });
     }
 
@@ -150,5 +155,12 @@ class OrderController extends Controller
             $form->display('created_at', '创建时间');
             $form->display('updated_at', '修改时间');
         });
+    }
+
+    public function orderPrint(Request $request){
+        $order = Order::with('details')->find($request['id']);
+        return view('/admin/orderPrint',[
+            'order'=>$order
+        ]);
     }
 }
