@@ -78,7 +78,7 @@ class OrderController extends Controller
             $grid->model()->orderBy('id','desc');
             $grid->filter(function($filter) {
                 $filter->disableIdFilter();
-                $filter->like('realname ', '收货人');
+                $filter->like('realname', '收货人');
                 $filter->between('created_at', '下单时间')->datetime();
             });
             $grid->id('ID');
