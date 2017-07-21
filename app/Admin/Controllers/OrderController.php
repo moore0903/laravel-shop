@@ -86,7 +86,7 @@ class OrderController extends Controller
             $grid->realname('收货人')->editable();
             $grid->phone('联系电话')->editable()->prependIcon('phone');
             $grid->address('收货地址')->editable('textarea');
-//            $grid->stat('当前状态')->editable('select', array_combine(Order::$stat_keys, Order::$stat_values));
+            $grid->stat('当前状态')->editable('select', array_combine(Order::$stat_keys, Order::$stat_values));
 //            $grid->total('原价');
 //            $grid->discount('优惠')->editable();
             $grid->totalpay('现价')->editable();
@@ -138,7 +138,7 @@ class OrderController extends Controller
             $form->text('address','收货地址');
             $form->text('realname','收货人');
             $form->mobile('phone','联系人电话');
-//            $form->select('stat','订单状态')->options(Order::$stat);
+            $form->select('stat','订单状态')->options(Order::$stat);
 //            $form->display('total', '原价');
 //            $form->currency('discount','优惠');
             $form->currency('totalpay','现价');
