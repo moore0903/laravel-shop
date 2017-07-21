@@ -94,7 +94,7 @@
                     <li>{{ $detail->product_title }}</li>
                     <li>{{ $detail->product_price }}</li>
                     <li>{{ $detail->product_num }}</li>
-                    <li>{{ \App\Models\ShopItem::getUnitsById($detail->shop_item_id) }}</li>
+                    <li>{{ $detail->units }}</li>
                     <li>{{ $detail->product_price * $detail->product_num }}</li>
                 </ul>
             </li>
