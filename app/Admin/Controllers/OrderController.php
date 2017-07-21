@@ -118,7 +118,6 @@ class OrderController extends Controller
 //            });
             $grid->disableExport();
             $grid->disableCreation();
-            \Log::debug($this->getData());
         });
     }
 
