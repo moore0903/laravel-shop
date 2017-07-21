@@ -31,10 +31,18 @@
                 </td>
                 @endforeach
             </tr>
+                <?php $totalpay[] = $row->totalpay??0;?>
             @endforeach
         </table>
     </div>
     <div class="box-footer clearfix">
+        <?php
+            if(!empty($totalpay))
+                $totalpaySum = collect($totalpay)->sum();
+            ?>
+        @if(!empty($totalpaySum))
+        {!! '总价:'.$totalpaySum.'元' !!}
+        @endif
         {!! $grid->paginator() !!}
     </div>
     <!-- /.box-body -->

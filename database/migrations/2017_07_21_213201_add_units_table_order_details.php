@@ -14,7 +14,7 @@ class AddUnitsTableOrderDetails extends Migration
     public function up()
     {
         Schema::table('order_details', function (Blueprint $table) {
-            $table->string('units')->comment('是否可以购买')->nullable();
+            $table->string('units')->comment('单位')->nullable();
         });
     }
 

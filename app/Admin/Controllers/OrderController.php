@@ -89,13 +89,16 @@ class OrderController extends Controller
             $grid->stat('当前状态')->editable('select', array_combine(Order::$stat_keys, Order::$stat_values));
 //            $grid->total('原价');
 //            $grid->discount('优惠')->editable();
-            $grid->totalpay('现价')->editable();
+            $grid->totalpay('现价');
 //            $grid->paytype('支付类型');
 //            $grid->totalget('支付金额')->editable();
             $grid->column('订单详情')->expand(function () {
                 $details = $this->details;
                 $details = $details->map(function($item){
-                    $data = ['product_title'=>$item['product_title'],'product_num'=>$item['product_num'],'product_price'=>$item['product_price']];
+                    $data = [
+                        'product_title'=>$item['product_title'],
+                        'product_num'=>$item['product_num'],
+                        'product_price'=>$item['product_price']];
                     foreach(array_diff_assoc($item->toArray(),$data) as $key => $value){
                         unset($item[$key]);
                     }
