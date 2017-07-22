@@ -40,6 +40,8 @@ Route::group([
 
     $router->resource('user', UserController::class);
 
+    $router->resource('orderDetail', OrderDetailController::class);
+
 
     $router->get('updateSite', 'HomeController@updateSite');
 
