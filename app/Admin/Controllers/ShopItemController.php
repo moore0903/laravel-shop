@@ -87,14 +87,14 @@ class ShopItemController extends Controller
 //            $grid->sellcount_real('真实销量');
 //            $grid->sellcount_false('虚假销量')->editable();
 
-//            $states = [
-//                'on' => ['text' => 'YES'],
-//                'off' => ['text' => 'NO'],
-//            ];
+            $states = [
+                'on' => ['text' => 'YES'],
+                'off' => ['text' => 'NO'],
+            ];
 //
-//            $grid->column('是否显示')->switchGroup([
-//                'show' => '显示'
-//            ],$states);
+            $grid->column('是否上架')->switchGroup([
+                'show' => '上架'
+            ],$states);
 //
 //            $grid->column('是否推荐')->switchGroup([
 //                'recommend' => '推荐'
@@ -145,7 +145,7 @@ class ShopItemController extends Controller
 
             $form->switch('recommend','推荐')->default(false);
 
-            $form->switch('show','显示')->default(true);
+            $form->switch('show','上架')->default(true);
 
 //            $form->display('created_at', 'Created At');
 //            $form->display('updated_at', 'Updated At');
