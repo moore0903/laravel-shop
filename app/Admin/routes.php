@@ -38,6 +38,12 @@ Route::group([
 
     $router->resource('user', UserController::class);
 
+    $router->resource('brand', MobileBrandCotroller::class);
+
+    $router->resource('model', MobileModelController::class);
+
+    $router->resource('universities', UniversityCotroller::class);
+
 
     $router->get('updateSite', 'HomeController@updateSite');
 
