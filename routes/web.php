@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'HomeController@home');
 
 Route::get('/welcome', 'HomeController@welcome');
 
@@ -30,6 +30,12 @@ Route::get('sendSmsVerify','UserController@sendSMSVerify');
 Route::post('bindphone','UserController@bindphone');
 
 Route::get('user/addCollection','UserController@addCollection');
+
+Route::get('mobileBrand','HomeController@mobileBrand');
+Route::get('mobileModel','HomeController@mobileModel');
+Route::get('mobileProblem','HomeController@mobileProblem');
+Route::post('mobileConfirm','HomeController@mobileConfirm');
+Route::post('mobileAddOrder','HomeController@mobileAddOrders');
 
 Auth::routes();
 

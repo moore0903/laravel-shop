@@ -78,7 +78,7 @@
                 </div>
             @endif
                 <div class="top-right links">
-                    <a href="{{ url('/oauth/github') }}">GitHub登录</a>
+                    {{--<a href="{{ url('/oauth/github') }}">GitHub登录</a>--}}
                 </div>
 
             <div class="content">

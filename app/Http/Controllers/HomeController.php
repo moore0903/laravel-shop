@@ -5,8 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Browse;
 use App\Models\Catalog;
 use App\Models\Collection;
+use App\Models\MobileBrand;
+use App\Models\MobileModel;
+use App\Models\MobileOrders;
 use App\Models\SecKill;
 use App\Models\ShopItem;
+use App\Models\ThirdUser;
+use App\Models\Universities;
+use Carbon\Carbon;
+use Encore\Admin\Form\Field\Mobile;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Vinkla\Hashids\Facades\Hashids;
@@ -19,13 +26,13 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function home()
     {
         return view('welcome');
     }
 
     public function welcome(){
-        return view('welcome');
+        return view('home');
     }
 
     /**
@@ -188,6 +195,74 @@ class HomeController extends Controller
         if(!$request->hasFile('image')) return ['stat'=>0,'msg'=>'没有选中上传文件'];
         $path = \Storage::putFile('public/comment', $request->file('image'));
         return ['stat'=>1,'imgUrl'=>\Storage::url($path),'path'=>$path];
+    }
+
+    /**
+     * 获取所有的手机品牌
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function mobileBrand(){
+        $mobileBrands = MobileBrand::orderBy('sort','asc')->get();
+        return view('mobileBrand',['mobileBrands'=>$mobileBrands]);
+    }
+
+    /**
+     * 根据手机品牌获取手机型号
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function mobileModel(Request $request){
+        $mobileModels = MobileModel::where('brand_id','=',$request['brand_id'])->orderBy('sort','asc')->get();
+        return view('mobileModel',['mobileModels'=>$mobileModels]);
+    }
+
+    /**
+     * 选择出现的问题
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function mobileProblem(Request $request){
+        $mobileModel = MobileModel::with('brand')->find($request['model_id']);
+        return view('mobileProblem',['mobileModel'=>$mobileModel]);
+    }
+
+    /**
+     * 下单确认页面
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function mobileConfirm(Request $request){
+        $problem = $request['problem'];
+        $mobileModel = MobileModel::with('brand')->find($request['model_id']);
+        $universities = Universities::orderBy('sort','asc')->get();
+        return view('mobileConfirm',[
+            'problems'=>$problem,
+            'mobileModel' => $mobileModel,
+            'universities' => $universities
+        ]);
+    }
+
+    public function mobileAddOrders(Request $request){
+        $thirdUser = ThirdUser::find(\Auth::user()->id);
+        $mobileModel = MobileModel::with('brand')->find($request['model_id']);
+        MobileOrders::create([
+            'user_id' => \Auth::user()->id,
+            'avatar' => $thirdUser->avatar,
+            'realname' => $request['s_user_name'],
+            'nick_name' => $thirdUser->nick_name,
+            'phone' => $request['s_user_tel'],
+            'color' => $request['s_phone_color'],
+            'address' => $request['s_user_site'].$request['s_house_number'],
+            'university' => $request['s_user_school'],
+            'brand' => $mobileModel->brand->brand_name,
+            'model' => $mobileModel->model_name,
+            'order_time' => $request['s_date'].$request['s_date_time'],
+            'problem' => $request['problem'],
+            'remark' => $request['s_phone_desc'],
+            'stat' => MobileOrders::STAT_ORDER
+        ]);
+
+        return redirect('/user/info');
     }
 
 
