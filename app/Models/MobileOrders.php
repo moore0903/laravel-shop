@@ -29,7 +29,7 @@ class MobileOrders extends Model
                     ]);
                 }
                 if($old_order->engineer !== $model->engineer){
-                    if($model->engineer > 0){
+                    if(!empty($model->engineer)){
                         ThirdUser::repairTemplateNotice($model->engineer);
                     }
                 }

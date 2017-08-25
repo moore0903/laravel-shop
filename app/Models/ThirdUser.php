@@ -32,7 +32,6 @@ class ThirdUser extends Model
             'openid'=>[
                 'o9MrhwZW4ux04BH_doYoY_H7NVy0',  //大锤
                 'o9MrhwXND-d8zv3QFQCkq2REGHhA',  //全蛋
-                'o9MrhwSXhXFyHvbIE7j5xih_XCNg',  //天啦
             ],
             'url'=>'http://gaoxiaoxiu.qinfengyunxun.com/admin'
         ],
@@ -58,11 +57,11 @@ class ThirdUser extends Model
     public static function repairTemplateNotice($openid){
         $notice = \EasyWeChat::notice();
         $data = [
-            'first'=>'有一条新预约报修,请注意查看',
+            'first'=>'有一条新报修,请注意查看',
             'keyword1'=>'手机/电脑报修',
             'keyword2'=>'需要维修',
-            'keyword3'=>Carbon::now()->toDateTimeString(),
-            'remark'=>'有一条新预约报修,请注意查看'
+            'keyword3'=>date('Y-m-d H:i:s',time()),
+            'remark'=>'有一条新报修,请注意查看'
         ];
         $result = $notice->to($openid)->uses('ddvgO7TJBmJqdktxiRAxXU4_QbPkZdFcitxc3IDSzwc')->andUrl('http://gaoxiaoxiu.qinfengyunxun.com/admin')->data($data)->send();
         \Log::debug($result);

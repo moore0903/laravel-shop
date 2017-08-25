@@ -96,12 +96,11 @@ class MobileOrderController extends Controller
             }
             $grid->created_at('添加时间')->sortable();
             $grid->stat('订单状态')->editable('select', array_combine(MobileOrders::$stat_keys, MobileOrders::$stat_values));
-            $grid->column('工程师')->display(function($engineer){
+            $grid->engineer('工程师')->display(function($engineer){
                 if(!empty($engineer)){
                     $thirdUser = ThirdUser::where('standard_id','=',$engineer)->first();
                     return $thirdUser->nick_name;
                 }else{
-
                     return '暂无';
                 }
             });
