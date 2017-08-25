@@ -23,6 +23,8 @@ use Encore\Admin\Form;
 use App\Admin\Extensions\Column\ExpandRow;
 use Encore\Admin\Grid\Column;
 use App\Admin\Extensions\Column\ViewExpress;
+use App\Admin\Extensions\Popover;
+use App\Admin\Extensions\ProblemPopover;
 
 Form::forget('map');
 
@@ -37,6 +39,9 @@ Column::extend('prependIcon', function ($value, $icon) {
     return "<span style='color: #999;'><i class='fa fa-$icon'></i>  $value</span>";
 
 });
+
+Column::extend('popover', Popover::class);
+Column::extend('problemPopover', ProblemPopover::class);
 
 Admin::css('/packages/pace/pace.css');
 Admin::js('/packages/pace/pace.min.js');

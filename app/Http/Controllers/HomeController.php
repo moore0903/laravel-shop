@@ -28,6 +28,7 @@ class HomeController extends Controller
      */
     public function home()
     {
+        \Auth::loginUsingId(1);
         return view('welcome');
     }
 
@@ -227,7 +228,7 @@ class HomeController extends Controller
     }
 
     /**
-     * 下单确认页面
+     * 手机订单下单确认页面
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -259,7 +260,40 @@ class HomeController extends Controller
             'order_time' => $request['s_date'].$request['s_date_time'],
             'problem' => $request['problem'],
             'remark' => $request['s_phone_desc'],
-            'stat' => MobileOrders::STAT_ORDER
+            'stat' => MobileOrders::STAT_ORDER,
+            'progress' => date('Y-m-d H:i:s',time()).' '.MobileOrders::STAT_ORDER,
+            'type' => 1
+        ]);
+
+        return redirect('/user/info');
+    }
+
+    /**
+     * 电脑订单下单确认页面
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function pcConfirm(){
+        $universities = Universities::orderBy('sort','asc')->get();
+        return view('pcConfirm',[
+            'universities' => $universities
+        ]);
+    }
+
+    public function pcAddOrders(Request $request){
+        $thirdUser = ThirdUser::find(\Auth::user()->id);
+        MobileOrders::create([
+            'user_id' => \Auth::user()->id,
+            'avatar' => $thirdUser->avatar,
+            'realname' => $request['pc_user_name'],
+            'nick_name' => $thirdUser->nick_name,
+            'phone' => $request['pc_user_tel'],
+            'address' => $request['pc_user_site'].$request['pc_house_number'],
+            'university' => $request['pc_user_school'],
+            'order_time' => $request['pc_date'].$request['pc_date_time'],
+            'remark' => $request['pc_desc'],
+            'stat' => MobileOrders::STAT_ORDER,
+            'progress' => date('Y-m-d H:i:s',time()).' '.MobileOrders::STAT_ORDER,
+            'type' => 2
         ]);
 
         return redirect('/user/info');

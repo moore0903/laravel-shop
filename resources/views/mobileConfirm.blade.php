@@ -51,7 +51,7 @@
             </div>
             <div class="form-desc-box">
                 <input type="hidden" name="problem" value="{{ json_encode($problems) }}"/>
-                <textarea type="text" name="s_phone_desc" rows="4" placeholder="更多需求（最多只能输入50个字）"></textarea>
+                <textarea type="text" name="s_phone_desc" rows="4" class="s_phone_desc" placeholder="更多需求（最多只能输入50个字）"></textarea>
             </div>
             <div>
                 <div class="am-u-sm-12 form-tips">
@@ -153,7 +153,7 @@
         var $house_number = $order_form.find('input[name=s_house_number]');
         var $s_date = $order_form.find('input[name=s_date]');
         var $s_date_time = $order_form.find('input[name=s_date_time]');
-        var $s_desc = $order_form.find('input[name=s_desc]');
+        var $s_desc = $order_form.find('.s_phone_desc');
         var $order_alert_tips = $('#order-modal-tips');
 
         $order_checkBtn.bind('click', function(e){

@@ -44,6 +44,8 @@ Route::group([
 
     $router->resource('universities', UniversityCotroller::class);
 
+    $router->resource('mobileOrder', MobileOrderController::class);
+
 
     $router->get('updateSite', 'HomeController@updateSite');
 

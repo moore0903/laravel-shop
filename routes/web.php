@@ -35,7 +35,9 @@ Route::get('mobileBrand','HomeController@mobileBrand');
 Route::get('mobileModel','HomeController@mobileModel');
 Route::get('mobileProblem','HomeController@mobileProblem');
 Route::post('mobileConfirm','HomeController@mobileConfirm');
+Route::get('pcConfirm','HomeController@pcConfirm');
 Route::post('mobileAddOrder','HomeController@mobileAddOrders');
+Route::post('pcAddOrder','HomeController@pcAddOrders');
 
 Auth::routes();
 

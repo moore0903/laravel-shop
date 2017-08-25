@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Encore\Admin\Form\Field\Mobile;
 use Illuminate\Database\Eloquent\Model;
 
 class MobileOrders extends Model
@@ -9,8 +10,27 @@ class MobileOrders extends Model
     protected $table = 'mobile_orders';
 
     protected $fillable = [
-        'user_id', 'avatar', 'realname','nick_name','phone','color','address','university','brand','model','order_time','problem','stat','engineer','remark'
+        'user_id', 'avatar', 'realname','nick_name','phone','color','address','university','brand','model','order_time','problem','stat','engineer','remark','progress','type'
     ];
+
+    /**
+     * 前置任务
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($model) {
+            $old_order = MobileOrders::find($model->id);
+            if($old_order){
+                if($old_order->stat !== $model->stat){
+                    \DB::table('mobile_orders')->where('id','=',$model->id)->update([
+                        'progress' => $old_order->progress.'|'.date('Y-m-d H:i:s',time()).' '.$model->stat
+                    ]);
+                }
+            }
+        });
+    }
 
     public static function datatime(){
         $weekarray = array("日","一","二","三","四","五","六");
