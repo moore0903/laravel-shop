@@ -1,6 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" charset="utf-8">
+        wx.config(<?php echo $js->config(array('getLocation'), true) ?>);
+        wx.ready(function(){
+            wx.getLocation({
+                type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+                success: function (res) {
+                    $.get("{{ url('ajaxGetGeocoder/') }}", { latitude: res.latitude, longitude: res.longitude },
+                        function(data){
+                            $('input[name="pc_user_site"]').val(data);
+                        });
+                },
+                cancel: function (res) {
+                    alert('用户拒绝授权获取地理位置');
+                }
+            });
+        });
+    </script>
     <header class="ui-header ui-header-style">
         <i class="am-icon-angle-left am-icon-fw" onclick="history.back()"></i>
         <h1>确认订单</h1>

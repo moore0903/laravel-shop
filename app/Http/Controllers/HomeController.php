@@ -236,10 +236,12 @@ class HomeController extends Controller
         $problem = $request['problem'];
         $mobileModel = MobileModel::with('brand')->find($request['model_id']);
         $universities = Universities::orderBy('sort','asc')->get();
+        $app = \EasyWeChat::notice();
         return view('mobileConfirm',[
             'problems'=>$problem,
             'mobileModel' => $mobileModel,
-            'universities' => $universities
+            'universities' => $universities,
+            'js' => $app->js
         ]);
     }
 
@@ -274,8 +276,10 @@ class HomeController extends Controller
      */
     public function pcConfirm(){
         $universities = Universities::orderBy('sort','asc')->get();
+        $app = \EasyWeChat::notice();
         return view('pcConfirm',[
-            'universities' => $universities
+            'universities' => $universities,
+            'js' => $app->js
         ]);
     }
 
@@ -297,6 +301,26 @@ class HomeController extends Controller
         ]);
 
         return redirect('/user/info');
+    }
+
+    /**
+     * ajax 根据经纬度获取当前位置信息
+     * @param Request $request
+     * @return mixed
+     */
+    public function ajaxGetGeocoder(Request $request){
+        $txMapKey = env('TX_MAP_KEY','WDQBZ-G5R36-RD3S4-MVWML-SBGB6-4WBGQ');
+        $ch = curl_init();
+        $url = "http://apis.map.qq.com/ws/geocoder/v1/?location=$request[latitude],$request[longitude]&key=$txMapKey&get_poi=0";
+        // 执行HTTP请求
+        curl_setopt($ch , CURLOPT_URL , $url);
+        $res = curl_exec($ch);
+        $result = json_decode($res);
+        if($result->status == 0){
+            return $result->result->formatted_addresses->recommend;
+        }else{
+            return $result->message;
+        }
     }
 
 

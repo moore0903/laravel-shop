@@ -124,6 +124,7 @@ Route::group(
         Route::post('mobileAddOrder','HomeController@mobileAddOrders');
         Route::post('pcAddOrder','HomeController@pcAddOrders');
         Route::get('/', 'HomeController@welcome');
+        Route::get('ajaxGetGeocoder', 'HomeController@ajaxGetGeocoder');
     }
 );
 
