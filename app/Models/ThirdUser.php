@@ -50,4 +50,36 @@ class ThirdUser extends Model
             \Log::debug($result);
         }
     }
+
+    /**
+     * 根据用户标签获取用户
+     * @return array
+     */
+    public static function wxUserTags(){
+        $result = [];
+        $user_tag = \EasyWeChat::user_tag();
+        foreach($user_tag->lists()->tags as $tag){
+            if($tag['name'] == '工程师'){
+                $data = $user_tag->usersOfTag($tag['id'], $nextOpenId = '');
+                break;
+            }
+        }
+        if(!empty($data)){
+            foreach($data->data->openid as $openid){
+                $thirdUser = ThirdUser::where('standard_id','=',$openid)->first();
+                if(!empty($thirdUser->toArray())){
+                    $result = [
+                        $openid => $thirdUser->nick_name
+                    ];
+                }else{
+                    $user = \EasyWeChat::user();
+                    $userInfo = $user->get($openid);
+                    $result = [
+                        $openid => $userInfo->nickname
+                    ];
+                }
+            }
+        }
+        return $result;
+    }
 }

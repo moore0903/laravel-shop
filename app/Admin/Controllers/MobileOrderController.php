@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Models\MobileOrders;
 
+use App\Models\ThirdUser;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Facades\Admin;
@@ -134,7 +135,7 @@ class MobileOrderController extends Controller
 
             $form->display('created_at', '添加时间');
             $form->select('stat','订单状态')->options(MobileOrders::$stat);
-
+            $form->select('engineer','工程师')->options(ThirdUser::wxUserTags());
         });
     }
 }
