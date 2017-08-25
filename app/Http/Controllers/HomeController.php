@@ -268,6 +268,14 @@ class HomeController extends Controller
             'type' => 1
         ]);
 
+        ThirdUser::templateNotice('1',[
+            'first'=>'有一条新预约报修,请注意查看',
+            'keyword1'=>'手机报修',
+            'keyword2'=>'预约成功',
+            'keyword3'=>Carbon::now()->toDateTimeString(),
+            'remark'=>'有一条新预约报修,请注意查看'
+        ]);
+
         return redirect('/user/info');
     }
 
@@ -299,6 +307,14 @@ class HomeController extends Controller
             'stat' => MobileOrders::STAT_ORDER,
             'progress' => date('Y-m-d H:i:s',time()).' '.MobileOrders::STAT_ORDER,
             'type' => 2
+        ]);
+
+        ThirdUser::templateNotice('1',[
+            'first'=>'有一条新预约报修,请注意查看',
+            'keyword1'=>'电脑报修',
+            'keyword2'=>'预约成功',
+            'keyword3'=>Carbon::now()->toDateTimeString(),
+            'remark'=>'有一条新预约报修,请注意查看'
         ]);
 
         return redirect('/user/info');
