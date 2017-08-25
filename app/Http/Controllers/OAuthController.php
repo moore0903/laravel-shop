@@ -46,7 +46,7 @@ class OAuthController extends Controller
      */
     public function redirectToWechat()
     {
-        return Socialite::driver('wechat')->scopes(['snsapi_userinfo'])->redirect();
+        return Socialite::driver('wechat')->scopes(['snsapi_base'])->redirect();
     }
 
     /**

@@ -15,7 +15,6 @@ Route::get('/home', 'HomeController@home');
 
 Route::get('/welcome', 'HomeController@welcome');
 
-Route::get('/', 'HomeController@welcome');
 
 Route::get('/article/{id}', 'ArticlesController@detail');
 
@@ -31,13 +30,6 @@ Route::post('bindphone','UserController@bindphone');
 
 Route::get('user/addCollection','UserController@addCollection');
 
-Route::get('mobileBrand','HomeController@mobileBrand');
-Route::get('mobileModel','HomeController@mobileModel');
-Route::get('mobileProblem','HomeController@mobileProblem');
-Route::post('mobileConfirm','HomeController@mobileConfirm');
-Route::get('pcConfirm','HomeController@pcConfirm');
-Route::post('mobileAddOrder','HomeController@mobileAddOrders');
-Route::post('pcAddOrder','HomeController@pcAddOrders');
 
 Auth::routes();
 
@@ -123,6 +115,15 @@ Route::group(
             Route::any('/serve', 'WechatController@serve');
             Route::get('/profile', 'WechatController@profile');
         });
+
+        Route::get('mobileBrand','HomeController@mobileBrand');
+        Route::get('mobileModel','HomeController@mobileModel');
+        Route::get('mobileProblem','HomeController@mobileProblem');
+        Route::post('mobileConfirm','HomeController@mobileConfirm');
+        Route::get('pcConfirm','HomeController@pcConfirm');
+        Route::post('mobileAddOrder','HomeController@mobileAddOrders');
+        Route::post('pcAddOrder','HomeController@pcAddOrders');
+        Route::get('/', 'HomeController@welcome');
     }
 );
 
