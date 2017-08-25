@@ -34,16 +34,16 @@
                             <?php
                                 Log::debug($order->progress);
                                 $processes = explode('|',$order->progress);
+                                $processes = array_reverse($processes);
                             ?>
                             @foreach($processes as $process)
                                 <?php
                                     $pro = explode(' ',$process);
-                                    \Log::debug($pro);
                                 ?>
-                                <li class="log-item active">
+                                <li class="log-item {{ $loop->iteration == 1 ? 'active' : '' }}">
                                     <span class="am-icon-circle"></span>
                                     {{ \App\Models\MobileOrders::$stat[$pro[2]] }}
-                                    <span class="txt-gray9 am-fr">{{ $pro[0].$pro[1] }}</span>
+                                    <span class="txt-gray9 am-fr">{{ $pro[0].' '.$pro[1] }}</span>
                                 </li>
                             @endforeach
                         </ul>
