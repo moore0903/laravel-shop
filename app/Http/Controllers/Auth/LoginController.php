@@ -44,11 +44,11 @@ class LoginController extends Controller
     }
 
     public function showLoginForm(){
-        $inMobile = preg_match('/iPad|iPhone|iPod|iOS|Android|Windows Phone|Mobile/i',$_SERVER['HTTP_USER_AGENT']??'') ;// strpos(($_SERVER['HTTP_USER_AGENT']??''),'MicroMessenger')!==FALSE;
-        $inWechat = strpos(($_SERVER['HTTP_USER_AGENT']??''),'MicroMessenger')!==FALSE;
-        if($inMobile && $inWechat){
+//        $inMobile = preg_match('/iPad|iPhone|iPod|iOS|Android|Windows Phone|Mobile/i',$_SERVER['HTTP_USER_AGENT']??'') ;// strpos(($_SERVER['HTTP_USER_AGENT']??''),'MicroMessenger')!==FALSE;
+//        $inWechat = strpos(($_SERVER['HTTP_USER_AGENT']??''),'MicroMessenger')!==FALSE;
+//        if($inMobile && $inWechat){
             return redirect('oauth/wechat');
-        }
+//        }
         if(isset($_REQUEST['intend'])) {
             session()->put('url.intended', $_REQUEST['intend']);
         }

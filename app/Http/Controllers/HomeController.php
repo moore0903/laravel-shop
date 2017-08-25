@@ -17,6 +17,7 @@ use Encore\Admin\Form\Field\Mobile;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Vinkla\Hashids\Facades\Hashids;
+use EasyWeChat\Foundation\Application;
 
 class HomeController extends Controller
 {
@@ -236,12 +237,12 @@ class HomeController extends Controller
         $problem = $request['problem'];
         $mobileModel = MobileModel::with('brand')->find($request['model_id']);
         $universities = Universities::orderBy('sort','asc')->get();
-        $app = \EasyWeChat::notice();
+        $js = \EasyWeChat::js();
         return view('mobileConfirm',[
             'problems'=>$problem,
             'mobileModel' => $mobileModel,
             'universities' => $universities,
-            'js' => $app->js
+            'js' => $js
         ]);
     }
 
@@ -276,10 +277,10 @@ class HomeController extends Controller
      */
     public function pcConfirm(){
         $universities = Universities::orderBy('sort','asc')->get();
-        $app = \EasyWeChat::notice();
+        $js = \EasyWeChat::js();
         return view('pcConfirm',[
             'universities' => $universities,
-            'js' => $app->js
+            'js' => $js
         ]);
     }
 
@@ -312,14 +313,16 @@ class HomeController extends Controller
         $txMapKey = env('TX_MAP_KEY','WDQBZ-G5R36-RD3S4-MVWML-SBGB6-4WBGQ');
         $ch = curl_init();
         $url = "http://apis.map.qq.com/ws/geocoder/v1/?location=$request[latitude],$request[longitude]&key=$txMapKey&get_poi=0";
+        \Log::debug("http://apis.map.qq.com/ws/geocoder/v1/?location=$request[latitude],$request[longitude]&key=$txMapKey&get_poi=0");
         // 执行HTTP请求
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch , CURLOPT_URL , $url);
         $res = curl_exec($ch);
         $result = json_decode($res);
-        if($result->status == 0){
-            return $result->result->formatted_addresses->recommend;
-        }else{
+        if($result->status > 0){
             return $result->message;
+        }else{
+            return $result->result->formatted_addresses->recommend;
         }
     }
 
