@@ -35,7 +35,7 @@ class ThirdUser extends Model
                 'o9MrhwSXhXFyHvbIE7j5xih_XCNg',  //天啦
             ],
             'url'=>'http://gaoxiaoxiu.qinfengyunxun.com/admin'
-        ]
+        ],
     ];
     /**
      * 发送模板消息
@@ -52,11 +52,28 @@ class ThirdUser extends Model
     }
 
     /**
+     * 维修模板消息
+     * @param $openid
+     */
+    public static function repairTemplateNotice($openid){
+        $notice = \EasyWeChat::notice();
+        $data = [
+            'first'=>'有一条新预约报修,请注意查看',
+            'keyword1'=>'手机/电脑报修',
+            'keyword2'=>'需要维修',
+            'keyword3'=>Carbon::now()->toDateTimeString(),
+            'remark'=>'有一条新预约报修,请注意查看'
+        ];
+        $result = $notice->to($openid)->uses('ddvgO7TJBmJqdktxiRAxXU4_QbPkZdFcitxc3IDSzwc')->andUrl('http://gaoxiaoxiu.qinfengyunxun.com/admin')->data($data)->send();
+        \Log::debug($result);
+    }
+
+    /**
      * 根据用户标签获取用户
      * @return array
      */
     public static function wxUserTags(){
-        $result = [];
+        $result['0'] = '暂无';
         $user_tag = \EasyWeChat::user_tag();
         foreach($user_tag->lists()->tags as $tag){
             if($tag['name'] == '工程师'){
@@ -65,18 +82,14 @@ class ThirdUser extends Model
             }
         }
         if(!empty($data)){
-            foreach($data->data->openid as $openid){
+            foreach($data->data['openid'] as $openid){
                 $thirdUser = ThirdUser::where('standard_id','=',$openid)->first();
                 if(!empty($thirdUser->toArray())){
-                    $result = [
-                        $openid => $thirdUser->nick_name
-                    ];
+                    $result[$openid] = $thirdUser->nick_name;
                 }else{
                     $user = \EasyWeChat::user();
                     $userInfo = $user->get($openid);
-                    $result = [
-                        $openid => $userInfo->nickname
-                    ];
+                    $result[$openid] = $userInfo->nickname;
                 }
             }
         }

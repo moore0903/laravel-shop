@@ -28,6 +28,11 @@ class MobileOrders extends Model
                         'progress' => $old_order->progress.'|'.date('Y-m-d H:i:s',time()).' '.$model->stat
                     ]);
                 }
+                if($old_order->engineer !== $model->engineer){
+                    if($model->engineer > 0){
+                        ThirdUser::repairTemplateNotice($model->engineer);
+                    }
+                }
             }
         });
     }
