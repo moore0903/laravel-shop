@@ -136,6 +136,7 @@ html,body{
 }
 .brand-item a{
     color: #333;
+    display: block;
 }
 .brand-item .am-icon-angle-right{
     font-size: 2rem;
