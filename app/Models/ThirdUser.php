@@ -83,7 +83,7 @@ class ThirdUser extends Model
         if(!empty($data)){
             foreach($data->data['openid'] as $openid){
                 $thirdUser = ThirdUser::where('standard_id','=',$openid)->first();
-                if(!empty($thirdUser->toArray())){
+                if(!empty($thirdUser)){
                     $result[$openid] = $thirdUser->nick_name;
                 }else{
                     $user = \EasyWeChat::user();
