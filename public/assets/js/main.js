@@ -64,7 +64,7 @@ var sel_phone_brandId, sel_phone_brandName, sel_phone_typeId, sel_phone_typeName
 /* 手机品牌点击 */
 function brandClick(){
     var $this = $(this);
-    var jump_url = $this.find('a').attr('href');
+    //var jump_url = $this.find('a').attr('href');
     sel_phone_brandId = $this.attr('data-id');
     sel_phone_brandName = $this.attr('data-name');
     window.location.href = jump_url;
@@ -75,7 +75,7 @@ function brandClick(){
 /* 手机类型点击 */
 function phoneTypeClick(){
     var $this = $(this);
-    var jump_url = $this.find('a').attr('href');
+    //var jump_url = $this.find('a').attr('href');
     sel_phone_typeId = $this.attr('data-id');
     sel_phone_typeName = $this.attr('data-name');
     window.location.href = jump_url;
