@@ -77,7 +77,7 @@ class MobileModelController extends Controller
         return Admin::grid(MobileModel::class, function (Grid $grid) {
             $grid->model()->where('brand_id','=',Request::get('brand_id'));
             $grid->brand()->brand_name('品牌名')->sortable();
-            $grid->model_name('型号')->sortable();
+            $grid->model_name('型号')->editable()->sortable();
             $grid->created_at('添加时间')->sortable();
             $grid->sort('排序')->sortable();
         });

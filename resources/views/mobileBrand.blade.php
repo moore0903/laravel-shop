@@ -9,7 +9,15 @@
         <div class="brand-list" id="brand_list">
             @foreach($mobileBrands as $brand)
                 <div class="brand-item" data-id="{{ $loop->iteration }}" data-name="{{ $brand->brand_name }}">
-                    <a href="{{ url('mobileModel/'.'?brand_id='.$brand->id) }}">{{ $brand->brand_name }}<i class="am-icon-angle-right am-fr am-margin-right"></i></a>
+                    @if($brand->brand_name == '其他')
+                        <?php
+                            $model = \App\Models\MobileModel::where('brand_id','=',$brand->id)->first();
+                        ?>
+                        <a href="{{ url('mobileProblem/'.'?model_id='.$model->id) }}">{{ $brand->brand_name }}<i class="am-icon-angle-right am-fr am-margin-right"></i></a>
+                        @else
+                        <a href="{{ url('mobileModel/'.'?brand_id='.$brand->id) }}">{{ $brand->brand_name }}<i class="am-icon-angle-right am-fr am-margin-right"></i></a>
+                    @endif
+
                 </div>
             @endforeach
         </div>

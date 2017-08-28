@@ -77,7 +77,7 @@ class UniversityCotroller extends Controller
 
             $grid->created_at('添加时间')->sortable();
 
-            $grid->sort('排序')->sortable();
+            $grid->sort('排序')->editable()->sortable();
 
             $grid->filter(function($filter){
                 // 禁用id查询框

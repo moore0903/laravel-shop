@@ -74,7 +74,7 @@ class MobileBrandCotroller extends Controller
         return Admin::grid(MobileBrand::class, function (Grid $grid) {
             $grid->brand_name('品牌名')->sortable();
             $grid->created_at('添加时间')->sortable();
-            $grid->sort('排序')->sortable();
+            $grid->sort('排序')->editable()->sortable();
             $grid->column('型号')->display(function(){
                 return '<a href="'.url('admin/model').'?brand_id='.$this->id.'">查看型号</a>';
             });
