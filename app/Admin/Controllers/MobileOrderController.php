@@ -127,6 +127,8 @@ class MobileOrderController extends Controller
                     $form->display('brand', '手机品牌');
                     $form->display('model', '手机型号');
                     $form->display('order_time', '预约时间');
+                    $form->display('color', '手机颜色');
+                    $form->display('university', '学校');
                     $form->display('problem', '手机问题')->with(function($problem){
                         $blem = json_decode($problem,true);
                         return implode(',',$blem);
