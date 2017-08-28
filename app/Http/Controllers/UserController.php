@@ -28,7 +28,7 @@ class UserController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function info(){
-        $order_list = MobileOrders::where('user_id','=',\Auth::user()->id)->get();
+        $order_list = MobileOrders::where('user_id','=',\Auth::user()->id)->orderBy('id','desc')->get();
         $thirdUser = ThirdUser::where('user_id','=',\Auth::user()->id)->first();
         return view('userInfo',[
             'orders' => $order_list,
