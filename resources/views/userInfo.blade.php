@@ -24,7 +24,7 @@
                         <div class="am-u-sm-10">
                             <p><span class="txt-gray9">业务类型：</span> {{ $order->type == 1 ? '手机报修' : '电脑报修' }}</p>
                             @if($order->type == 1)
-                            <p><span class="txt-gray9">手机型号：</span> iPone6</p>
+                            <p><span class="txt-gray9">手机型号：</span> {{ $order->brand.' '.$order->model }}</p>
                             @endif
                             <p><span class="txt-gray9">出现问题：</span> {{ $order->type == 1 ? implode(',',json_decode($order->problem,true)).' '.$order->remark : $order->remark }}</p>
                         </div>
