@@ -87,6 +87,8 @@ class MobileOrderController extends Controller
                     return $this->brand.' '.$this->model;
                 });
                 $grid->order_time('预约时间')->sortable();
+                $grid->color('手机颜色')->sortable();
+                $grid->university('所在学校')->sortable();
                 $grid->problem('手机问题')->problemPopover('right');
                 $grid->remark('用户备注')->popover('right');
             }else{
@@ -128,7 +130,7 @@ class MobileOrderController extends Controller
                     $form->display('model', '手机型号');
                     $form->display('order_time', '预约时间');
                     $form->display('color', '手机颜色');
-                    $form->display('university', '学校');
+                    $form->display('university', '所在学校');
                     $form->display('problem', '手机问题')->with(function($problem){
                         $blem = json_decode($problem,true);
                         return implode(',',$blem);
