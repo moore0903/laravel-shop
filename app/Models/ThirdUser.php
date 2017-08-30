@@ -32,6 +32,8 @@ class ThirdUser extends Model
             'openid'=>[
                 'o9MrhwZW4ux04BH_doYoY_H7NVy0',  //大锤
                 'o9MrhwXND-d8zv3QFQCkq2REGHhA',  //全蛋
+                'o9MrhwVHeEHcqqEkBlAllHRvE9BY',  //江城的猫
+                'o9MrhwRPfHVDPHOxB5NuDpCRePiU',  //克卜猫
             ],
             'url'=>'http://gaoxiaoxiu.qinfengyunxun.com/admin'
         ],
