@@ -47,7 +47,7 @@
                                 </li>
                             @endforeach
                         </ul>
-                        <div class="tips">如有疑问请拨打客服电话44130028</div>
+                        <div class="tips">如有疑问请拨打客服电话 18627763575</div>
                         <div class="toggle-show-logs-btn">
                             <i class="am-icon-angle-down am-animation-rotateIn"></i>
                         </div>
