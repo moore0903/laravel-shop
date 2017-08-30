@@ -106,6 +106,13 @@ class MobileOrderController extends Controller
                     return '暂无';
                 }
             });
+            $grid->filter(function($filter){
+                $filter->disableIdFilter();
+                $filter->like('realname', '真实姓名');
+                $filter->like('phone', '联系方式');
+
+            });
+
             $grid->disableCreation();
         });
     }

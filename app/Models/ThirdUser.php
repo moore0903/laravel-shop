@@ -41,11 +41,11 @@ class ThirdUser extends Model
      * @param $templateType
      * @param $data
      */
-    public static function templateNotice($templateType,$data){
+    public static function templateNotice($templateType,$data,$url=''){
         $notice = \EasyWeChat::notice();
         $template = ThirdUser::$templateType[$templateType];
         foreach($template['openid'] as $openid){
-            $result = $notice->to($openid)->uses($template['templateId'])->andUrl($template['url'])->data($data)->send();
+            $result = $notice->to($openid)->uses($template['templateId'])->andUrl($url??$template['url'])->data($data)->send();
             \Log::debug($result);
         }
     }

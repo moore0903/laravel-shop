@@ -274,7 +274,7 @@ class HomeController extends Controller
             'keyword2'=>'预约成功',
             'keyword3'=>Carbon::now()->toDateTimeString(),
             'remark'=>'有一条新预约报修,请注意查看'
-        ]);
+        ],'http://gaoxiaoxiu.qinfengyunxun.com/admin/mobileOrder?type=1');
 
         return redirect('/user/info');
     }
@@ -315,7 +315,7 @@ class HomeController extends Controller
             'keyword2'=>'预约成功',
             'keyword3'=>Carbon::now()->toDateTimeString(),
             'remark'=>'有一条新预约报修,请注意查看'
-        ]);
+        ],'http://gaoxiaoxiu.qinfengyunxun.com/admin/mobileOrder?type=2');
 
         return redirect('/user/info');
     }
