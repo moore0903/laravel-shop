@@ -8,7 +8,7 @@
                 <a class="menu-btn" href="{{ url('mobileBrand/') }}"><img src="{{ asset('assets/images/icon-phone.png') }}" class="icon-phone">手机报修</a>
                 <a class="menu-btn" href="{{ url('pcConfirm/') }}"><img src="{{ asset('assets/images/icon-PC.png') }}" class="icon-PC">电脑报修</a>
             </div>
-            <div class="index-fixed-btn"><img src="{{ asset('assets/images/icon-kf.png') }}">咨询客服</div>
+            <div class="index-fixed-btn"><img src="{{ asset('assets/images/icon-kf.png') }}">咨询客服微信：1163406044</div>
         </div>
     </div>
 @endsection

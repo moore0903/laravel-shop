@@ -52,8 +52,8 @@ html,body{
     line-height: 40px;
 }
 .index-menu-box .menu-btn:hover{
-    color: #c12525;
-    border-color: #c12525;
+    color: #FFB717;
+    border-color: #FFB717;
 }
 .index-menu-box .menu-btn img{
     margin-right: 3.2rem;
@@ -77,7 +77,7 @@ html,body{
     font-size: 14px;
     border-radius: 22.5px;
     color: #fff;
-    background: #c12525;
+    background: #FFB717;
     position: fixed;
     left: 1rem;
     right: 1rem;
@@ -120,8 +120,8 @@ html,body{
     padding-top: 45px;
 }
 .am-btn-danger{
-    background-color: #c12525;
-    border-color: #c12525;
+    background-color: #FFB717;
+    border-color: #FFB717;
 }
 /* phone */
 .brand-list{
@@ -159,7 +159,7 @@ html,body{
 .problem-info span{
     display: inline-block;
     margin-right: 10px;
-    color: #c12525;
+    color: #FFB717;
 }
 .problem-list{
     background-color: #f4f4f4;
@@ -260,9 +260,16 @@ html,body{
     width: 85%;
     border-radius: 8px;
     overflow: hidden;
+	position:fixed;
+	top:50%; left:50%;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform:translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+	height:50%;
 }
+.sel-action-list{ height:100%; overflow-x:scroll; padding-bottom:30px; }
 .am-modal-list .am-modal-hd{
-    color: #c12525;
+    color: #FFB717;
     padding: .6rem;
     font-size: 1.6rem;
     background: #eee;

@@ -38,6 +38,8 @@ class MobileModel extends Model
         'home键失灵',
         '扬声器损坏',
         '软件问题',
+        'WIFI问题',
+        '手机进水',
         '其它故障'
     ];
 }
