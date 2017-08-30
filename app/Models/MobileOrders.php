@@ -30,7 +30,7 @@ class MobileOrders extends Model
                 }
                 if($old_order->engineer !== $model->engineer){
                     if(!empty($model->engineer)){
-                        ThirdUser::repairTemplateNotice($model->engineer);
+                        ThirdUser::repairTemplateNotice($model->engineer,$model->id);
                     }
                 }
             }

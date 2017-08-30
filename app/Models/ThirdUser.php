@@ -54,18 +54,27 @@ class ThirdUser extends Model
 
     /**
      * 维修模板消息
-     * @param $openid
+     * @param $openid 微信的openid
+     * @param $order_id 订单id
      */
-    public static function repairTemplateNotice($openid){
+    public static function repairTemplateNotice($openid,$order_id){
+        $order = MobileOrders::find($order_id);
+        if($order->type == 1){
+            $keyword1 = '手机报修';
+            $url = 'http://gaoxiaoxiu.qinfengyunxun.com/admin/mobileOrder?type=1&id='.$order_id;
+        }else{
+            $keyword1 = '电脑报修';
+            $url = 'http://gaoxiaoxiu.qinfengyunxun.com/admin/mobileOrder?type=2&id='.$order_id;
+        }
         $notice = \EasyWeChat::notice();
         $data = [
             'first'=>'有一条新报修,请注意查看',
-            'keyword1'=>'手机/电脑报修',
+            'keyword1'=> $keyword1,
             'keyword2'=>'需要维修',
             'keyword3'=>date('Y-m-d H:i:s',time()),
             'remark'=>'有一条新报修,请注意查看'
         ];
-        $result = $notice->to($openid)->uses('ddvgO7TJBmJqdktxiRAxXU4_QbPkZdFcitxc3IDSzwc')->andUrl('http://gaoxiaoxiu.qinfengyunxun.com/admin')->data($data)->send();
+        $result = $notice->to($openid)->uses('ddvgO7TJBmJqdktxiRAxXU4_QbPkZdFcitxc3IDSzwc')->andUrl($url)->data($data)->send();
         \Log::debug($result);
     }
 
