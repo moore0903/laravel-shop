@@ -7,7 +7,7 @@
     <meta name="keywords" content="">
     <meta name="viewport"
           content="width=device-width, initial-scale=1">
-    <title>高校修</title>
+    <title>一剑修</title>
 
     <!-- Set render engine for 360 browser -->
     <meta name="renderer" content="webkit">
