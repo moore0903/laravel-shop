@@ -249,7 +249,7 @@ class HomeController extends Controller
     public function mobileAddOrders(Request $request){
         $thirdUser = ThirdUser::find(\Auth::user()->id);
         $mobileModel = MobileModel::with('brand')->find($request['model_id']);
-        MobileOrders::create([
+        $order = MobileOrders::create([
             'user_id' => \Auth::user()->id,
             'avatar' => $thirdUser->avatar,
             'realname' => $request['s_user_name'],
@@ -274,7 +274,7 @@ class HomeController extends Controller
             'keyword2'=>'预约成功',
             'keyword3'=>Carbon::now()->toDateTimeString(),
             'remark'=>'有一条新预约报修,请注意查看'
-        ],'http://gaoxiaoxiu.qinfengyunxun.com/admin/mobileOrder?type=1');
+        ],'http://gaoxiaoxiu.qinfengyunxun.com/admin/mobileOrder?type=1&id='.$order->id);
 
         return redirect('/user/info');
     }
@@ -294,7 +294,7 @@ class HomeController extends Controller
 
     public function pcAddOrders(Request $request){
         $thirdUser = ThirdUser::find(\Auth::user()->id);
-        MobileOrders::create([
+        $order = MobileOrders::create([
             'user_id' => \Auth::user()->id,
             'avatar' => $thirdUser->avatar,
             'realname' => $request['pc_user_name'],
@@ -315,7 +315,7 @@ class HomeController extends Controller
             'keyword2'=>'预约成功',
             'keyword3'=>Carbon::now()->toDateTimeString(),
             'remark'=>'有一条新预约报修,请注意查看'
-        ],'http://gaoxiaoxiu.qinfengyunxun.com/admin/mobileOrder?type=2');
+        ],'http://gaoxiaoxiu.qinfengyunxun.com/admin/mobileOrder?type=2&id='.$order->id);
 
         return redirect('/user/info');
     }

@@ -107,7 +107,6 @@ class MobileOrderController extends Controller
                 }
             });
             $grid->filter(function($filter){
-                $filter->disableIdFilter();
                 $filter->like('realname', '真实姓名');
                 $filter->like('phone', '联系方式');
 
