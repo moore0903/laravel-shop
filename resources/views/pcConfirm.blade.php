@@ -60,8 +60,7 @@
             </div>
             <div>
                 <div class="am-u-sm-12 form-tips">
-                    请您知晓：软件问题免费上门解决，若硬件损坏，则需要您支付更
-                    换硬件和维修的成本费用。
+                    请您知晓：软件问题免费上门解决，若硬件损坏，则需要您支付更换硬件的成本费用。
                 </div>
                 <div class="am-u-sm-12">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
