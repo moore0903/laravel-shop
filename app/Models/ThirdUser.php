@@ -34,6 +34,7 @@ class ThirdUser extends Model
                 'o9MrhwXND-d8zv3QFQCkq2REGHhA',  //全蛋
                 'o9MrhwVHeEHcqqEkBlAllHRvE9BY',  //江城的猫
                 'o9MrhwRPfHVDPHOxB5NuDpCRePiU',  //克卜猫
+                'o9MrhwQEep3kjVVJmbXJ3I5UtIHs',  //卫榆松
             ],
             'url'=>'http://gaoxiaoxiu.qinfengyunxun.com/admin'
         ],
