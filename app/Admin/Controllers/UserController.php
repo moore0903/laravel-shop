@@ -45,7 +45,7 @@ class UserController extends Controller
             $content->header('header');
             $content->description('description');
 
-            $content->body($this->form()->edit($id));
+            $content->body($this->form('edit')->edit($id));
         });
     }
 
@@ -61,7 +61,7 @@ class UserController extends Controller
             $content->header('header');
             $content->description('description');
 
-            $content->body($this->form());
+            $content->body($this->form('create'));
         });
     }
 
@@ -73,41 +73,68 @@ class UserController extends Controller
     protected function grid()
     {
         return Admin::grid(User::class, function (Grid $grid) {
-            $grid->model()->where('phone',\DB::raw('REGEXP'),\DB::raw('"[1][35678][0-9]{9}"'));
+//            $grid->model()->where('phone',\DB::raw('REGEXP'),\DB::raw('"[1][35678][0-9]{9}"'));
             $grid->id('ID')->sortable();
-            $grid->phone('电话');
+            $grid->name('用户名');
+            $grid->email('邮箱');
+            $grid->phone('手机');
 
-            $grid->created_at('注册时间');
-
-            $grid->column('收货地址')->expand(function () {
-                $address = $this->address;
-                $address = $address->map(function($item){
-                    $data = ['realname'=>$item['realname'],'address'=>$item['address'],'phone'=>$item['phone']];
-                    foreach(array_diff_assoc($item->toArray(),$data) as $key => $value){
-                        unset($item[$key]);
-                    }
-                    return $item;
-                })->prepend(['收货人','收货地址','收货电话'])->toArray();
-                return new Table([], $address);
-            }, '点击查看');
+            $grid->user_name('真实姓名');
+            $grid->sex('性别')->display(function ($sex) {
+                return $sex ? '女' : '男';
+            });
+            $grid->column('address','通讯地址');
+            $grid->tel('电话');
+            $grid->qq('QQ/MSN');
 
             $grid->disableRowSelector();
-            $grid->disableActions();
+//            $grid->disableActions();
             
         });
     }
 
     /**
-     * Make a form builder.
-     *
-     * @return Form
-     */
-    protected function form()
+ * Make a form builder.
+ *
+ * @return Form
+ */
+    protected function form($type='create')
     {
-        return Admin::form(User::class, function (Form $form) {
+        return Admin::form(User::class, function (Form $form) use($type){
+            if($type == 'create'){
+                $form->display('id', 'ID');
+                $form->text('name','用户名')->rules('required|unique:users,name');
+                $form->email('email','邮箱')->rules('required');
+                $form->password('password','密码')->rules('required');
+                $form->mobile('phone','手机')->rules('required');
 
-            $form->display('id', 'ID');
+                $form->divide();
+
+                $form->text('user_name','真实姓名');
+                $form->radio('sex', '性别')->options(['0' => '男', '1'=> '女'])->default('0');
+                $form->text('address','通讯地址');
+                $form->text('code','邮政编码');
+                $form->text('tel','电话');
+                $form->text('qq','QQ/MSN');
+            }else{
+                $form->display('id', 'ID');
+                $form->display('name','用户名');
+                $form->email('email','邮箱');
+                $form->hidden('password');
+                $form->mobile('phone','手机');
+
+                $form->divide();
+
+                $form->text('user_name','真实姓名');
+                $form->radio('sex', '性别')->options(['0' => '男', '1'=> '女'])->default('0');
+                $form->text('address','通讯地址');
+                $form->text('code','邮政编码');
+                $form->text('tel','电话');
+                $form->text('qq','QQ/MSN');
+            }
+
 
         });
     }
+
 }

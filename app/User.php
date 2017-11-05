@@ -19,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','phone','headimage','sex'
+        'name', 'email', 'password','phone','headimage','sex','user_name','address','code','tel','qq'
     ];
 
     /**
@@ -57,12 +57,13 @@ class User extends Authenticatable
         return $this->belongsToMany(ShopItem::class,'browse','user_id','shop_item_id');
     }
 
-    /**
-     * 收货人列表
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function address()
+
+    public static function boot()
     {
-        return $this->hasMany(Address::class,'user_id');
+        parent::boot();
+
+        static::saving(function ($model) {
+            $model->password = bcrypt($model->password);
+        });
     }
 }
