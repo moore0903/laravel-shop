@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
 use App\Models\Browse;
+use App\Models\Cases;
 use App\Models\Catalog;
 use App\Models\Collection;
+use App\Models\Messages;
+use App\Models\Page;
 use App\Models\SecKill;
 use App\Models\ShopItem;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Input;
+use Mews\Captcha\Captcha;
 use Vinkla\Hashids\Facades\Hashids;
 
 class HomeController extends Controller
@@ -21,168 +27,135 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+        return view('home');
     }
 
     public function welcome(){
-        return view('welcome');
+        return view('home');
     }
 
-    /**
-     * 进入详情页
-     * @param $hash_id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function detail($hash_id){
-        $id = Hashids::decode($hash_id);
-        $shopItem = ShopItem::where('id','=',$id)->first();
-        $shopItem->hashid = Hashids::encode($shopItem->id);
-        $secKill = SecKill::where('shop_item_id','=',$shopItem->id)->where('start_time','<',date('Y-m-d h:i:s'))->where('end_time','>',date('Y-m-d h:i:s'))->first();
-        if(\Auth::check()){
-            Browse::recording(\Auth::user()->id,$shopItem->id);
-            $is_collection = Collection::where('user_id','=',\Auth::user()->id)->where('shop_item_id','=',$shopItem->id)->first();
+    public function catalog($catalog_id){
+        $catalog = Catalog::find($catalog_id);
+        if(empty($catalog->parent_id)){
+            $catalog_set = Catalog::where('parent_id',$catalog_id)->orderBy('order','desc')->get();
+            $top_catalog = $catalog;
+            $top_catalog_id = $catalog_id;
+            $catalog_id = $catalog_set->first()->id;
+        }else{
+            $catalog_set = Catalog::where('parent_id',$catalog->parent_id)->orderBy('order','desc')->get();
+            $top_catalog = Catalog::find($catalog->parent_id);
+            $top_catalog_id = $catalog->parent_id;
         }
-        return view('detail',[
-            'item' => $shopItem,
-            'comments'=>$shopItem->comments,
-            'commentCount'=>$shopItem->comments->count(),
-            'itemStar'=>$shopItem->comments->avg('pivot.star')??0,
-            'cart'=>collect(['cart_items'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_price_count'=>\Cart::totalPrice()]),
-            'is_collection'=>empty($is_collection)?0:1,
-            'secKill'=>$secKill
+        if($catalog->type == 1){  //单页
+            $catalog = Catalog::find($catalog_id);
+            return view('page',[
+                'info' => $catalog,
+                'catalog' => $catalog,
+                'catalog_set' => $catalog_set,
+                'top_catalog' => $top_catalog,
+                'set_nev' => Catalog::$set_nev[$top_catalog_id]
+            ]);
+        }elseif($catalog->type == 2){  //案例
+            $list = Cases::where('catalog_id',$catalog_id)->where('is_display',1)->orderBy('sort','desc')
+                ->orderBy('created_at','desc')->paginate(6);
+            return view('case',[
+                'list' => $list,
+                'catalog' => $catalog,
+                'catalog_set' => $catalog_set,
+                'top_catalog' => $top_catalog,
+                'set_nev' => Catalog::$set_nev[$top_catalog_id]
+            ]);
+
+        }elseif($catalog->type == 3){  //新闻
+            $list = Article::where('catalog_id',$catalog_id)->where('is_display',1)->orderBy('sort','desc')
+                ->orderBy('created_at','desc')->paginate(6);
+            return view('article',[
+                'list' => $list,
+                'catalog' => $catalog,
+                'catalog_set' => $catalog_set,
+                'top_catalog' => $top_catalog,
+                'set_nev' => Catalog::$set_nev[$top_catalog_id]
+            ]);
+        }elseif($catalog->type == 4){  //图片集合
+            $catalog = Catalog::find($catalog_id);
+            return view('image_set',[
+                'info' => $catalog,
+                'catalog' => $catalog,
+                'catalog_set' => $catalog_set,
+                'top_catalog' => $top_catalog,
+                'set_nev' => Catalog::$set_nev[$top_catalog_id]
+            ]);
+        }
+
+    }
+
+    public function caseDetail($id){
+        $case = Cases::find($id);
+        $catalog_set = Catalog::where('parent_id',$case->catalog->parent_id)->orderBy('order','desc')->get();
+        $top_catalog = Catalog::find($case->catalog->parent_id);
+        return view('caseDetail',[
+            'info' => $case,
+            'catalog_set' => $catalog_set,
+            'catalog' => $case->catalog,
+            'top_catalog' => $top_catalog,
+            'set_nev' => Catalog::$set_nev[$top_catalog->id]
         ]);
     }
 
+    public function articleDetail($id){
+        $article = Article::find($id);
+        $catalog_set = Catalog::where('parent_id',$article->catalog->parent_id)->orderBy('order','desc')->get();
+        $top_catalog = Catalog::find($article->catalog->parent_id);
+        return view('articleDetail',[
+            'info' => $article,
+            'catalog_set' => $catalog_set,
+            'catalog' => $article->catalog,
+            'top_catalog' => $top_catalog,
+            'set_nev' => Catalog::$set_nev[$top_catalog->id]
+        ]);
+    }
 
-    /**
-     * 进入商品列表
-     * @param Request $request
-     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function good_list(Request $request){
-        $catalogs = Catalog::where('parent_id','=','0')->get();
-        $catalogs = $catalogs->map(function($value){
-            $value->hashid = \Hashids::encode($value->id);
-            $value->attr = Catalog::where('parent_id','=',$value->id)->get();
-            return $value;
-        });
-        $maxid = 0xffffffff;
-        $shopItemQuery = ShopItem::where('id','<',$maxid)->where('show','=','1');
-        if($request['search']){
-            $shopItemQuery = $shopItemQuery->where('title','like','%'.$request['search'].'%')->where('detail','like','%'.$request['search'].'%');
-        }
-        if($request['catalog_id']){
-            $catalog_id = Hashids::decode($request['catalog_id']);
-            $catalog_ids = Catalog::where('id','=',$catalog_id)->orWhere('parent_id','=',$catalog_id)->select('id')->get();
-            $shopItemQuery = $shopItemQuery->whereIn('catalog_id',array_flatten($catalog_ids->toArray()));
-        }
-        if($request['lowestPrice']){
-            $shopItemQuery = $shopItemQuery->where('price','>',$request['lowestPrice']);
-        }
-        if($request['highestPrice']){
-            $shopItemQuery = $shopItemQuery->where('price','<',$request['highestPrice']);
-        }
-        if($request['filterProduction']){
-            $shopItemQuery = $shopItemQuery->where('production','=',$request['filterProduction']);
-//        }else{
-//            $shopItem = ShopItem::all();
-        }
-        $shopItem = $shopItemQuery->get();
-        $shopItem = $shopItem->map(function($value){
-            $value->hashid = \Hashids::encode($value->id);
-            $value->url = url('/shop_item/detail/'.$value->hashid);
-            $value->imgUrl = asset('upload/'.$value->img);
-            $row = \Cart::search(['id'=>$value->id]);
-            $row = $row->first();
-            $value->rows = $row??'';
-            $secKill = SecKill::where('shop_item_id','=',$value->id)->where('start_time','<',date('Y-m-d h:i:s'))->where('end_time','>',date('Y-m-d h:i:s'))->first();
-            if(!empty($secKill)) $value->sec_kill_price = $secKill->sec_kill_price;
-            return $value;
-        });
-        $configs = \App\Models\Config::all();
-        $search_key = $configs->where('key','search_key')->first();
-        $search = [];
-        if(!empty($search_key)) $search = explode(',',$search_key->value);
-        $returnData = [
-            'catalogs' => $catalogs,
-            'shopItem' => $shopItem,
-            'subCatalogs'=>$catalogs->first()->attr,
-            'cart'=>collect(['cart_items'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_price_count'=>\Cart::totalPrice()]),
-            'searches' => collect($search),
-            'filter' => collect(['lowestPrice'=>$request['lowestPrice'],'highestPrice'=>$request['highestPrice'],'filterProduction'=>$request['filterProduction']])
+    public function message(){
+        $catalog_id = 29;
+        $catalog = Catalog::find($catalog_id);
+        $catalog_set = Catalog::where('parent_id',$catalog_id)->orderBy('order','desc')->get();
+        $top_catalog = $catalog;
+        $top_catalog_id = $catalog_id;
+        return view('message',[
+            'catalog' => $catalog,
+            'catalog_set' => $catalog_set,
+            'top_catalog' => $top_catalog,
+            'set_nev' => Catalog::$set_nev[$top_catalog_id],
+            'src' => captcha_src()
+        ]);
+    }
+
+    public function message_submit_ajax(Request $request){
+        $rules = [
+            'captcha' => 'required|captcha'
         ];
+        $validator = \Validator::make(Input::all(), $rules);
+        if ($validator->fails())
+        {
+            return ['status'=>'n','info'=>'验证码不正确'];
+        }
+        Messages::create([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'city' => $request->city,
+            'area' => $request->area,
+            'content' => $request->contents,
+            'ip' => $request->ip(),
+        ]);
+        return ['status'=>'y','info'=>'提交成功'];
 
-        if(!empty($request['is_api'])) return $returnData;
-        return view('good_list',$returnData);
     }
 
-    /**
-     * ajax 请求获取下级栏目分类
-     * @param Request $request
-     * @return array
-     */
-    public function ajax_sub_catalog(Request $request){
-        if(empty($request['hash_id'])){
-            $catalogs = Catalog::all();
-        }else{
-            $catalog_id = Hashids::decode($request['hash_id']);
-            $catalogs = Catalog::where('parent_id','=',$catalog_id)->get();
-        }
-        if(empty($catalogs->toArray())) return ['stat'=>0,'msg'=>'该栏目无下级栏目'];
-        $catalogs = $catalogs->map(function($value){
-            $value->hashid = \Hashids::encode($value->id);
-            return $value;
-        });
-
-        return ['stat'=>1,'catalogs'=>$catalogs->toArray()];
+    public function captcha_re(){
+        return ['src'=>captcha_src()];
     }
 
-    /**
-     *ajax 请求获取栏目下商品
-     * @param Request $request
-     * @return array
-     */
-    public function ajax_shop_item(Request $request){
-        switch ($request['sortType']){
-            case 'sell':
-                $orderBy = \DB::raw('sellcount_real+sellcount_false');
-                $orderType = \DB::raw('desc');
-                break;
-            case 'priceDesc':
-                $orderBy = \DB::raw('price');
-                $orderType = \DB::raw('desc');
-                break;
-            case 'priceAsc':
-                $orderBy = \DB::raw('price');
-                $orderType = \DB::raw('asc');
-                break;
-            default:
-                $orderBy = \DB::raw('sellcount_real+sellcount_false');
-                $orderType = \DB::raw('desc');
-                break;
-        }
-        if(empty($request['hash_id'])){
-            $shopItems = ShopItem::where('show','=','1')->orderBy($orderBy,$orderType)->get();
-        }else{
-            $catalog_id = Hashids::decode($request['hash_id']);
-            $catalog_ids = Catalog::where('id','=',$catalog_id)->orWhere('parent_id','=',$catalog_id)->select('id')->get();
-            if(empty($catalog_ids)) return ['stat'=>0,'msg'=>'找不到该栏目'];
-            $shopItems = ShopItem::whereIn('catalog_id',array_flatten($catalog_ids->toArray()))->where('show','=','1')->orderBy($orderBy,$orderType)->get();
-        }
-        if(empty($shopItems->toArray())) return ['stat'=>0,'msg'=>'该栏目下无商品'];
-        $shopItems = $shopItems->map(function($value){
-            $value->hashid = \Hashids::encode($value->id);
-            $value->url = url('/shop_item/detail/'.$value->hashid);
-            $value->imgUrl = asset('upload/'.$value->img);
-            $row = \Cart::search(['id'=>$value->id]);
-            $row = $row->first();
-            $value->rows = $row??'';
-            $secKill = SecKill::where('shop_item_id','=',$value->id)->where('start_time','<',date('Y-m-d h:i:s'))->where('end_time','>',date('Y-m-d h:i:s'))->first();
-            if(!empty($secKill)) $value->sec_kill_price = $secKill->sec_kill_price;
-            return $value;
-        });
-        return ['stat' => '1','shopItems' => $shopItems->toArray()];
-    }
+
 
     public function imageUpload(Request $request){
         if(!$request->hasFile('image')) return ['stat'=>0,'msg'=>'没有选中上传文件'];

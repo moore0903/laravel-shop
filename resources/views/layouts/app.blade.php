@@ -1,87 +1,104 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
-
-    <!-- Scripts -->
-    <script>
-        window.Laravel = <?php echo json_encode([
-            'csrfToken' => csrf_token(),
-        ]); ?>
-    </script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>温特斯顿</title>
+    <link href="{{ asset('theme/css/style.css') }}" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="{{ asset('theme/common/jquery-1.7.2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('theme/common/jquery.tools.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('theme/common/iader.js') }}"></script>
+    <script type="text/javascript" src="http://validform.rjboy.cn/Validform/v5.1/Validform_v5.1_min.js"></script>
+    <script type="text/javascript" src="{{ asset('packages/layer/layer.js') }}"></script>
 </head>
+
 <body>
-<div id="app">
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
 
-                <!-- Collapsed Hamburger -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                    <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
-                    &nbsp;
-                </ul>
-
-                <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- Authentication Links -->
-                    @if (Auth::guest())
-                        <li><a href="{{ url('/login') }}">Login</a></li>
-                        <li><a href="{{ url('/register') }}">Register</a></li>
-                    @else
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
-                            </a>
-
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="{{ url('/logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        Logout
-                                    </a>
-
-                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                                        {{ csrf_field() }}
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
-                    @endif
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    @yield('content')
+<div class="wrap fmyh">
+    <div class="topbar mod">
+        <div class="logo"><a href="{{ url('/') }}"></a></div>
+        <ul class="menu lifl">
+            <li>
+                <p class="name"><a href="{{ url('/') }}">首 页</a></p>
+            </li>
+            <li>
+                <p class="name"><a href="{{ url('/catalog/1') }}">企业文化</a></p>
+            </li>
+            <li>
+                <p class="name"><a href="{{ url('/catalog/4') }}">采暖市场</a></p>
+                <dl class="clear">
+                    @foreach(\App\Models\Catalog::parentCatalog(4) as $catalog)
+                    <dd><a href="{{ url('/catalog/'.$catalog->id) }}">{{ $catalog->title }}</a></dd>
+                    @endforeach
+                </dl>
+            </li>
+            <li>
+                <p class="name"><a href="{{ url('/catalog/17') }}">科技之光</a></p>
+                <dl class="clear">
+                    @foreach(\App\Models\Catalog::parentCatalog(17) as $catalog)
+                        <dd><a href="{{ url('/catalog/'.$catalog->id) }}">{{ $catalog->title }}</a></dd>
+                    @endforeach
+                </dl>
+            </li>
+            <li>
+                <p class="name"><a href="{{ url('/catalog/21') }}">财富站</a></p>
+            </li>
+            <li>
+                <p class="name"><a href="{{ url('/catalog/25') }}">讯息台</a></p>
+            </li>
+            <li>
+                <p class="name"><a href="{{ url('/catalog/29') }}">大本营</a></p>
+            </li>
+        </ul>
+        <div class="clean"></div>
+        <div class="vip"> <a href="vip.asp">会员专区</a> </div>
+    </div>
 </div>
 
-<!-- Scripts -->
-<script src="/js/app.js"></script>
+@yield('content')
+
+<div class="fdm1">
+    <p class="fc1"></p>
+    <div class="wrap clear">
+        <dl class="fnav lifl fl">
+            <dt>导航</dt>
+            <dd><a href="#">企业介绍</a></dd>
+            <dd><a href="#">企业精神</a></dd>
+            <dd><a href="#">企业实力</a></dd>
+            <dd><a href="#">企业荣誉</a></dd>
+            <dd><a href="#">企业规划</a></dd>
+            <dd><a href="#">企业风采</a></dd>
+            <dd><a href="#">知识产权</a></dd>
+            <dd><a href="#">企业事件</a></dd>
+        </dl>
+        <dl class="contatc fl">
+            <dt>联系方式</dt>
+            <dd>服务热线：</dd>
+            <dd>400-1058-258</dd>
+            <dd>地址：</dd>
+            <dd>西安交通大学苏州科技园</dd>
+        </dl>
+        <div class="fphone fl">
+            <p class="bt">全国咨询热线：</p>
+            <p class="title">400-1058-258</p>
+            <p class="fx">分享到：</p>
+            <ul class="fxlist lifl clear">
+                <li class="f1"><a href="#"></a></li>
+                <li class="f2"><a href="#"></a></li>
+            </ul>
+        </div>
+        <div class="fewm fr"></div>
+    </div>
+</div>
+<div class="copyright fmyh">
+    ALL Rights Reseved   苏ICP备16018689号-1  版权所有
+</div>
+<script type="text/javascript">
+    function setNav(id){
+        $("ul.menu li .name").children("a").eq(id-1).addClass("hover");
+    }
+</script>
+
+@yield('script')
+
 </body>
 </html>

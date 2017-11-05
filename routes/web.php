@@ -31,6 +31,21 @@ Route::post('bindphone','UserController@bindphone');
 
 Route::get('user/addCollection','UserController@addCollection');
 
+Route::get('/catalog/{catalog_id}','HomeController@catalog');
+
+Route::get('/case/detail/{id}','HomeController@caseDetail');
+
+Route::get('/article/detail/{id}','HomeController@articleDetail');
+
+Route::get('/message','HomeController@message')->name('message');
+
+Route::post('/message_submit','HomeController@message_submit_ajax');
+
+Route::get('/captcha_re','HomeController@captcha_re');
+
+Route::get('captcha/{config?}', '\Mews\Captcha\CaptchaController@getCaptcha')->middleware('web');
+
+
 Auth::routes();
 
 

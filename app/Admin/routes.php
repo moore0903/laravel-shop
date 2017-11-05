@@ -26,6 +26,10 @@ Route::group([
 
     $router->resource('article', ArticlesController::class);
 
+    $router->resource('case', CasesController::class);
+
+    $router->resource('message', MessagesController::class);
+
     $router->resource('page', PagesController::class);
 
     $router->resource('shopitem', ShopItemController::class);

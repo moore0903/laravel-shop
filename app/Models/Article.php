@@ -10,7 +10,7 @@ class Article extends Model
     protected $table = 'articles';
 
     protected $fillable = [
-        'title', 'content', 'img','author','browse','hot','new','recommend','content_tpl','is_display','catalog_id'
+        'title', 'content', 'img','author','browse','hot','new','recommend','content_tpl','is_display','catalog_id','sort'
     ];
 
     public function catalog()

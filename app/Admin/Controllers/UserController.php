@@ -91,7 +91,6 @@ class UserController extends Controller
                 return new Table([], $address);
             }, '点击查看');
 
-            $grid->disableCreation();
             $grid->disableRowSelector();
             $grid->disableActions();
             
@@ -109,8 +108,6 @@ class UserController extends Controller
 
             $form->display('id', 'ID');
 
-            $form->display('created_at', 'Created At');
-            $form->display('updated_at', 'Updated At');
         });
     }
 }

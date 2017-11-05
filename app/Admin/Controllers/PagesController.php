@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\Catalog;
 use App\Models\Page;
 
 use Encore\Admin\Form;
@@ -41,8 +42,8 @@ class PagesController extends Controller
     {
         return Admin::content(function (Content $content) use ($id) {
 
-            $content->header('header');
-            $content->description('description');
+            $content->header('单页修改');
+            $content->description('单页修改');
 
             $content->body($this->form()->edit($id));
         });
@@ -57,8 +58,8 @@ class PagesController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('header');
-            $content->description('description');
+            $content->header('单页添加');
+            $content->description('单页添加');
 
             $content->body($this->form());
         });
@@ -76,6 +77,8 @@ class PagesController extends Controller
             $grid->id('ID')->sortable();
 
             $grid->title('标题');
+//            $grid->en_title('英文标题');
+            $grid->catalog()->title('分类');
 
             $grid->created_at('创建时间');
             $grid->updated_at('修改时间');
@@ -92,13 +95,15 @@ class PagesController extends Controller
         return Admin::form(Page::class, function (Form $form) {
 
             $form->display('id', 'ID');
+            $form->select('catalog_id','分类')->options(Catalog::selectOptions());
 
             $form->text('title', '标题');
+//            $form->text('en_title', '英文标题');
 
             $form->editor('content', '内容')->attribute(['style' => 'height:400px;max-height:500px;']);
-
-            $form->display('created_at', 'Created At');
-            $form->display('updated_at', 'Updated At');
+//
+//            $form->display('created_at', 'Created At');
+//            $form->display('updated_at', 'Updated At');
         });
     }
 }

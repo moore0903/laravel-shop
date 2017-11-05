@@ -94,16 +94,26 @@ class CatalogsController extends Controller
             $form->display('id', 'ID');
 
             $form->text('title', '标题');
-            $form->image('img', '图片')->uniqueName();
+            $form->text('en_title', '英文标题');
+            $directors = [
+                1 => '单页',
+                2 => '案例',
+                3  => '新闻',
+                4  => '图片集合',
+            ];
+            $form->select('type', '栏目类型')->options($directors);
+//            $form->image('img', '图片')->uniqueName();
             $form->number('order', '排序');
             $form->select('parent_id', '上级栏目')->options(Catalog::selectOptions());
             $form->text('url', '链接地址')->placeholder('选填 直接跳转地址');
+            $form->multipleImage('images', '图片集合');
+            $form->editor('content', '单页内容')->attribute(['style' => 'height:400px;max-height:500px;']);
 
 //            $form->select('catalog_tpl', '栏目模板')->options(Catalog::dirToArray());
 //            $form->select('content_tpl', '内容模板')->options(Catalog::dirToArray());
-
-            $form->display('created_at', 'Created At');
-            $form->display('updated_at', 'Updated At');
+//
+//            $form->display('created_at', 'Created At');
+//            $form->display('updated_at', 'Updated At');
         });
     }
 }

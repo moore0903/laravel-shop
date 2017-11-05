@@ -78,6 +78,8 @@ class ArticlesController extends Controller
     protected function grid()
     {
         return Admin::grid(Article::class, function (Grid $grid) {
+            $grid->model()->orderBy('created_at', 'desc');
+
             $grid->id('ID')->sortable();
             $grid->title('标题')->editable();
             $grid->catalog()->title('分类');
@@ -89,9 +91,7 @@ class ArticlesController extends Controller
                 'off' => ['text' => 'NO'],
             ];
 
-            $grid->column('推荐')->switchGroup([
-                'recommend' => '推荐', 'hot' => '热门', 'new' => '最新'
-            ], $states);
+            $grid->sort('排序号')->editable();
 
             $grid->column('是否显示')->switchGroup([
                 'is_display' => '显示'
@@ -120,13 +120,12 @@ class ArticlesController extends Controller
             $form->editor('content', '内容')->attribute(['style' => 'height:400px;max-height:500px;']);
 
             $form->image('img', '图片');
-            $form->select('content_tpl', '内容模板')->options(Catalog::dirToArray());
+//            $form->select('content_tpl', '内容模板')->options(Catalog::dirToArray());
 
             $form->text('author','作者')->default('本站');
             $form->number('browse', '浏览量');
-            $form->switch('recommend','推荐');
-            $form->switch('hot','热门');
-            $form->switch('new','最新');
+
+            $form->number('sort', '排序号')->default('100');
 
             $form->switch('is_display','显示')->default(true);
 

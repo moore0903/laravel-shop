@@ -15,6 +15,7 @@
         "lokielse/omnipay-alipay": "dev-master",
         "lokielse/omnipay-wechatpay": "dev-master",
         "maatwebsite/excel": "~2.1.0",
+        "mews/captcha": "^2.1",
         "moore0903/laravel-admin": "1.4.x-dev",
         "overtrue/laravel-pinyin": "~3.0",
         "overtrue/laravel-shopping-cart": "dev-master",

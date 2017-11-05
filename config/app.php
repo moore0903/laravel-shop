@@ -194,6 +194,7 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Arcanedev\LogViewer\LogViewerServiceProvider::class,
         Ignited\LaravelOmnipay\LaravelOmnipayServiceProvider::class,
+        Mews\Captcha\CaptchaServiceProvider::class,
 
     ],
 
@@ -249,6 +250,7 @@ return [
         'EasyWeChat' => Overtrue\LaravelWechat\Facade::class,
         'Pinyin' => Overtrue\LaravelPinyin\Facades\Pinyin::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Captcha' => Mews\Captcha\Facades\Captcha::class,
 
     ],
 

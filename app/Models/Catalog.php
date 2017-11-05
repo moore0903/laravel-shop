@@ -14,12 +14,17 @@ class Catalog extends Model
     protected $table = 'catalogs';
 
     protected $fillable = [
-        'title', 'order', 'parent_id','url','catalog_tpl','content_tpl','img'
+        'title', 'order', 'parent_id','url','catalog_tpl','content_tpl','img','en_title'
     ];
 
     public function article()
     {
         return $this->hasMany(Article::class,'catalog_id');
+    }
+
+    public function page()
+    {
+        return $this->hasMany(Page::class,'catalog_id');
     }
 
     public function shopitem()
@@ -48,6 +53,27 @@ class Catalog extends Model
     public static function parentCatalog($catalog_id,$page=5){
         return Catalog::where('parent_id','=',$catalog_id)->take($page)->get();
     }
+
+    public function setImagesAttribute($images)
+    {
+        if (is_array($images)) {
+            $this->attributes['images'] = json_encode($images);
+        }
+    }
+
+    public function getImagesAttribute($images)
+    {
+        return json_decode($images, true);
+    }
+
+    public static $set_nev = [
+        '1' => '2',
+        '4' => '3',
+        '17' => '4',
+        '21' => '5',
+        '25' => '6',
+        '29' => '7'
+    ];
 
 
 

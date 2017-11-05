@@ -1,10 +1,10 @@
 @if ($paginator->hasPages())
-    <ul class="pagination">
+    <div class="page fmyh">
         {{-- Previous Page Link --}}
         @if ($paginator->onFirstPage())
-            <li class="disabled"><span>&laquo;</span></li>
+            <a class="prev" href="javascript:void(0);">&lt;</a>
         @else
-            <li><a href="{{ $paginator->previousPageUrl() }}" rel="prev">&laquo;</a></li>
+            <a class="prev" href="{{ $paginator->previousPageUrl() }}">&lt;</a>
         @endif
 
         {{-- Pagination Elements --}}
@@ -18,9 +18,9 @@
             @if (is_array($element))
                 @foreach ($element as $page => $url)
                     @if ($page == $paginator->currentPage())
-                        <li class="active"><span>{{ $page }}</span></li>
+                        <a class="num cur">{{ $page }}</a>
                     @else
-                        <li><a href="{{ $url }}">{{ $page }}</a></li>
+                        <a class="num" href="{{ $url }}">{{ $page }}</a>
                     @endif
                 @endforeach
             @endif
@@ -28,9 +28,10 @@
 
         {{-- Next Page Link --}}
         @if ($paginator->hasMorePages())
-            <li><a href="{{ $paginator->nextPageUrl() }}" rel="next">&raquo;</a></li>
+            <a class="next" href="{{ $paginator->nextPageUrl() }}">&gt;</a>
         @else
-            <li class="disabled"><span>&raquo;</span></li>
+            <a class="next" href="javascript:void(0);">&gt;</a>
         @endif
-    </ul>
+        <span class="all">当前页 {{ $paginator->currentPage() }}/{{ $paginator->lastPage() }} ，共 {{ $paginator->total() }} 条信息</span>
+    </div>
 @endif
