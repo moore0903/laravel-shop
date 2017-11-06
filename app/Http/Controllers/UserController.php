@@ -26,15 +26,8 @@ class UserController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function info(){
-        $order_list = Order::where('user_id','=',\Auth::user()->id)->get();
-        $recomment_shop = ShopItem::where('recommend','=','1')->get();
         return view('user_info',[
-            'recomment_shop' => $recomment_shop->count() > 4 ? $recomment_shop->random(4): $recomment_shop,
-            'order_no_pay_count' => $order_list->filter(function($order){return $order->stat == Order::STAT_NOTPAY;})->count(),
-            'order_express_count' => $order_list->filter(function($order){return $order->stat == Order::STAT_EXPRESS;})->count(),
-            'order_payed_count' => $order_list->filter(function($order){return $order->stat == Order::STAT_PAYED;})->count(),
-            'order_finish_count' => $order_list->filter(function($order){return $order->stat == Order::STAT_FINISH;})->count(),
-            'order_service_count' => $order_list->filter(function($order){return $order->stat == Order::STAT_SERVICE;})->count(),
+            'user' => \Auth::user()
         ]);
     }
 
