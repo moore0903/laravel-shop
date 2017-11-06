@@ -9,7 +9,6 @@ use Encore\Admin\Grid;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
-use Encore\Admin\Controllers\ModelForm;
 use Encore\Admin\Widgets\Table;
 
 class UserController extends Controller
@@ -42,8 +41,8 @@ class UserController extends Controller
     {
         return Admin::content(function (Content $content) use ($id) {
 
-            $content->header('header');
-            $content->description('description');
+            $content->header('修改会员资料');
+            $content->description('修改会员资料');
 
             $content->body($this->form('edit')->edit($id));
         });
@@ -58,8 +57,8 @@ class UserController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('header');
-            $content->description('description');
+            $content->header('创建会员');
+            $content->description('创建会员');
 
             $content->body($this->form('create'));
         });
@@ -78,6 +77,9 @@ class UserController extends Controller
             $grid->name('用户名');
             $grid->email('邮箱');
             $grid->phone('手机');
+            $grid->discount('折扣点数')->display(function($discount){
+                return "$discount 折";
+            });
 
             $grid->user_name('真实姓名');
             $grid->sex('性别')->display(function ($sex) {
@@ -103,10 +105,14 @@ class UserController extends Controller
         return Admin::form(User::class, function (Form $form) use($type){
             if($type == 'create'){
                 $form->display('id', 'ID');
-                $form->text('name','用户名')->rules('required|unique:users,name');
+                $form->text('name','用户名')->rules('required|unique:users,name',[
+                    'required' => '用户名不能为空',
+                    'unique' => '用户名重复',
+                ]);
                 $form->email('email','邮箱')->rules('required');
                 $form->password('password','密码')->rules('required');
                 $form->mobile('phone','手机')->rules('required');
+                $form->text('discount','折扣点数')->rules('required')->help('0.9代表九折');
 
                 $form->divide();
 
@@ -122,6 +128,7 @@ class UserController extends Controller
                 $form->email('email','邮箱');
                 $form->hidden('password');
                 $form->mobile('phone','手机');
+                $form->text('discount','折扣点数')->help('0.9代表九折');
 
                 $form->divide();
 
