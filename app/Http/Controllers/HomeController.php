@@ -34,6 +34,10 @@ class HomeController extends Controller
         return view('home');
     }
 
+    /**获取栏目主页
+     * @param $catalog_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function catalog($catalog_id){
         $catalog = Catalog::find($catalog_id);
         if(empty($catalog->parent_id)){
@@ -89,6 +93,11 @@ class HomeController extends Controller
 
     }
 
+    /**
+     * 获取案例详情
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function caseDetail($id){
         $case = Cases::find($id);
         $catalog_set = Catalog::where('parent_id',$case->catalog->parent_id)->orderBy('order','desc')->get();
@@ -102,6 +111,11 @@ class HomeController extends Controller
         ]);
     }
 
+    /**
+     * 获取文章详情
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function articleDetail($id){
         $article = Article::find($id);
         $catalog_set = Catalog::where('parent_id',$article->catalog->parent_id)->orderBy('order','desc')->get();
@@ -115,6 +129,10 @@ class HomeController extends Controller
         ]);
     }
 
+    /**
+     * 留言
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function message(){
         $catalog_id = 29;
         $catalog = Catalog::find($catalog_id);
@@ -130,6 +148,11 @@ class HomeController extends Controller
         ]);
     }
 
+    /**
+     * 提交留言
+     * @param Request $request
+     * @return array
+     */
     public function message_submit_ajax(Request $request){
         $rules = [
             'captcha' => 'required|captcha'
@@ -151,10 +174,18 @@ class HomeController extends Controller
 
     }
 
+    /**
+     * 刷新验证码
+     * @return array
+     */
     public function captcha_re(){
         return ['src'=>captcha_src()];
     }
 
+
+    public function product(){
+
+    }
 
 
     public function imageUpload(Request $request){
