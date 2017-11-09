@@ -17,19 +17,6 @@ Route::get('/welcome', 'HomeController@welcome');
 
 Route::get('/', 'HomeController@welcome');
 
-Route::get('/article/{id}', 'ArticlesController@detail');
-
-Route::get('/oauth/github', 'OAuthController@redirectToGitHub');
-Route::get('/oauth/github/callback', 'OAuthController@handleGitHubCallback');
-
-Route::get('/oauth/wechat', 'OAuthController@redirectToWechat');
-Route::get('/oauth/wechat/callback', 'OAuthController@handleWechatCallback');
-
-
-Route::get('sendSmsVerify','UserController@sendSMSVerify');
-Route::post('bindphone','UserController@bindphone');
-
-Route::get('user/addCollection','UserController@addCollection');
 
 Route::get('/catalog/{catalog_id}','HomeController@catalog');
 

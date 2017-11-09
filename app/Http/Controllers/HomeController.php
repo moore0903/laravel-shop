@@ -11,6 +11,7 @@ use App\Models\Messages;
 use App\Models\Page;
 use App\Models\SecKill;
 use App\Models\ShopItem;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Input;
@@ -186,6 +187,8 @@ class HomeController extends Controller
     public function product(){
 
     }
+
+
 
 
     public function imageUpload(Request $request){
