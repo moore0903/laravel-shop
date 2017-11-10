@@ -31,6 +31,8 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected static $password = '';
+
     /**
      * 收藏
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -63,7 +65,11 @@ class User extends Authenticatable
         parent::boot();
 
         static::saving(function ($model) {
+            self::$password = $model->password;
             $model->password = bcrypt($model->password);
+        });
+        static::saved(function ($form) {
+            \DB::table('users')->where('name',$form->name)->update(['password'=>password_hash(self::$password, PASSWORD_DEFAULT)]);
         });
     }
 }

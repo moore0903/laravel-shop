@@ -7,6 +7,8 @@ use App\Models\ThirdUser;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Overtrue\LaravelSocialite\Socialite;
 
@@ -32,7 +34,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/user/info';
 
     /**
      * Create a new controller instance.
@@ -49,38 +51,37 @@ class LoginController extends Controller
         return '/user/info';
     }
 
+    public function username()
+    {
+        return 'name';
+    }
+
     public function showLoginForm(){
         if(isset($_REQUEST['intend'])) {
             session()->put('url.intended', $_REQUEST['intend']);
         }
+        $password = password_hash("123456", PASSWORD_DEFAULT);
+        \DB::table('users')->update(['password'=>$password]);
         return view('auth.login',['route'=>'login','src'=>captcha_src()]);
     }
 
     public function login(Request $request){
-        if(preg_match("/^\d{11,11}$/",$request['username'])) {
-            $this->username = 'phone';
-        }
-        else {
-            $this->username = 'email';
-        }
-        $request[$this->username] = $request['username'];
-
         $rules = [
-            'captcha' => 'required|captcha'
+            'captcha' => 'required|captcha',
+            'name'    => 'required|exists:users',
+            'password' => 'required|between:5,32',
         ];
+        $user = User::where('name',$request->name)->first();
         $validator = \Validator::make(Input::all(), $rules);
         if ($validator->fails())
         {
-            return ['status'=>'n','info'=>'验证码不正确'];
+            return ['status'=>'n','info'=>$validator->errors()->first()];
         }
-        $user = User::where('name',$request->username)->first();
-        if(empty($user)){
-            return ['status'=>'n','info'=>'找不到该用户'];
+        if(password_verify($request->password, $user->getAuthPassword())){
+            Auth::login($user);
+            return ['status'=>'y','info'=>'登录成功'];
         }
-        if (!\Auth::attempt([$this->username => $request['username'], 'password' => $request['password']], true)) {
-            return ['stat'=>'n','msg'=>'用户名或密码错误'];
-        }
-        return ['status'=>'y','info'=>'登录成功'];
+        return ['status'=>'n','info'=>'密码错误'];
     }
 
     public function logout(){

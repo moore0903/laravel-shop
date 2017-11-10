@@ -39,33 +39,17 @@
         </div>
         <div class="vipmain fr">
             <div class="ny_title"><i class="fr">你所在位置：会员中心</i> 您好 <span>{{ $user->user_name??$user->name }}</span> 您是我们的 <span>经销商</span>，您目前有 <span>0</span> 个待处理订单。</div>
-            <div class="gwckuai">
-                <div class="vipzcnr">
-                    <div class="title">用户 <i>{{ $user->user_name??$user->name }}</i> 注册信息</div>
-                    <ul class="lifl clear">
-                        <li>
-                            <p class="name">用户姓名：</p>
-                            {{ $user->user_name }}</li>
-                        <li>
-                            <p class="name">用户性别：</p>
-                            {{ $user->sex?'女':'男' }}</li>
-                        <li>
-                            <p class="name">电子邮箱：</p>{{ $user->email }}
-                        </li>
-                        <li>
-                            <p class="name">联系手机：</p>
-                            {{ $user->phone }}</li>
-                        <li>
-                            <p class="name">邮政编码：{{ $user->code }}</p>
-                        </li>
-                        <li>
-                            <p class="name">QQ/MSN：{{ $user->qq }}</p>
-                        </li>
-                        <li>
-                            <p class="name">通讯地址：{{ $user->address }}</p>
-                        </li>
-                    </ul>
-                </div>
+            <ul class="zxdglist lifl clear">
+                @foreach($list as $item)
+                <li><a href="{{ url('/product/detail/'.$item->id) }}">
+                        <p class="tu"><img src="{{ asset('upload/'.$item->img) }}" width="237" height="188" /></p>
+                        <p class="name">{{ $item->title }}</p>
+                        <p class="more"></p>
+                    </a></li>
+                @endforeach
+            </ul>
+            <div class="page fmyh">
+                {{ $list->links() }}
             </div>
         </div>
         <div class="clean"></div>

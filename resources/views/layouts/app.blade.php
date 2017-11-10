@@ -50,7 +50,7 @@
             </li>
         </ul>
         <div class="clean"></div>
-        <div class="vip"> <a href="{{ url('/login') }}">会员专区</a> </div>
+        <div class="vip"> <a href="{{ Auth::check() ? url('/user/info') : url('/login') }}">会员专区</a> </div>
     </div>
 </div>
 

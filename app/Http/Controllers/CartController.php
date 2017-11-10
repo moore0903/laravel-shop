@@ -12,6 +12,7 @@ namespace App\Http\Controllers;
 use App\Models\SecKill;
 use App\Models\ShopItem;
 use Illuminate\Http\Request;
+use Overtrue\LaravelShoppingCart\Cart;
 use Vinkla\Hashids\Facades\Hashids;
 
 class CartController extends Controller
@@ -52,6 +53,7 @@ class CartController extends Controller
             'cart_count'=>\Cart::count(),
             'cart_totalPrice'=>\Cart::totalPrice(),
             'cart_raw_count' => \Cart::count(false),
+            'user' => \Auth::user()
         ]);
     }
 
@@ -61,15 +63,17 @@ class CartController extends Controller
      * @return array
      */
     public function addCart(Request $request){
-        $id = Hashids::decode($request['hash_id']);
-        $shopItem = ShopItem::where('id','=',$id)->first();
+        $shopItem = ShopItem::where('id','=',$request->id)->first();
         $stat = 0;
         if(isset($shopItem)){
-            $time = date('Y-m-d h:i:s');
-            $secKill = SecKill::where('shop_item_id','=',$shopItem->id)->where('start_time','<',$time)->where('end_time','>',$time)->first();
-            if(!empty($secKill)) $price = $secKill->sec_kill_price;
-            else $price = $shopItem->price;
-            \Cart::add($shopItem->id,$shopItem->title,$request['qty'],$price,['imgUrl'=>asset('upload/'.$shopItem->img),'url'=>url('/shop_item/detail/'.$shopItem->hashid),'hashid'=>\Hashids::encode($shopItem->id)]);
+            $user = \Auth::user();
+            \Cart::add($shopItem->id,$shopItem->title,$request->qty??1,$shopItem->price*$user->discount,[
+                'title'=>$shopItem->title,
+                'price'=>$shopItem->price,
+                'id'=>$shopItem->id,
+                'discount' => $user->discount,
+                'discount_price' => $shopItem->price * $user->discount
+            ]);
             $stat = 1;
         }
         return ['stat'=>$stat,'cart_lists'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_totalPrice'=>\Cart::totalPrice(),'cart_raw_count' => \Cart::count(false)];
@@ -81,11 +85,12 @@ class CartController extends Controller
      * @return array
      */
     public function updateCart(Request $request){
-        $cart_item = \Cart::get($request['raw_id']);
-        if(!empty($cart_item)){
-            $qty = empty($request['qty']) ? $cart_item->qty - 1 : $request['qty'];
-            \Cart::update($request['raw_id'],$qty);
-        }
+        \Log::debug($request->all());
+//        $cart_item = \Cart::get($request['raw_id']);
+//        if(!empty($cart_item)){
+//            $qty = empty($request['qty']) ? $cart_item->qty - 1 : $request['qty'];
+//            \Cart::update($request['raw_id'],$qty);
+//        }
         return ['stat'=>1,'cart_lists'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_totalPrice'=>\Cart::totalPrice(),'cart_raw_count' => \Cart::count(false)];
     }
 

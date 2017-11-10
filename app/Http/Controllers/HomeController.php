@@ -90,6 +90,15 @@ class HomeController extends Controller
                 'top_catalog' => $top_catalog,
                 'set_nev' => Catalog::$set_nev[$top_catalog_id]
             ]);
+        }elseif($catalog->type == 5){  //产品
+            if(!\Auth::check()){
+                return \Redirect::to('/');
+            }
+            $list = ShopItem::where('catalog_id',$catalog_id)->orderByDesc('sort')->orderByDesc('created_at')->paginate(9);
+            return view('product',[
+                'list' => $list,
+                'user' => \Auth::user()
+            ]);
         }
 
     }
@@ -127,6 +136,19 @@ class HomeController extends Controller
             'catalog' => $article->catalog,
             'top_catalog' => $top_catalog,
             'set_nev' => Catalog::$set_nev[$top_catalog->id]
+        ]);
+    }
+
+    public function productDetail($id){
+        if(!\Auth::check()){
+            return \Redirect::to('/');
+        }
+        $product = ShopItem::find($id);
+//        $product->images = json_decode($product->images,true);
+        return view('productDetail',[
+            'info' => $product,
+            'catalog' => $product->catalog,
+            'user' => \Auth::user()
         ]);
     }
 

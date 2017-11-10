@@ -24,6 +24,8 @@ Route::get('/case/detail/{id}','HomeController@caseDetail');
 
 Route::get('/article/detail/{id}','HomeController@articleDetail');
 
+Route::get('/product/detail/{id}','HomeController@productDetail');
+
 Route::get('/message','HomeController@message')->name('message');
 
 Route::post('/message_submit','HomeController@message_submit_ajax');
@@ -38,11 +40,12 @@ Auth::routes();
 
 Route::group(
     [
-        'prefix'=>'cart'
+        'prefix'=>'cart',
+        'middleware'=>['web', 'auth']
     ],
     function(){
         Route::get('add','CartController@addCart');
-        Route::get('update','CartController@updateCart');
+        Route::any('update','CartController@updateCart');
         Route::get('del','CartController@delCart');
         Route::get('all','CartController@cartAll');
         Route::get('list','CartController@list');

@@ -11,7 +11,7 @@
                         <li>
                             <p class="name fl">用户名：</p>
                             <p class="nr fl">
-                                <input name="username" type="text" datatype="s2-24" errormsg="用户名至少2个字符,最多24个字符！"/>
+                                <input name="name" type="text" datatype="s2-24" errormsg="用户名至少2个字符,最多24个字符！"/>
                             </p>
                         </li>
                         <li>
@@ -34,7 +34,7 @@
                         </li>
                         <li>
                             <p class="vipaniu vipaniu1 fl">
-                                <input name="Submit" type="submit" value="登 录"/>
+                                <input name="" type="submit" value="登 录"/>
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                             </p>
                             <p class="vipaniu fl">
