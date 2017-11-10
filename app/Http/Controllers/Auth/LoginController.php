@@ -60,8 +60,6 @@ class LoginController extends Controller
         if(isset($_REQUEST['intend'])) {
             session()->put('url.intended', $_REQUEST['intend']);
         }
-        $password = password_hash("123456", PASSWORD_DEFAULT);
-        \DB::table('users')->update(['password'=>$password]);
         return view('auth.login',['route'=>'login','src'=>captcha_src()]);
     }
 
@@ -86,7 +84,7 @@ class LoginController extends Controller
 
     public function logout(){
         \Auth::logout();
-        Session::flush();
+        \Session::flush();
         return \Redirect::to('/');
     }
 

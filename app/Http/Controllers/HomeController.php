@@ -28,7 +28,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('home',[
+            'banners' => Article::where('catalog_id',35)->where('is_display',1)->orderBy('sort','desc')
+                ->orderBy('created_at','desc')->get(),
+            'case_recommend' => Cases::where('recommend','1')->where('is_display',1)->orderBy('sort','desc')
+                ->orderBy('created_at','desc')->limit(5)->get(),
+            'article_hot' => Article::where('hot','1')->where('is_display',1)->orderBy('sort','desc')
+                ->orderBy('created_at','desc')->first(),
+            'article_recommend' => Article::where('recommend','1')->where('is_display',1)->orderBy('sort','desc')
+                ->orderBy('created_at','desc')->limit(3)->get()
+        ]);
     }
 
     public function welcome(){
@@ -99,6 +108,13 @@ class HomeController extends Controller
                 'list' => $list,
                 'user' => \Auth::user()
             ]);
+        }elseif($catalog->type == 6){  //公告
+            if(!\Auth::check()){
+                return \Redirect::to('/');
+            }
+            $list = Article::where('catalog_id',$catalog_id)->where('is_display',1)->orderBy('sort','desc')
+                ->orderBy('created_at','desc')->paginate(6);
+
         }
 
     }
@@ -130,6 +146,7 @@ class HomeController extends Controller
         $article = Article::find($id);
         $catalog_set = Catalog::where('parent_id',$article->catalog->parent_id)->orderBy('order','desc')->get();
         $top_catalog = Catalog::find($article->catalog->parent_id);
+        $article->increment('browse');
         return view('articleDetail',[
             'info' => $article,
             'catalog_set' => $catalog_set,
@@ -144,7 +161,6 @@ class HomeController extends Controller
             return \Redirect::to('/');
         }
         $product = ShopItem::find($id);
-//        $product->images = json_decode($product->images,true);
         return view('productDetail',[
             'info' => $product,
             'catalog' => $product->catalog,
@@ -206,7 +222,49 @@ class HomeController extends Controller
     }
 
 
-    public function product(){
+    public function productSearch(Request $request){
+        if(!\Auth::check()){
+            return \Redirect::to('/');
+        }
+        $search_title = $request->search_title;
+        if($search_title){
+            $list = ShopItem::where('title','like','%'.$search_title.'%')->orderByDesc('sort')->orderByDesc('created_at')->paginate(9);
+        }else{
+            $list = ShopItem::orderByDesc('sort')->orderByDesc('created_at')->paginate(9);
+        }
+        return view('product',[
+            'list' => $list,
+            'user' => \Auth::user()
+        ]);
+    }
+
+    public function resetPassword(Request $request){
+        if($request->method() == 'GET'){
+            return view('reset_password');
+        }else{
+            $user = User::find($request->user()->id);
+            if(!password_verify($request->old_password, $user->getAuthPassword())){
+                return ['status'=>'n','info'=>'旧密码不正确'];
+            }
+            if($request->new_password != $request->confirm_password){
+                return ['status'=>'n','info'=>'新密码不一致'];
+            }
+            $password = password_hash($request->confirm_password, PASSWORD_DEFAULT);
+            \Auth::logout();
+            \Session::flush();
+            \DB::table('users')->where('name',$user->name)->update(['password'=>$password]);
+            return ['status'=>'y','info'=>'密码修改成功,请重新登录'];
+        }
+    }
+
+
+    public function logout(){
+        \Auth::logout();
+        \Session::flush();
+        return \Redirect::to('/');
+    }
+
+    public function notice(){
 
     }
 

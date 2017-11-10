@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>温特斯顿</title>
+    <title>温特斯顿-超导强热石墨烯地暖</title>
     <link href="{{ asset('theme/css/style.css') }}" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="{{ asset('theme/common/jquery-1.7.2.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('theme/common/jquery.tools.min.js') }}"></script>
@@ -61,14 +61,14 @@
     <div class="wrap clear">
         <dl class="fnav lifl fl">
             <dt>导航</dt>
-            <dd><a href="#">企业介绍</a></dd>
-            <dd><a href="#">企业精神</a></dd>
-            <dd><a href="#">企业实力</a></dd>
-            <dd><a href="#">企业荣誉</a></dd>
-            <dd><a href="#">企业规划</a></dd>
-            <dd><a href="#">企业风采</a></dd>
-            <dd><a href="#">知识产权</a></dd>
-            <dd><a href="#">企业事件</a></dd>
+            <dd><a href="{{ url('/catalog/9') }}">企业介绍</a></dd>
+            <dd><a href="{{ url('/catalog/10') }}">企业精神</a></dd>
+            <dd><a href="{{ url('/catalog/11') }}">企业实力</a></dd>
+            <dd><a href="{{ url('/catalog/12') }}">企业荣誉</a></dd>
+            <dd><a href="{{ url('/catalog/13') }}">企业规划</a></dd>
+            <dd><a href="{{ url('/catalog/14') }}">企业风采</a></dd>
+            <dd><a href="{{ url('/catalog/15') }}">知识产权</a></dd>
+            <dd><a href="{{ url('/catalog/16') }}">企业事件</a></dd>
         </dl>
         <dl class="contatc fl">
             <dt>联系方式</dt>

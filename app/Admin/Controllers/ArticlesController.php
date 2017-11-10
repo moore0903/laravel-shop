@@ -97,11 +97,25 @@ class ArticlesController extends Controller
                 'is_display' => '显示'
             ],$states);
 
-            $grid->author('作者')->editable();
-            $grid->browse('浏览量')->editable();
+            $grid->column('是否推荐')->switchGroup([
+                'recommend' => '推荐'
+            ],$states);
+
+            $grid->column('是否热门')->switchGroup([
+                'hot' => '热门'
+            ],$states);
+
+//            $grid->author('作者')->editable();
+//            $grid->browse('浏览量')->editable();
+
 
             $grid->created_at('创建时间');
             $grid->updated_at('修改时间');
+
+            $grid->filter(function ($filter) {
+                $filter->like('title','标题');
+                $filter->is('catalog_id', '分类')->select(Catalog::selectOptions());
+            });
         });
     }
 
@@ -120,10 +134,15 @@ class ArticlesController extends Controller
             $form->editor('content', '内容')->attribute(['style' => 'height:400px;max-height:500px;']);
 
             $form->image('img', '图片');
+
+            $form->switch('hot','热门');
+
+            $form->switch('recommend','推荐');
+
 //            $form->select('content_tpl', '内容模板')->options(Catalog::dirToArray());
 
-            $form->text('author','作者')->default('本站');
-            $form->number('browse', '浏览量');
+//            $form->text('author','作者')->default('本站');
+//            $form->number('browse', '浏览量');
 
             $form->number('sort', '排序号')->default('100');
 

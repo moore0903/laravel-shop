@@ -98,6 +98,10 @@ class CasesController extends Controller
                 'is_display' => '显示'
             ],$states);
 
+            $grid->column('是否推荐')->switchGroup([
+                'recommend' => '推荐'
+            ],$states);
+
         });
     }
 
@@ -116,6 +120,9 @@ class CasesController extends Controller
             $form->editor('content', '内容')->attribute(['style' => 'height:400px;max-height:500px;']);
 
             $form->image('img', '图片');
+
+
+            $form->switch('recommend','推荐');
 
             $form->number('sort', '排序号')->default('100');
 

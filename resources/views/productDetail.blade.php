@@ -9,9 +9,9 @@
             <div class="pro_case protop">
                 <div class="title">会员功能</div>
                 <ul class="lifl clear">
-                    <li class="on"><a href="{{ url('/product') }}">在线订购</a></li>
+                    <li class="on"><a href="{{ url('/product_search') }}">在线订购</a></li>
                     <li><a href="{{ url('/cart/list') }}">查看购物车</a></li>
-                    <li><a href="{{ url('/my_order') }}">查看我的订单</a></li>
+                    <li><a href="{{ url('/order/list') }}">查看我的订单</a></li>
                     <li><a href="{{ url('/notice') }}">会员公告</a></li>
                     <li><a href="{{ url('/reset_password') }}">修改密码</a></li>
                     <li><a href="{{ url('/logout') }}">安全退出</a></li>
@@ -20,7 +20,7 @@
             <div class="series">
                 <div class="title">产品系列<i class="ttuc">Product series</i></div>
                 <ul class="lifl clear">
-                    @foreach(\App\Models\Catalog::parentCatalog(1) as $catalog)
+                    @foreach(\App\Models\Catalog::parentCatalog(32) as $catalog)
                         <li><a href="{{ url('/catalog/'.$catalog->id) }}">{{ $catalog->title }}</a></li>
                     @endforeach
                 </ul>
@@ -31,7 +31,8 @@
                         <input type="text" name="key" id="userId" placeholder="请输入产品关键词">
                     </p>
                     <p class="nr fl">
-                        <input name="" type="submit" />
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                        <input name="" type="submit" value="" />
                     </p>
                 </form>
 
@@ -71,7 +72,7 @@
                         <li>
                             <p class="name fl">购买数量：</p>
                             <p class="nr fl">
-                                <input name="qty" type="text" />
+                                <input name="qty" type="text" value="1" />
                             </p>
                             <p class="time fl">件</p>
                         </li>

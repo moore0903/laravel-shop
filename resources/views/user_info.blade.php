@@ -9,9 +9,9 @@
             <div class="pro_case protop">
                 <div class="title">会员功能</div>
                 <ul class="lifl clear">
-                    <li class="on"><a href="{{ url('/product') }}">在线订购</a></li>
+                    <li class="on"><a href="{{ url('/product_search') }}">在线订购</a></li>
                     <li><a href="{{ url('/cart/list') }}">查看购物车</a></li>
-                    <li><a href="{{ url('/my_order') }}">查看我的订单</a></li>
+                    <li><a href="{{ url('/order/list') }}">查看我的订单</a></li>
                     <li><a href="{{ url('/notice') }}">会员公告</a></li>
                     <li><a href="{{ url('/reset_password') }}">修改密码</a></li>
                     <li><a href="{{ url('/logout') }}">安全退出</a></li>
@@ -20,7 +20,7 @@
             <div class="series">
                 <div class="title">产品系列<i class="ttuc">Product series</i></div>
                 <ul class="lifl clear">
-                    @foreach(\App\Models\Catalog::parentCatalog(1) as $catalog)
+                    @foreach(\App\Models\Catalog::parentCatalog(32) as $catalog)
                         <li><a href="{{ url('/catalog/'.$catalog->id) }}">{{ $catalog->title }}</a></li>
                     @endforeach
                 </ul>
@@ -28,17 +28,18 @@
             <div class="search clear">
                 <form method="post" action="{{ url('/product_search') }}">
                     <p class="name fl">
-                        <input type="text" name="key" id="userId" placeholder="请输入产品关键词">
+                        <input type="text" name="search_title" id="userId" placeholder="请输入产品关键词">
                     </p>
                     <p class="nr fl">
-                        <input name="" type="submit" />
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                        <input name="" type="submit" value="" />
                     </p>
                 </form>
 
             </div>
         </div>
         <div class="vipmain fr">
-            <div class="ny_title"><i class="fr">你所在位置：会员中心</i> 您好 <span>{{ $user->user_name??$user->name }}</span> 您是我们的 <span>经销商</span>，您目前有 <span>0</span> 个待处理订单。</div>
+            <div class="ny_title"><i class="fr">你所在位置：会员中心</i> 您好 <span>{{ $user->user_name??$user->name }}</span> 您是我们的 <span>经销商</span>，您目前有 <span>{{ \App\Models\Order::NotHandleOrder() }}</span> 个待处理订单。</div>
             <div class="gwckuai">
                 <div class="vipzcnr">
                     <div class="title">用户 <i>{{ $user->user_name??$user->name }}</i> 注册信息</div>
@@ -56,13 +57,13 @@
                             <p class="name">联系手机：</p>
                             {{ $user->phone }}</li>
                         <li>
-                            <p class="name">邮政编码：{{ $user->code }}</p>
+                            <p class="name">邮政编码：</p>{{ $user->code }}
                         </li>
                         <li>
-                            <p class="name">QQ/MSN：{{ $user->qq }}</p>
+                            <p class="name">QQ/MSN：</p>{{ $user->qq }}
                         </li>
                         <li>
-                            <p class="name">通讯地址：{{ $user->address }}</p>
+                            <p class="name">通讯地址：</p>{{ $user->address }}
                         </li>
                     </ul>
                 </div>

@@ -72,38 +72,12 @@ class OrderController extends Controller
      * @return $this
      */
     public function addOrder(Request $request){
-        if($request->method() == 'GET'){
-            return \Redirect::intended('cart/list')->withInput()->withErrors(['msg' => '请重新下单']);
-        }
-        if ($request['useraddress'] != 'since') {
-            //获取收货地址
-            $address = Address::where('id', $request['useraddress'])->where('user_id', \Auth::user()->id)->first();
-            if (!$address) {
-                return back()->withInput($request->toArray())->withErrors(['msg' => '请选择一个地址']);
-            }
-        }
-        //获取优惠券
-        if (!empty($request['gift'])) {
-            $gift = Giftcode::where('id', $request['gift'])->first();
-            if (!$gift) return back()->withInput($request->toArray())->withErrors(['msg' => '优惠券不存在']);
-            $now = new Carbon();
-            if (!$now->between($gift->start_time, $gift->end_time)) return back()->withInput()->withErrors(['msg' => '优惠券不在有效期']);
-            if ($gift->usecount >= $gift->usecountmax) return back()->withInput()->withErrors(['msg' => '优惠券已被使用']);
-            if ($gift->discountnlimit > \Cart::totalPrice()) return back()->withInput($request->toArray())->withErrors(['msg' => '购物车内商品不满足该优惠券']);
-            $gift->usecount += 1;
-            $gift->save();
-        }
 
         if (\Cart::count() <= 0) return \Redirect::intended('cart/list')->withInput()->withErrors(['msg' => '由于长时间未操作,购物车已过期,请重新下单']);
 
         $orders = $shopItems = [];
-        $configs = Config::all();
-        $post_price = $request['postage'];
-        $since_address = $configs->where('key', 'since_address')->first();
-        $since_realname = $configs->where('key', 'since_realname')->first();
-        $since_phone = $configs->where('key', 'since_phone')->first();
         $total = \Cart::totalPrice();
-        $discount = 0;
+        $discount = $get_total = 0;
 
         foreach (\Cart::all() as $cartitem) {
             if (!$cartitem) continue;
@@ -119,7 +93,7 @@ class OrderController extends Controller
                 'product_price' => $shopItem->price,
                 'shop_item_catalog' => $shopItem->catalog->title,
             ]);
-
+            $get_total += $shopItem->price * $cartitem->qty;
             $details[] = $detail;
             $shopItems[$shopItem->id]['count'] = $shopItem->count - $cartitem->qty;
         }
@@ -128,31 +102,26 @@ class OrderController extends Controller
         $order = Order::create([
             'user_id' => \Auth::user()->id,
             'serial' => date('YmdHis') . str_random(6),
-            'address' => empty($address) ? $since_address->value : $address->area . ' ' . $address->address,
-            'realname' => empty($address) ? $since_realname->value : $address->realname,
-            'phone' => empty($address) ? $since_phone->value : $address->phone,
             'stat' => Order::STAT_NOTPAY,
             'remark' => $request['remark'],
             'giftcode_id' => !empty($gift) ? $gift->id : 0,
             'memo' => '',
-            'post_price' => $post_price,
             'paytype'=>Order::paytypeString($request['paytype']),
-
+            'address' => \Auth::user()->address,
+            'realname' => \Auth::user()->user_name,
+            'phone' => \Auth::user()->phone,
         ]);
 
         foreach ($details as $detail) {
             $detail->order_id = $order->id;
         }
 
-        if (!empty($gift)) {
-            $order->memo .= '(优惠券ID=' . $gift->id . ')满' . $gift->discountnlimit . '元减' . $gift->discountn . '元。';
-            $discount = $gift->discountn;
-        }
 
         $order->details()->saveMany($details);
-        $order->total = $total;
-        $order->discount = $discount;
-        $order->totalpay = max(0, $total - $order->discount + $post_price);
+        $order->total = $get_total;
+        $order->discount = $get_total - $total;
+        $order->totalpay = $total;
+
         if ($order->totalpay == 0) $order->stat = Order::STAT_PAYED;
 
         $order->save();
@@ -166,8 +135,8 @@ class OrderController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function orderList(Request $request){
-        $stat = $request['stat']??'all';
-        if($stat != 'all'){
+        $stat = $request['stat'];
+        if($stat){
             $stat = (int)$stat;
             $orderList = Order::where('user_id','=',\Auth::user()->id)->where('stat','=',$stat)->with('details')->orderBy('created_at','desc')->get();
         }else{
@@ -176,6 +145,14 @@ class OrderController extends Controller
         return view('order_list',[
             'orders'=>$orderList,
             'stat'=>$stat
+        ]);
+    }
+
+    public function orderDetail($id){
+        $order = Order::find($id);
+        return view('order_detail',[
+            'order' => $order,
+            'details' => $order->details
         ]);
     }
 

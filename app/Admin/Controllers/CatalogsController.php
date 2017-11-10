@@ -100,7 +100,9 @@ class CatalogsController extends Controller
                 2 => '案例',
                 3  => '新闻',
                 4  => '图片集合',
-                5  => '产品'
+                5  => '产品',
+                6  => '系统公告',
+                7  => 'banner'
             ];
             $form->select('type', '栏目类型')->options($directors);
 //            $form->image('img', '图片')->uniqueName();

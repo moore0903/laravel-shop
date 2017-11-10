@@ -69,10 +69,10 @@ class CartController extends Controller
             $user = \Auth::user();
             \Cart::add($shopItem->id,$shopItem->title,$request->qty??1,$shopItem->price*$user->discount,[
                 'title'=>$shopItem->title,
-                'price'=>$shopItem->price,
+                'price'=>$shopItem->price * $user->discount,
                 'id'=>$shopItem->id,
                 'discount' => $user->discount,
-                'discount_price' => $shopItem->price * $user->discount
+                'product_price' => $shopItem->price
             ]);
             $stat = 1;
         }
@@ -86,11 +86,15 @@ class CartController extends Controller
      */
     public function updateCart(Request $request){
         \Log::debug($request->all());
-//        $cart_item = \Cart::get($request['raw_id']);
-//        if(!empty($cart_item)){
-//            $qty = empty($request['qty']) ? $cart_item->qty - 1 : $request['qty'];
-//            \Cart::update($request['raw_id'],$qty);
-//        }
+        $cart_list = $request->arr;
+        foreach($cart_list as $item){
+            $items = explode('|',$item);
+            $cart_item = \Cart::get($items[0]);
+            if(!empty($cart_item)){
+                $qty = empty($items[1]) ? $cart_item->qty - 1 : $items[1];
+                \Cart::update($items[0],$qty);
+            }
+        }
         return ['stat'=>1,'cart_lists'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_totalPrice'=>\Cart::totalPrice(),'cart_raw_count' => \Cart::count(false)];
     }
 
@@ -101,6 +105,16 @@ class CartController extends Controller
      */
     public function delCart(Request $request){
         \Cart::remove($request['raw_id']);
+        return ['stat'=>1,'cart_lists'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_totalPrice'=>\Cart::totalPrice(),'cart_raw_count' => \Cart::count(false)];
+    }
+
+    /**
+     * 清空购物车
+     * @param Request $request
+     * @return array
+     */
+    public function emptyCart(Request $request){
+        \Cart::destroy();
         return ['stat'=>1,'cart_lists'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_totalPrice'=>\Cart::totalPrice(),'cart_raw_count' => \Cart::count(false)];
     }
 }

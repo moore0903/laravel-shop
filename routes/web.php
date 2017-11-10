@@ -13,9 +13,9 @@
 
 Route::get('/home', 'HomeController@index');
 
-Route::get('/welcome', 'HomeController@welcome');
+Route::get('/welcome', 'HomeController@index');
 
-Route::get('/', 'HomeController@welcome');
+Route::get('/', 'HomeController@index');
 
 
 Route::get('/catalog/{catalog_id}','HomeController@catalog');
@@ -25,6 +25,12 @@ Route::get('/case/detail/{id}','HomeController@caseDetail');
 Route::get('/article/detail/{id}','HomeController@articleDetail');
 
 Route::get('/product/detail/{id}','HomeController@productDetail');
+
+Route::any('/product_search','HomeController@productSearch');
+
+Route::any('/reset_password','HomeController@resetPassword');
+
+Route::any('/logout','Auth\LoginController@logout');
 
 Route::get('/message','HomeController@message')->name('message');
 
@@ -49,6 +55,7 @@ Route::group(
         Route::get('del','CartController@delCart');
         Route::get('all','CartController@cartAll');
         Route::get('list','CartController@list');
+        Route::get('empty','CartController@emptyCart');
         Route::get('submitCartQuick','CartController@submitCartQuick');
     }
 );
@@ -109,6 +116,7 @@ Route::group(
                 Route::get('cartsubmitquick','OrderController@cartsubmitquick');
                 Route::any('add','OrderController@addOrder');
                 Route::get('list','OrderController@orderList');
+                Route::get('detail/{id}','OrderController@orderDetail');
                 Route::get('confirmReceipt','OrderController@confirmReceipt');
                 Route::any('evaluation','OrderController@evaluation');
                 Route::get('cancel','OrderController@cancel');
