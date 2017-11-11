@@ -28,6 +28,8 @@ Route::get('/product/detail/{id}','HomeController@productDetail');
 
 Route::get('/notice/detail/{id}','HomeController@noticeDetail');
 
+Route::get('/notice','HomeController@notice');
+
 Route::any('/product_search','HomeController@productSearch');
 
 Route::any('/reset_password','HomeController@resetPassword');

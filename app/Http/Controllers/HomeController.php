@@ -109,14 +109,7 @@ class HomeController extends Controller
                 'user' => \Auth::user()
             ]);
         }elseif($catalog->type == 6){  //公告
-            if(!\Auth::check()){
-                return \Redirect::to('/');
-            }
-            $list = Article::where('catalog_id',$catalog_id)->where('is_display',1)->orderBy('sort','desc')
-                ->orderBy('created_at','desc')->paginate(6);
-            return view('notice',[
-                'list' => $list
-            ]);
+
         }
 
     }
@@ -167,6 +160,17 @@ class HomeController extends Controller
             'info' => $product,
             'catalog' => $product->catalog,
             'user' => \Auth::user()
+        ]);
+    }
+
+    public function notice($catalog_id){
+        if(!\Auth::check()){
+            return \Redirect::to('/');
+        }
+        $list = Article::where('catalog_id',$catalog_id)->where('is_display',1)->orderBy('sort','desc')
+            ->orderBy('created_at','desc')->paginate(6);
+        return view('notice',[
+            'list' => $list
         ]);
     }
 
