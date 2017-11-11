@@ -43,7 +43,7 @@
         <ul class="xxzlist lifl clear">
             @foreach($list as $item)
             <li><a href="{{ url('/notice/detail/'.$item->id) }}">
-                    <p class="time">{{ date('d',strtotime($item->created_time)) }}<i>{{ date('Y/m',strtotime($item->created_time)) }}</i></p>
+                    <p class="time">{{ date('d',strtotime($item->created_at)) }}<i>{{ date('Y/m',strtotime($item->created_at)) }}</i></p>
                     <p class="name">{{ $item->title }}</p>
                     <p class="nr">{{ mb_substr(strip_tags($item->content),0,50) }}</p>
                 </a></li>
