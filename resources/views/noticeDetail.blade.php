@@ -41,7 +41,7 @@
     <div class="vipmain fr">
         <div class="ny_title"><i class="fr">你所在位置：会员中心>会员公告</i> 您已经成功登陆 <span>温特斯顿</span> 网络订货中心!</div>
         <div class="xxzdetail">
-            <div class="xxzbt">{{ $info->title }}<i>发布时间：{{ date('Y/m/d',$info->created_at) }}</i></div>
+            <div class="xxzbt">{{ $info->title }}<i>发布时间：{{ date('Y/m/d',strtotime($info->created_at)) }}</i></div>
             <div class="xxzcont">
                 {!! $info->content !!}
             </div>
