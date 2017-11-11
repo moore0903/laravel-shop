@@ -163,7 +163,8 @@ class HomeController extends Controller
         ]);
     }
 
-    public function notice($catalog_id){
+    public function notice(){
+        $catalog_id = 36;
         if(!\Auth::check()){
             return \Redirect::to('/');
         }
