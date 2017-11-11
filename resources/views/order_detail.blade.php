@@ -96,7 +96,7 @@
                         <li><p class="name fl">收货人地址：</p><p class="nr fl">{{ Auth::user()->address }}</p></li>
                         <li><p class="name fl">邮政编码：</p><p class="nr fl">{{ Auth::user()->code }}</p></li>
                         <li><p class="name fl">电子信箱：</p><p class="nr fl">{{ Auth::user()->email }}</p></li>
-                        <li><p class="name fl">是否需要发票：</p><p class="nr fl">否</p></li>
+                        {{--<li><p class="name fl">是否需要发票：</p><p class="nr fl">否</p></li>--}}
                     </ul>
                     <ul class="dklist lifl clear">
                         <li><a href="{{ url('/order/list') }}">返回订单列表</a></li>
