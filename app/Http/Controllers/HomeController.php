@@ -114,7 +114,9 @@ class HomeController extends Controller
             }
             $list = Article::where('catalog_id',$catalog_id)->where('is_display',1)->orderBy('sort','desc')
                 ->orderBy('created_at','desc')->paginate(6);
-
+            return view('notice',[
+                'list' => $list
+            ]);
         }
 
     }
@@ -164,6 +166,18 @@ class HomeController extends Controller
         return view('productDetail',[
             'info' => $product,
             'catalog' => $product->catalog,
+            'user' => \Auth::user()
+        ]);
+    }
+
+    public function noticeDetail($id){
+        if(!\Auth::check()){
+            return \Redirect::to('/');
+        }
+        $article = Article::find($id);
+        return view('noticeDetail',[
+            'info' => $article,
+            'catalog' => $article->catalog,
             'user' => \Auth::user()
         ]);
     }
@@ -262,10 +276,6 @@ class HomeController extends Controller
         \Auth::logout();
         \Session::flush();
         return \Redirect::to('/');
-    }
-
-    public function notice(){
-
     }
 
 

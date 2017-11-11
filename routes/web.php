@@ -26,6 +26,8 @@ Route::get('/article/detail/{id}','HomeController@articleDetail');
 
 Route::get('/product/detail/{id}','HomeController@productDetail');
 
+Route::get('/notice/detail/{id}','HomeController@noticeDetail');
+
 Route::any('/product_search','HomeController@productSearch');
 
 Route::any('/reset_password','HomeController@resetPassword');

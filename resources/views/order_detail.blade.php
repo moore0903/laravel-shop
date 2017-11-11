@@ -12,7 +12,7 @@
                     <li><a href="{{ url('/product_search') }}">在线订购</a></li>
                     <li><a href="{{ url('/cart/list') }}">查看购物车</a></li>
                     <li class="on"><a href="{{ url('/order/list') }}">查看我的订单</a></li>
-                    <li><a href="{{ url('/notice') }}">会员公告</a></li>
+                    <li><a href="{{ url('/catalog/36') }}">会员公告</a></li>
                     <li><a href="{{ url('/reset_password') }}">修改密码</a></li>
                     <li><a href="{{ url('/logout') }}">安全退出</a></li>
                 </ul>
