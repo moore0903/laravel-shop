@@ -172,6 +172,8 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .news .cont .nwlbg .tu{ width:480px; height:257px; overflow:hidden; }
 
+.news .cont .nwlbg .tu img{ width: 100%; height: 100%; }
+
 .news .cont .nwlbg .name{ font-size:16px; color:#535353; font-weight:bold; margin-top:15px; }
 
 .news .cont .nwlbg .name i{ color:#535353; font-size:14px; }
@@ -204,7 +206,7 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .fdm1 .wrap{ position:relative; }
 
-.fc1{ position:absolute; top:-138px; right:-360px; background:url(../bg/bg8.png) no-repeat; width:360px; height:406px; overflow:hidden; }
+.fc1{ position:absolute; bottom:0px; right:0px; background:url(../bg/bg8.png) no-repeat; width:360px; height:406px; overflow:hidden; }
 
 .fewm{ background:url(../bg/ewm.png) no-repeat; width:124px; height:151px; overflow:hidden; margin:62px 65px 0 0; }
 
@@ -256,7 +258,7 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .pro_case li.on a{ background:#dedede; color:#fff; }
 
-.main{ width:872px; margin-right:28px; margin-top:70px; height:auto!important; min-height:400px; height:400px; }
+.main{ width:872px; margin-right:28px; margin-top:70px; height:auto!important; min-height:400px; height:400px; padding-bottom:30px; }
 
 .ny_case .title{ height:69px; overflow:hidden; background:url(../bg/nbg1.gif) no-repeat left bottom; margin-top:10px; font-size:24px; color:#878787; border-bottom:1px solid #f1f1f1; }
 
@@ -267,6 +269,8 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 .caselist li{ width:269px; height:186px; overflow:hidden; margin:40px 8px 0 8px; }
 
 .caselist li a{ width:269px; height:186px; display:block; position:relative; }
+
+.caselist li a img{ width: 100%; height: 100%; }
 
 .caselist li a .name{ width:269px; height:40px; overflow:hidden; position:absolute; bottom:0px; left:0px; background:url(../bg/bg4.png) repeat; font-size:16px; color:#fff; font-weight:bold; text-align:center; line-height:40px; display:none; }
 
@@ -300,6 +304,8 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .ny_honor .lmtitle{ line-height:35px; color:#e62129; font-size:16px; font-weight:bold; text-align:center; }
 
+.ny_honor .lmtitle p{ text-align: center; }
+
 .honorkuai{ margin-top:45px; }
 
 .honortop{ width:463px; height:283px; margin: 0 auto; }
@@ -315,6 +321,8 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 .honorbot .hontu{ width:463px; height:89px; margin-left:30px; }
 
 .honorbot .hontu li{ width:146px; height:89px; margin-right:12px; cursor:pointer; }
+
+.honorbot .hontu li img{ width: 100%; height: 100%; }
 
 .xxzlist{ width:812px; padding:30px 30px 0 30px; }
 
@@ -443,6 +451,8 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 .prolkuai .probcont{ width:357px; height:84px; overflow:hidden; margin-top:15px; }
 
 .prolkuai .probcont li{ width:105px; height:84px; margin:0 8px; cursor:pointer; }
+
+.prolkuai .probcont li img{ width: 100%; height: 100%; overflow: hidden; }
 
 .prorkuai{ width:240px; margin-left:58px; }
 
