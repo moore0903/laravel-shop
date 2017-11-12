@@ -22,6 +22,11 @@
             </li>
             <li>
                 <p class="name"><a href="{{ url('/catalog/1') }}">企业文化</a></p>
+                <dl class="clear">
+                    @foreach(\App\Models\Catalog::parentCatalog(1) as $catalog)
+                        <dd><a href="{{ url('/catalog/'.$catalog->id) }}">{{ $catalog->title }}</a></dd>
+                    @endforeach
+                </dl>
             </li>
             <li>
                 <p class="name"><a href="{{ url('/catalog/4') }}">采暖市场</a></p>
@@ -41,12 +46,27 @@
             </li>
             <li>
                 <p class="name"><a href="{{ url('/catalog/21') }}">财富站</a></p>
+                <dl class="clear">
+                    @foreach(\App\Models\Catalog::parentCatalog(21) as $catalog)
+                        <dd><a href="{{ url('/catalog/'.$catalog->id) }}">{{ $catalog->title }}</a></dd>
+                    @endforeach
+                </dl>
             </li>
             <li>
                 <p class="name"><a href="{{ url('/catalog/25') }}">讯息台</a></p>
+                <dl class="clear">
+                    @foreach(\App\Models\Catalog::parentCatalog(25) as $catalog)
+                        <dd><a href="{{ url('/catalog/'.$catalog->id) }}">{{ $catalog->title }}</a></dd>
+                    @endforeach
+                </dl>
             </li>
             <li>
                 <p class="name"><a href="{{ url('/catalog/29') }}">大本营</a></p>
+                <dl class="clear">
+                    @foreach(\App\Models\Catalog::parentCatalog(29) as $catalog)
+                        <dd><a href="{{ url('/catalog/'.$catalog->id) }}">{{ $catalog->title }}</a></dd>
+                    @endforeach
+                </dl>
             </li>
         </ul>
         <div class="clean"></div>
