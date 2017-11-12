@@ -57,8 +57,8 @@
 @yield('content')
 
 <div class="fdm1">
-    <p class="fc1"></p>
     <div class="wrap clear">
+        <p class="fc1"></p>
         <dl class="fnav lifl fl">
             <dt>导航</dt>
             <dd><a href="{{ url('/catalog/9') }}">企业介绍</a></dd>

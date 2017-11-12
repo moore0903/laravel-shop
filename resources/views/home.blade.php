@@ -13,6 +13,8 @@
         <ul class="pan lifl clear">
         </ul>
     </div>
+    <div class="fdm3">
+        <div class="fdm2">
     <div class="wrap fmyh">
         <div class="about mod">
             <p class="phone"></p>
@@ -31,6 +33,9 @@
             </div>
         </div>
     </div>
+        </div>
+    </div>
+    <div class="fdm4">
     <div class="wrap fmyh">
         <div class="case">
             <div class="title">案例展示<i>地暖黑科技，温暖陪伴你</i> </div>
@@ -46,6 +51,8 @@
             </ul>
         </div>
     </div>
+    </div>
+    <div class="fdm5">
     <div class="wrap fmyh">
         <div class="news">
             <div class="title">新闻资讯<i>科研精英+营销大师+明星代言 强兵强将强强集合  超强战队所向披靡</i> </div>
@@ -67,6 +74,7 @@
             </div>
             <div class="more"><a href="{{ url('/catalog/25') }}">查看更多</a></div>
         </div>
+    </div>
     </div>
     <div class="wq1"></div>
     <div class="wq2"></div>
