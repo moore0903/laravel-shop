@@ -99,7 +99,7 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .about{ margin-top:70px; }
 
-.about .title{ color:#424242; font-size:30px; text-align:center; background:url(../bg/cxj1.gif) no-repeat center 8px; }
+.about .title{ color:#424242; font-size:30px; line-height: 42px; text-align:center; background:url(../bg/cxj1.gif) no-repeat center 8px; }
 
 .about .title i{ font-size:14px; background:url(../bg/bg2.gif) no-repeat center top; display:block; padding-top:20px; color:#878787; margin-top:10px; }
 
@@ -124,9 +124,9 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 .about .cont .ablist li.abl4 a{ background:url(../bg/abg4.gif) no-repeat center top; padding-top:40px; display:block; color:#878787; }
 .about .cont .ablist li.abl4 a:hover{ background:url(../bg/abgh4.gif) no-repeat center top; color:#e62129; }
 
-.case{ margin-top:58px; }
+.case{ margin-top:60px; }
 
-.case .title{ color:#424242; font-size:30px; text-align:center; }
+.case .title{ color:#424242; font-size:30px; text-align:center; line-height: 42px;  }
 
 .case .title i{ font-size:14px; background:url(../bg/bg2.gif) no-repeat center top; display:block; padding-top:20px; color:#878787; margin-top:10px; }
 
@@ -158,9 +158,9 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .case li.c5{ width:269px; height:186px; overflow:hidden; position:absolute; top:227px; right:0px; }
 
-.news{ margin-top:75px; }
+.news{ margin-top:80px; }
 
-.news .title{ color:#424242; font-size:30px; text-align:center; background:url(../bg/cxj5.gif) no-repeat center 10px; }
+.news .title{ color:#424242; font-size:30px; text-align:center; line-height: 42px; background:url(../bg/cxj5.gif) no-repeat center 10px; }
 
 .news .title i{ font-size:14px; background:url(../bg/bg2.gif) no-repeat center top; display:block; padding-top:20px; color:#878787; margin-top:10px; }
 
@@ -250,7 +250,7 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .pro_case .title{ background:#e62129; font-size:20px; height:70px; line-height:70px; text-align:center; color:#fff; }
 
-.pro_case li{ line-height:50px; width:250px; margin-top:2px; }
+.pro_case li{ line-height:50px; width:250px; margin-top:1px; }
 
 .pro_case li a{ font-size:14px; color:#363636; display:block; background:#f9f9f9; text-align:center; }
 
@@ -338,13 +338,15 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .xxzlist li a .name{ margin-left:105px; font-size:16px; color:#535353; font-weight:bold; padding-top:5px; }
 
+.xxzlist li a:hover .name{ color: #da251c; }
+
 .xxzlist li a .nr{ margin-left:105px; line-height:22px; color:#878787; font-size:14px; padding-top:8px; }
 
 .xxzdetail{ padding:30px; font-size:14px; color:#555555; line-height:30px; }
 
 .xxzdetail .xxzbt{ font-size:16px; text-align:center; font-weight:bold; color:#555555; }
 
-.xxzdetail .xxzbt i{ display:block; font-size:12px; color:#cacaca; font-weight:normal; padding-top:10px; }
+.xxzdetail .xxzbt i{ display:block; font-size:12px; color:#cacaca; font-weight:normal; }
 
 .xxzdetail .xxzcont{ padding-top:30px; }
 
@@ -366,7 +368,7 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .msglist li:hover .nr1 textarea{ border:1px solid #e62129; }
 
-.msglist li.msg{ padding-left:190px; width:632px; margin-top:35px; }
+.msglist li.msg{ padding-left:228px; width:632px; margin-top:35px; border: 1px solid #f1f1f1; }
 
 .msglist li.msg .anniulbg{ width:100px; height:40px; margin-right:40px; }
 
@@ -376,13 +378,13 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .vipkuai{ background:url(../bg/vipbg.jpg) no-repeat center top; height:759px; overflow:hidden; width:100%; margin-bottom:-60px; }
 
-.vipnrlist{ width:390px; margin:140px auto 0 auto; }
+.vipnrlist{ width:360px; margin:124px auto 0 auto; }
 
 .vipnrlist .title{ font-size:24px; color:#e62129; text-align:center; font-weight:bold; text-align:center; }
 
 .vipnrlist li{ width:390px; margin-top:20px; }
 
-.vipnrlist li .name{ height:40px; line-height:40px; font-size:14px; color:#696969; width:62px; }
+.vipnrlist li .name{ height:40px; line-height:40px; font-size:14px; color:#696969; width:70px; padding-left: 10px; }
 
 .vipnrlist li .nr{ width:270px; height:40px; }
 
@@ -392,7 +394,7 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .vipnrlist li .vipaniu{ width:100px; height:40px; margin-left:21px; }
 
-.vipnrlist li .vipaniu1{ margin-left:61px; }
+.vipnrlist li .vipaniu1{ margin-left:80px; }
 
 .vipnrlist li .vipaniu input{ width:100px; height:40px; background:#303030; border:none; font-size:14px; color:#fff; cursor:pointer; }
 
@@ -414,13 +416,13 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .protop{ margin-top:90px; }
 
-.series{ margin-top:20px; background:#f9f9f9; }
+.series{ margin-top:20px; }
 
 .series .title{ height:55px; background:url(../bg/bg10.gif) no-repeat 63px 20px #e62129; font-size:20px; color:#fff; padding:15px 0 0 100px; }
 
 .series .title i{ display:block; font-family:Arial, Helvetica, sans-serif; color:#fff; font-size:12px; }
 
-.series li{ line-height:50px; width:250px; margin-top:2px; }
+.series li{ line-height:50px; width:250px; margin-top:1px; background:#f9f9f9;  }
 
 .series li a{ font-size:14px; color:#363636; display:block; display:block; text-align:center; }
 
@@ -448,9 +450,9 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .prolkuai .protcont{ width:357px; height:285px; overflow:hidden; }
 
-.prolkuai .probcont{ width:357px; height:84px; overflow:hidden; margin-top:15px; }
+.prolkuai .probcont{ width:370px; height:84px; overflow:hidden; margin-top: 15px;  margin-left: -10px; }
 
-.prolkuai .probcont li{ width:105px; height:84px; margin:0 8px; cursor:pointer; }
+.prolkuai .probcont li{ width:105px; height:84px; margin:0 10px; cursor:pointer; }
 
 .prolkuai .probcont li img{ width: 100%; height: 100%; overflow: hidden; }
 
@@ -494,7 +496,7 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .gwclist td .xx{ background:url(../bg/bg13.gif) no-repeat; width:15px; height:15px; overflow:hidden; cursor:pointer; margin:0 auto; }
 
-.gwclist td input{ width:50px; height:30px; border:1px solid #999; text-align:center; }
+.gwclist td input{ width:50px; height:30px; border:1px solid #f1f1f1; text-align:center; }
 
 .gwclist td:hover input{ border:1px solid #e62129; }
 
@@ -532,7 +534,7 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .wdlist .title{ font-size:14px; color:#878787; padding:10px 0; border-left:1px solid #f1f1f1; border-right:1px solid #f1f1f1; }
 
-.wdlist .title select{ font-size:14px; color:#878787; text-align:center; width:130px; border:none; margin-left:10px; }
+.wdlist .title select{ font-size:14px; color:#878787; text-align:center; width:178px; height: 33px; border:1px solid #f1f1f1; margin-left:10px; }
 
 .wdlist .title select option{ text-align:center; }
 
@@ -582,7 +584,7 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .wdlistdetail .title i{ color:#ff0000; }
 
-.wdlistdetail .titleddzt{ font-size:14px; color:#ff0000; text-align:center; margin-top:30px; }
+.wdlistdetail .titleddzt{ font-size:14px; color:#ff0000; text-align:center; margin-top:10px; background: #f9f9f9; padding: 15px 0; }
 
 .wddztlist{ width:720px; margin:50px auto 0 auto; background:url(../bg/xjbg2.gif) no-repeat center 21px; position:relative; }
 
@@ -665,10 +667,10 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 #Validform_msg .Validform_info{padding:8px;border:1px solid #000; border-top:none; text-align:left;}
 
 
-.fdm2{ background:url(../bg/cxj2.gif) repeat-x left 8px; }
+.fdm2{ background:url(../bg/cxj2.gif) repeat-x left 6px; }
 
 .fdm3{ background:url(../bg/cxj3.png) no-repeat center bottom; padding-bottom:20px; }
 
 .fdm4{ background:url(../bg/cxj4.jpg) no-repeat center top; height:730px; overflow:hidden; margin-top:60px; }
 
-.fdm5{ background:url(../bg/cxj2.gif) repeat-x left 8px; }
+.fdm5{ background:url(../bg/cxj2.gif) repeat-x left 6px; }

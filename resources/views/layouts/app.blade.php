@@ -66,6 +66,7 @@
                     @foreach(\App\Models\Catalog::parentCatalog(29) as $catalog)
                         <dd><a href="{{ url('/catalog/'.$catalog->id) }}">{{ $catalog->title }}</a></dd>
                     @endforeach
+                        <dd><a href="{{ url('/message') }}">在线留言</a></dd>
                 </dl>
             </li>
         </ul>
