@@ -534,7 +534,7 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .wdlist .title{ font-size:14px; color:#878787; padding:10px 0; border-left:1px solid #f1f1f1; border-right:1px solid #f1f1f1; }
 
-.wdlist .title select{ font-size:14px; color:#878787; text-align:center; width:178px; height: 33px; border:1px solid #f1f1f1; margin-left:10px; }
+.wdlist .title select{ font-size:14px; color:#878787; text-align:center; width:178px; height: 33px; border:1px solid #f1f1f1; margin:0 5px; }
 
 .wdlist .title select option{ text-align:center; }
 
