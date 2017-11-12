@@ -269,7 +269,7 @@ class HomeController extends Controller
                 return ['status'=>'n','info'=>'新密码不一致'];
             }
             $password = password_hash($request->confirm_password, PASSWORD_DEFAULT);
-            \Auth::logout();
+//            \Auth::logout();
             \Session::flush();
             \DB::table('users')->where('name',$user->name)->update(['password'=>$password]);
             return ['status'=>'y','info'=>'密码修改成功,请重新登录'];
@@ -278,7 +278,7 @@ class HomeController extends Controller
 
 
     public function logout(){
-        \Auth::logout();
+//        \Auth::logout();
         \Session::flush();
         return \Redirect::to('/');
     }
