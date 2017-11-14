@@ -71,7 +71,7 @@ class HomeController extends Controller
             ]);
         }elseif($catalog->type == 2){  //案例
             $list = Cases::where('catalog_id',$catalog_id)->where('is_display',1)->orderBy('sort','desc')
-                ->orderBy('created_at','desc')->paginate(6);
+                ->orderBy('created_at','desc')->paginate(9);
             return view('case',[
                 'list' => $list,
                 'catalog' => $catalog,
