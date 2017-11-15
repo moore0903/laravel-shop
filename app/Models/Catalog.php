@@ -50,7 +50,7 @@ class Catalog extends Model
         return $result;
     }
 
-    public static function parentCatalog($catalog_id,$page=5){
+    public static function parentCatalog($catalog_id,$page=10){
         return Catalog::where('parent_id','=',$catalog_id)->take($page)->get();
     }
 

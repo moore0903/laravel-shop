@@ -95,7 +95,7 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .pan li.hover{ background-position:left top; }
 
-.phone{ background:url(../bg/phone.gif) no-repeat; width:280px; height:100px; overflow:hidden; position:absolute; top:-120px; right:0px; }
+.phone{ background:url(../bg/phone.gif) no-repeat; width:280px; height:100px; overflow:hidden; position:absolute; top:-120px; right:0px; display:none; }
 
 .about{ margin-top:70px; }
 
@@ -198,9 +198,9 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .news .more a{ width:98px; height:26px; border:1px solid #dd0000; text-align:center; line-height:26px; color:#dd0000; display:block; margin:60px auto 0 auto; }
 
-.wq1{ background:url(../bg/bg6.gif) no-repeat; width:61px; height:122px; position:absolute; top:1298px; right:0px; }
+.wq1{ background:url(../bg/bg6.gif) no-repeat; width:61px; height:122px; position:absolute; top:1315px; right:0px; }
 
-.wq2{ background:url(../bg/bg7.gif) no-repeat; width:145px; height:290px; position:absolute; top:1940px; left:0px; }
+.wq2{ background:url(../bg/bg7.gif) no-repeat; width:145px; height:290px; position:absolute; top:1962px; left:0px; }
 
 .fdm1{ background:url(../bg/fbg.gif) repeat; height:268px; margin-top:60px; }
 
@@ -244,7 +244,9 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .copyright{ height:50px; line-height:50px; color:#979797; text-align:center; overflow:hidden; background:#fff; font-size:14px; }
 
-.nbanner{ height:400px; width:100%; }
+.nfdm{ height:400px; position:relative; overflow:hidden; }
+
+.nbanner,.nbanner a{ height:400px; display:block; overflow:hidden; }
 
 .side{ width:250px; margin-top:70px; }
 
@@ -254,11 +256,15 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .pro_case li a{ font-size:14px; color:#363636; display:block; background:#f9f9f9; text-align:center; }
 
-.pro_case li a:hover{ background:#dedede; color:#fff; }
+.pro_case li a:hover{ background:#dedede; color:#e62129; }
 
 .pro_case li.on a{ background:#dedede; color:#fff; }
 
 .main{ width:872px; margin-right:28px; margin-top:70px; height:auto!important; min-height:400px; height:400px; padding-bottom:30px; }
+
+.main table{ border-collapse:collapse; border: 1px solid #aaa;}
+
+.main table td{ border: 1px solid #aaa; text-align:center; }
 
 .ny_case .title{ height:69px; overflow:hidden; background:url(../bg/nbg1.gif) no-repeat left bottom; margin-top:10px; font-size:24px; color:#878787; border-bottom:1px solid #f1f1f1; }
 
@@ -286,7 +292,7 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 .page .all{ padding-left:5px; color:#535353 }
 /*页码放置 end*/
 
-.nphone{ background:url(../bg/phone.gif) no-repeat; width:280px; height:100px; overflow:hidden; position:absolute; top:350px; right:0px; }
+.nphone{ background:url(../bg/phone.gif) no-repeat; width:280px; height:100px; overflow:hidden; position:absolute; top:350px; right:0px; display:none; }
 
 .nycontact{ background:url(../bg/bg9.gif) no-repeat 70px top; height:232px; overflow:hidden; font-size:14px; color:#555555; padding-left:435px; margin-top:75px; }
 
@@ -378,11 +384,11 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .vipkuai{ background:url(../bg/vipbg.jpg) no-repeat center top; height:759px; overflow:hidden; width:100%; margin-bottom:-60px; }
 
-.vipnrlist{ width:360px; margin:124px auto 0 auto; }
+.vipnrlist{ width:360px; margin:135px auto 0 auto; }
 
 .vipnrlist .title{ font-size:24px; color:#e62129; text-align:center; font-weight:bold; text-align:center; }
 
-.vipnrlist li{ width:390px; margin-top:20px; }
+.vipnrlist li{ width:390px; margin-top:13px; }
 
 .vipnrlist li .name{ height:40px; line-height:40px; font-size:14px; color:#696969; width:70px; padding-left: 10px; }
 

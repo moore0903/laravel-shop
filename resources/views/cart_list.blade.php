@@ -66,7 +66,7 @@
                 </table>
                 <div class="gwcnr">购物车中有商品：<i>{{ $cart_raw_count }}</i>种     总数：<i>{{ $cart_count }}</i>件    共计：￥<i>{{ $cart_totalPrice }}</i>元（人民币）</div>
                 <ul class="gwcgmlist lifl clear">
-                    <li><a href="{{ url('/user/info') }}">继续购买商品</a></li>
+                    <li><a href="{{ url('/product_search') }}">继续购买商品</a></li>
                     <li><a href="javascript:void(0);" id="edit_cart">修改购物清单</a></li>
                     <li><a href="{{ url('/order/add') }}">去收银台结算</a></li>
                     <li class="g1"><a href="javascript:void(0);" id="empty_cart">清空购物清单</a></li>

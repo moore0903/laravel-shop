@@ -12,6 +12,9 @@ $(document).ready(function(){
 	 },function(){
 	   $(this).removeClass("on");	 
 	 })
+	 
+	 $(".nbanner ul a").width($(window).width());
+	 $('.nbanner').scrollable({size:1,items:'.banner ul',loop:true,clickable:false}).autoscroll({autoplay: true,autopause:false,interval:5000,steps:1}).navigator({navi:"ul.pan",naviItem:"li",activeClass:"hover"});
 
      $('.honortop').scrollable({size:1,items:'.honortop ul',loop:true,clickable:false}).autoscroll({autoplay: true,autopause:false,interval:6000,steps:1}).navigator({navi:".hontu ul",naviItem:"li",activeClass:"hover"});
 

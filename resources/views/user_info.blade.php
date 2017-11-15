@@ -9,7 +9,7 @@
             <div class="pro_case protop">
                 <div class="title">会员功能</div>
                 <ul class="lifl clear">
-                    <li class="on"><a href="{{ url('/product_search') }}">在线订购</a></li>
+                    <li><a href="{{ url('/product_search') }}">在线订购</a></li>
                     <li><a href="{{ url('/cart/list') }}">查看购物车</a></li>
                     <li><a href="{{ url('/order/list') }}">查看我的订单</a></li>
                     <li><a href="{{ url('/notice') }}">会员公告</a></li>
