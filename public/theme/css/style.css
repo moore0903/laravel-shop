@@ -258,7 +258,7 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .pro_case li a:hover{ background:#dedede; color:#e62129; }
 
-.pro_case li.on a{ background:#dedede; color:#fff; }
+.pro_case li.on a{ background:#dedede; color:#e62129; }
 
 .main{ width:872px; margin-right:28px; margin-top:70px; height:auto!important; min-height:400px; height:400px; padding-bottom:30px; }
 
