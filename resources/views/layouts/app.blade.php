@@ -100,7 +100,7 @@
         </dl>
         <div class="fphone fl">
             <p class="bt">全国咨询热线：</p>
-            <p class="title">400-1058-258</p>
+            <p class="title">0512-82618889</p>
             <p class="fx">分享到：</p>
             <ul class="fxlist lifl clear">
                 <li class="f1"><a href="#"></a></li>
