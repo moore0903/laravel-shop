@@ -394,7 +394,7 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .vipnrlist li .nr{ width:270px; height:40px; }
 
-.vipnrlist li .nr input{ width:248px; height:38px; border:1px solid #f1f1f1; background:#fff; padding:0 10px; }
+.vipnrlist li .nr input{ width:248px; height:38px; border:1px solid #e62129; background:#fff; padding:0 10px; }
 
 .vipnrlist li:hover .nr input{ border:1px solid #e62129; font-size:14px; color:#696969; }
 
