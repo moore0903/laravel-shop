@@ -32,6 +32,10 @@ class Catalog extends Model
         return $this->hasMany(ShopItem::class,'catalog_id');
     }
 
+    public function subCata(){
+        return $this->hasMany(Catalog::class,'parent_id');
+    }
+
     public function subCataShopitem(){
         return $this->hasManyThrough(ShopItem::class,Catalog::class,'parent_id','catalog_id');
     }
