@@ -210,7 +210,7 @@ class HomeController extends Controller
             $entension = $file->getClientOriginalExtension(); //上传文件的后缀.
             $newName = date('YmdHis').mt_rand(100,999).'.'.$entension;
             $file->move(base_path().'public/upload/editor/',$newName);
-            $filepath = 'public/upload/editor/'.$newName;
+            $filepath = 'upload/editor/'.$newName;
             return asset($filepath);
         }
 //        if(!$request->hasFile('wangEditorH5File')) return 'error|失败原因为：找不到文件';
