@@ -61,15 +61,15 @@ class HomeController extends Controller
             $top_catalog_id = $catalog->parent_id;
         }
         if($catalog->id == 20 || $catalog->parent_id == 20){
-            $catalog = Catalog::find(20);
-            $catalog_set = Catalog::where('parent_id',$catalog->parent_id)->orderBy('order','desc')->get();
-            $top_catalog = Catalog::find($catalog->parent_id);
-            $top_catalog_id = $catalog->parent_id;
             if($catalog->id == 20){
                 $list = $catalog->subCataShopitem()->orderByDesc('sort')->orderByDesc('created_at')->paginate(9);
             }else{
                 $list = ShopItem::where('catalog_id',$catalog_id)->orderByDesc('sort')->orderByDesc('created_at')->paginate(9);
             }
+            $catalog = Catalog::find(20);
+            $catalog_set = Catalog::where('parent_id',$catalog->parent_id)->orderBy('order','desc')->get();
+            $top_catalog = Catalog::find($catalog->parent_id);
+            $top_catalog_id = $catalog->parent_id;
             return view('product_list',[
                 'banners' => Article::where('catalog_id',37)->where('is_display',1)->orderBy('sort','desc')
                     ->orderBy('created_at','desc')->get(),
