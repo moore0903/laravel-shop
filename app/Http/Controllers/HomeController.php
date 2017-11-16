@@ -60,6 +60,21 @@ class HomeController extends Controller
             $top_catalog = Catalog::find($catalog->parent_id);
             $top_catalog_id = $catalog->parent_id;
         }
+        if($catalog->id == 20 || $catalog_id->parent_id == 20){
+            $catalog = Catalog::find(20);
+            $list = ShopItem::where('catalog_id',$catalog_id)->orderByDesc('sort')->orderByDesc('created_at')->paginate(9);
+            return view('product_list',[
+                'banners' => Article::where('catalog_id',37)->where('is_display',1)->orderBy('sort','desc')
+                    ->orderBy('created_at','desc')->get(),
+                'list' => $list,
+                'catalog' => $catalog,
+                'catalog_set' => $catalog_set,
+                'top_catalog' => $top_catalog,
+                'set_nev' => Catalog::$set_nev[$top_catalog_id],
+                'three_catalog' => $catalog->subCata,
+                'three_catalog_id' => $catalog_id
+            ]);
+        }
         if($catalog->type == 1){  //单页
             $catalog = Catalog::find($catalog_id);
             return view('page',[
