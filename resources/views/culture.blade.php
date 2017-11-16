@@ -2,9 +2,13 @@
 
 
 @section('content')
-    <div class="nbanner" style="background:url({{ asset('images/nbanner.jpg') }}) no-repeat center top;">
-        <div class="wrap mod">
-            <div class="nphone"></div>
+    <div class="nfdm">
+        <div class="nbanner scroll">
+            <ul>
+                @foreach($banners as $banner)
+                    <li><a href="#" style=" background:url({{ asset('upload/'.$banner->img) }}) no-repeat center top;"></a></li>
+                @endforeach
+            </ul>
         </div>
     </div>
     <div class="wrap fmyh clear">

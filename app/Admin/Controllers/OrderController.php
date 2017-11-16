@@ -93,6 +93,17 @@ class OrderController extends Controller
                 'Other' => '其他'
             ]);
             $grid->totalget('支付金额')->editable();
+//            $grid->column('订单详情')->box('查看详情',function(){
+//                $details = $this->details;
+//                $details = $details->map(function($item){
+//                    $data = ['product_title'=>$item['product_title'],'product_num'=>$item['product_num'],'product_price'=>$item['product_price']];
+//                    foreach(array_diff_assoc($item->toArray(),$data) as $key => $value){
+//                        unset($item[$key]);
+//                    }
+//                    return $item;
+//                })->prepend(['商品名称','购买数量','商品价格']);
+//                return $details;
+//            });
             $grid->column('订单详情')->expand(function () {
                 $details = $this->details;
                 $details = $details->map(function($item){

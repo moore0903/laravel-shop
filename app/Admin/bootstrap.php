@@ -38,5 +38,11 @@ Column::extend('prependIcon', function ($value, $icon) {
 
 });
 
+Column::extend('box',function($title,$value){
+    $box = new \Encore\Admin\Widgets\Box($title,$value);
+    $box->removable();
+   return $box;
+});
+
 Admin::css('/packages/pace/pace.css');
 Admin::js('/packages/pace/pace.min.js');

@@ -63,6 +63,8 @@ class HomeController extends Controller
         if($catalog->type == 1){  //单页
             $catalog = Catalog::find($catalog_id);
             return view('page',[
+                'banners' => Article::where('catalog_id',37)->where('is_display',1)->orderBy('sort','desc')
+                    ->orderBy('created_at','desc')->get(),
                 'info' => $catalog,
                 'catalog' => $catalog,
                 'catalog_set' => $catalog_set,
@@ -73,6 +75,8 @@ class HomeController extends Controller
             $list = Cases::where('catalog_id',$catalog_id)->where('is_display',1)->orderBy('sort','desc')
                 ->orderBy('created_at','desc')->paginate(9);
             return view('case',[
+                'banners' => Article::where('catalog_id',37)->where('is_display',1)->orderBy('sort','desc')
+                    ->orderBy('created_at','desc')->get(),
                 'list' => $list,
                 'catalog' => $catalog,
                 'catalog_set' => $catalog_set,
@@ -84,6 +88,8 @@ class HomeController extends Controller
             $list = Article::where('catalog_id',$catalog_id)->where('is_display',1)->orderBy('sort','desc')
                 ->orderBy('created_at','desc')->paginate(6);
             return view('article',[
+                'banners' => Article::where('catalog_id',37)->where('is_display',1)->orderBy('sort','desc')
+                    ->orderBy('created_at','desc')->get(),
                 'list' => $list,
                 'catalog' => $catalog,
                 'catalog_set' => $catalog_set,
@@ -93,6 +99,8 @@ class HomeController extends Controller
         }elseif($catalog->type == 4){  //图片集合
             $catalog = Catalog::find($catalog_id);
             return view('image_set',[
+                'banners' => Article::where('catalog_id',37)->where('is_display',1)->orderBy('sort','desc')
+                    ->orderBy('created_at','desc')->get(),
                 'info' => $catalog,
                 'catalog' => $catalog,
                 'catalog_set' => $catalog_set,
@@ -105,6 +113,8 @@ class HomeController extends Controller
             }
             $list = ShopItem::where('catalog_id',$catalog_id)->orderByDesc('sort')->orderByDesc('created_at')->paginate(9);
             return view('product',[
+                'banners' => Article::where('catalog_id',37)->where('is_display',1)->orderBy('sort','desc')
+                    ->orderBy('created_at','desc')->get(),
                 'list' => $list,
                 'user' => \Auth::user()
             ]);
@@ -124,6 +134,8 @@ class HomeController extends Controller
         $catalog_set = Catalog::where('parent_id',$case->catalog->parent_id)->orderBy('order','desc')->get();
         $top_catalog = Catalog::find($case->catalog->parent_id);
         return view('caseDetail',[
+            'banners' => Article::where('catalog_id',37)->where('is_display',1)->orderBy('sort','desc')
+                ->orderBy('created_at','desc')->get(),
             'info' => $case,
             'catalog_set' => $catalog_set,
             'catalog' => $case->catalog,
@@ -143,6 +155,8 @@ class HomeController extends Controller
         $top_catalog = Catalog::find($article->catalog->parent_id);
         $article->increment('browse');
         return view('articleDetail',[
+            'banners' => Article::where('catalog_id',37)->where('is_display',1)->orderBy('sort','desc')
+                ->orderBy('created_at','desc')->get(),
             'info' => $article,
             'catalog_set' => $catalog_set,
             'catalog' => $article->catalog,
@@ -157,6 +171,8 @@ class HomeController extends Controller
         }
         $product = ShopItem::find($id);
         return view('productDetail',[
+            'banners' => Article::where('catalog_id',37)->where('is_display',1)->orderBy('sort','desc')
+                ->orderBy('created_at','desc')->get(),
             'info' => $product,
             'catalog' => $product->catalog,
             'user' => \Auth::user()
@@ -171,6 +187,8 @@ class HomeController extends Controller
         $list = Article::where('catalog_id',$catalog_id)->where('is_display',1)->orderBy('sort','desc')
             ->orderBy('created_at','desc')->paginate(6);
         return view('notice',[
+            'banners' => Article::where('catalog_id',37)->where('is_display',1)->orderBy('sort','desc')
+                ->orderBy('created_at','desc')->get(),
             'list' => $list
         ]);
     }
@@ -181,6 +199,8 @@ class HomeController extends Controller
         }
         $article = Article::find($id);
         return view('noticeDetail',[
+            'banners' => Article::where('catalog_id',37)->where('is_display',1)->orderBy('sort','desc')
+                ->orderBy('created_at','desc')->get(),
             'info' => $article,
             'catalog' => $article->catalog,
             'user' => \Auth::user()
@@ -198,6 +218,8 @@ class HomeController extends Controller
         $top_catalog = $catalog;
         $top_catalog_id = $catalog_id;
         return view('message',[
+            'banners' => Article::where('catalog_id',37)->where('is_display',1)->orderBy('sort','desc')
+                ->orderBy('created_at','desc')->get(),
             'catalog' => $catalog,
             'catalog_set' => $catalog_set,
             'top_catalog' => $top_catalog,
@@ -252,6 +274,8 @@ class HomeController extends Controller
             $list = ShopItem::orderByDesc('sort')->orderByDesc('created_at')->paginate(9);
         }
         return view('product',[
+            'banners' => Article::where('catalog_id',37)->where('is_display',1)->orderBy('sort','desc')
+                ->orderBy('created_at','desc')->get(),
             'list' => $list,
             'user' => \Auth::user()
         ]);
