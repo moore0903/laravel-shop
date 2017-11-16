@@ -60,7 +60,7 @@ class HomeController extends Controller
             $top_catalog = Catalog::find($catalog->parent_id);
             $top_catalog_id = $catalog->parent_id;
         }
-        if($catalog->id == 20 || $catalog_id->parent_id == 20){
+        if($catalog->id == 20 || $catalog->parent_id == 20){
             $catalog = Catalog::find(20);
             $list = ShopItem::where('catalog_id',$catalog_id)->orderByDesc('sort')->orderByDesc('created_at')->paginate(9);
             return view('product_list',[
