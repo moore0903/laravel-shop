@@ -25,7 +25,7 @@
     <div class="main fr">
         <div class="ny_case">
             <div class="title"> {{ $catalog->title }} <i class="ttuc">{{ $catalog->en_title }}</i> </div>
-            <ul>
+            <ul class="product_quandan">
                 @foreach($three_catalog as $item)
                     <li @if($item->id == $three_catalog_id)  class="on" @endif><a href="{{ url('/catalog/'.$item->id) }}">{{ $item->title }}</a></li>
                 @endforeach
