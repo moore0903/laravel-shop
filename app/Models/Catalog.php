@@ -33,7 +33,7 @@ class Catalog extends Model
     }
 
     public function subCata(){
-        return $this->hasMany(Order::class,'parent_id');
+        return $this->hasMany(Catalog::class,'parent_id');
     }
 
     /**
