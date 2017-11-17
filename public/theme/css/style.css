@@ -70,7 +70,7 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .menu li.on .name a{ color:#da251c; }
 
-.menu li dl{ position:absolute; top:45px; left:0px; background:url(../bg/mbg.png) repeat; width:115px; padding:15px 0; display:none; }
+.menu li dl{ position:absolute; top:50px; left:0px; background:url(../bg/mbg.png) repeat; width:115px; padding:15px 0; display:none; }
 
 .menu li.on dl{ display:block; }
 
@@ -95,7 +95,7 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .pan li.hover{ background-position:left top; }
 
-.phone{ background:url(../bg/phone.gif) no-repeat; width:280px; height:100px; overflow:hidden; position:absolute; top:-120px; right:0px; display:none; }
+.phone{ background:url(../bg/phone.gif) no-repeat; width:280px; height:100px; overflow:hidden; position:absolute; top:-120px; right:0px; }
 
 .about{ margin-top:70px; }
 
@@ -244,7 +244,9 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .copyright{ height:50px; line-height:50px; color:#979797; text-align:center; overflow:hidden; background:#fff; font-size:14px; }
 
-.nfdm{ height:400px; position:relative; overflow:hidden; }
+.nfdm{ height:400px; position:relative; }
+
+.nbanner{ position:absolute; top:0px; left:0px; width:100%; }
 
 .nbanner,.nbanner a{ height:400px; display:block; overflow:hidden; }
 
@@ -292,7 +294,7 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 .page .all{ padding-left:5px; color:#535353 }
 /*页码放置 end*/
 
-.nphone{ background:url(../bg/phone.gif) no-repeat; width:280px; height:100px; overflow:hidden; position:absolute; top:350px; right:0px; display:none; }
+.nphone{ background:url(../bg/phone.gif) no-repeat; width:280px; height:100px; overflow:hidden; position:absolute; top:350px; right:0px; z-index:999; }
 
 .nycontact{ background:url(../bg/bg9.gif) no-repeat 70px top; height:232px; overflow:hidden; font-size:14px; color:#555555; padding-left:435px; margin-top:75px; }
 
@@ -308,11 +310,9 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .ny_honor{ padding-top:40px; }
 
-.ny_honor .lmtitle{ line-height:35px; color:#e62129; font-size:16px; font-weight:bold; text-align:center; }
+.ny_honor .lmtitle{ line-height:20px; color:#e62129; font-size:16px; font-weight:bold; text-align:center; }
 
 .ny_honor .lmtitle p{ text-align: center; }
-
-.honorkuai{ margin-top:45px; }
 
 .honortop{ width:463px; height:283px; margin: 0 auto; }
 
