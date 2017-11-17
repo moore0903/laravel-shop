@@ -272,9 +272,9 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .ny_case .title i{ display:block; font-size:12px; }
 
-.caselist{ padding-left:17px; margin-top:20px; }
+.caselist{ padding-left:17px; }
 
-.caselist li{ width:269px; height:186px; overflow:hidden; margin:40px 8px 0 8px; }
+.caselist li{ width:269px; height:186px; overflow:hidden; margin:30px 8px 0 8px; }
 
 .caselist li a{ width:269px; height:186px; display:block; position:relative; }
 
@@ -672,7 +672,6 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 #Validform_msg a.Validform_close:hover{color:#cc0;}
 #Validform_msg .Validform_info{padding:8px;border:1px solid #000; border-top:none; text-align:left;}
 
-
 .fdm2{ background:url(../bg/cxj2.gif) repeat-x left 6px; }
 
 .fdm3{ background:url(../bg/cxj3.png) no-repeat center bottom; padding-bottom:20px; }
@@ -680,3 +679,13 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 .fdm4{ background:url(../bg/cxj4.jpg) no-repeat center top; height:730px; overflow:hidden; margin-top:60px; }
 
 .fdm5{ background:url(../bg/cxj2.gif) repeat-x left 6px; }
+
+.product_quandan{ margin-top:15px; overflow:hidden; _height:1px; _overflow:visible; }
+
+.product_quandan li{ float:left; margin:10px 12px 0 12px; }
+
+.product_quandan li a{ height:30px; line-height:30px; display:block; text-align:center; padding:0 15px; border:1px solid #f1f1f1; color:#9b9b9b; font-size:14px; }
+
+.product_quandan li a:hover{ background:#e6212b; color:#fff; }
+
+.product_quandan li a.on{ background:#e6212b; color:#fff; }
