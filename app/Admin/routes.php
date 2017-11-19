@@ -47,5 +47,7 @@ Route::group([
 
     $router->match(['get','post'],'updateConfig','HomeController@updateConfig');
 
+    $router->get('print/{id}','HomeController@printOrder');
+
 
 });

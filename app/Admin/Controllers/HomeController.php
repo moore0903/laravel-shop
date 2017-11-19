@@ -217,4 +217,13 @@ class HomeController extends Controller
 //        $path = \Storage::putFile('public/editor', $request->file('wangEditorH5File'));
 //        return \Storage::url($path);
     }
+
+    public function printOrder($order_id){
+        $order = Order::find($order_id);
+        return view('printOrder',[
+            'user' => $order->user,
+            'order' => $order,
+            'details' => $order->details
+        ]);
+    }
 }
