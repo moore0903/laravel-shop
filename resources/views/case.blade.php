@@ -31,7 +31,7 @@
                 <ul class="caselist lifl clear">
                     @foreach($list as $item)
                         <li>
-                            <a href="{{ url('/case/detail/'.$item->id) }}"><img src="{{ asset('upload/'.$item->img) }}" width="269" height="186"/>
+                            <a href="javascript:void(0);"><img src="{{ asset('upload/'.$item->img) }}" width="269" height="186"/>
                                 <p class="name">{{ $item->title }}</p>
                             </a>
                         </li>

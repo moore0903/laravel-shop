@@ -290,10 +290,11 @@ class HomeController extends Controller
             return \Redirect::to('/');
         }
         $search_title = $request->search_title;
+        $catalog_ids = Catalog::subCatalogIds(32);
         if($search_title){
-            $list = ShopItem::where('title','like','%'.$search_title.'%')->orderByDesc('sort')->orderByDesc('created_at')->paginate(9);
+            $list = ShopItem::where('title','like','%'.$search_title.'%')->whereIn('catalog_id',$catalog_ids)->orderByDesc('sort')->orderByDesc('created_at')->paginate(9);
         }else{
-            $list = ShopItem::orderByDesc('sort')->orderByDesc('created_at')->paginate(9);
+            $list = ShopItem::whereIn('catalog_id',$catalog_ids)->orderByDesc('sort')->orderByDesc('created_at')->paginate(9);
         }
         return view('product',[
             'banners' => Article::where('catalog_id',37)->where('is_display',1)->orderBy('sort','desc')

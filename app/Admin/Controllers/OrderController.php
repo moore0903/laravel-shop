@@ -83,7 +83,7 @@ class OrderController extends Controller
             $grid->stat('当前状态')->editable('select', array_combine(Order::$stat_keys, Order::$stat_values));
             $grid->total('原价');
             $grid->discount('优惠')->editable();
-            $grid->totalpay('现价')->editable();
+            $grid->totalpay('合计')->editable();
             $grid->paytype('支付类型')->editable('select', [
                 '未支付' => '未支付',
                 'WechatPay' => '微信支付',
@@ -119,6 +119,11 @@ class OrderController extends Controller
                 $filter->like('realname','收货人');
                 $filter->like('phone','收货电话');
                 $filter->is('stat', '状态')->select(Order::$stat);
+            });
+            $grid->column('打印订单')->display(function () {
+                $id = $this->id;
+                return "<a href='".url('/admin/print/'.$id)."' target='_blank'>打印订单</a>";
+
             });
             $grid->disableCreation();
         });

@@ -62,6 +62,16 @@ class Catalog extends Model
         return Catalog::where('parent_id','=',$catalog_id)->take($page)->get();
     }
 
+    public static function subCatalogIds($catalog_id){
+        $ids = [$catalog_id];
+        $catalog = Catalog::find($catalog_id);
+        $catalog->subCata->map(function($item)use(&$ids){
+            $ids[] = $item->id;
+            return $ids;
+        });
+        return $ids;
+    }
+
     public function setImagesAttribute($images)
     {
         if (is_array($images)) {
