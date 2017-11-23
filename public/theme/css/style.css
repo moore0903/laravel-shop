@@ -364,13 +364,13 @@ ul,ol,dl{ list-style-type:none; margin:0px; }
 
 .msglist li .nr{ width:567px; height:40px; }
 
-.msglist li .nr input{ width:545px; height:38px; border:1px solid #e6e6e6; padding: 0 10px; }
+.msglist li .nr input{ width:545px; height:38px; border:1px solid #e62129; padding: 0 10px; }
 
 .msglist li:hover .nr input{border:1px solid #e62129; }
 
 .msglist li .nr1{ height:200px; width:567px; }
 
-.msglist li .nr1 textarea{ border:1px solid #e6e6e6; font-size:14px; color:#555555; height:178px; width:545px; padding:10px; }
+.msglist li .nr1 textarea{ border:1px solid #e62129; font-size:14px; color:#555555; height:178px; width:545px; padding:10px; }
 
 .msglist li:hover .nr1 textarea{ border:1px solid #e62129; }
 
