@@ -233,7 +233,7 @@
             <div class="cpcont tab-bd">
                 <div class="box">
                     <ul class="cplist lifl clear">
-                        @foreach(\App\Models\ShopItem::like(4) as $item)
+                        @foreach(\App\Models\ShopItem::like(12) as $item)
                             <li><a href="{{url('shop_item/detail/'.\Hashids::encode($item->id))}}">
                                     <p class="tu"><img width="374" height="342" src="{{asset('upload/'.$item->img)}}"/>
                                     </p>
@@ -246,7 +246,7 @@
                 </div>
                 <div class="box">
                     <ul class="cplist lifl clear">
-                        @foreach(\App\Models\ShopItem::sellCountOrder(4) as $item)
+                        @foreach(\App\Models\ShopItem::sellCountOrder(12) as $item)
                             <li><a href="{{url('shop_item/detail/'.\Hashids::encode($item->id))}}">
                                     <p class="tu"><img width="374" height="342" src="{{asset('upload/'.$item->img)}}"/>
                                     </p>

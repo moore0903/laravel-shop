@@ -30,7 +30,7 @@ class ThirdUser extends Model
         '1' => [   //新订单通知
             'templateId'=>'FcWAAsXeYuwaxsDpmnVxIb7jmtRdhBUL0eavWaR3SBk',
             'openid'=>[
-                'o6GH4v2dM2NSSo4PT2LshVXI932c',  //大锤
+				'o6GH4v2dM2NSSo4PT2LshVXI932c',  //大锤
                 'o6GH4vymyzAGQhgUkx50n50o7-j4',  //贺大
                 'o6GH4v1YXzA6YvNJFYoibfKXRRfg',  //老李
                 'o6GH4v9DZZlHm3fGYpo0DjXPYQvQ',  //cc

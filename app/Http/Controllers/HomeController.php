@@ -103,10 +103,14 @@ class HomeController extends Controller
         $search_key = $configs->where('key','search_key')->first();
         $search = [];
         if(!empty($search_key)) $search = explode(',',$search_key->value);
+		$subCatalogs = $catalogs->first()->attr->map(function($item){
+			$item->hashid = \Hashids::encode($item->id);
+            return $item;
+		});
         $returnData = [
             'catalogs' => $catalogs,
             'shopItem' => $shopItem,
-            'subCatalogs'=>$catalogs->first()->attr,
+            'subCatalogs'=>$subCatalogs,
             'cart'=>collect(['cart_items'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_price_count'=>\Cart::totalPrice()]),
             'searches' => collect($search),
             'filter' => collect(['lowestPrice'=>$request['lowestPrice'],'highestPrice'=>$request['highestPrice'],'filterProduction'=>$request['filterProduction']])
