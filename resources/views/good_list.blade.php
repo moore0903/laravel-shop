@@ -113,16 +113,18 @@
                 },
                 methods:{
                     getShopItems:function(hashid){
-                        $.get("{{url('shop_item/ajax_shop_item')}}", { hash_id: hashid,sortType: shop_item_list.sortTypeStr},
-                            function(data){
-                                layer.close(layerLoad);
-                                if(data.stat){
-                                    shop_item_list.shopItems = data.shopItems;
-                                    shop_item_list.currentCataHashid = hashid;
-                                }else{
-                                    layer.msg('<span style="font-size: 30px;">'+data.msg+'</span>');
-                                }
-                            });
+                        window.location.href="{{ url('shop_item/good_list?catalog_id='.$catalog_id) }}"+"&sub_catalog_id="+hashid;
+
+                        {{--$.get("{{url('shop_item/ajax_shop_item')}}", { hash_id: hashid,sortType: shop_item_list.sortTypeStr},--}}
+                            {{--function(data){--}}
+                                {{--layer.close(layerLoad);--}}
+                                {{--if(data.stat){--}}
+                                    {{--shop_item_list.shopItems = data.shopItems;--}}
+                                    {{--shop_item_list.currentCataHashid = hashid;--}}
+                                {{--}else{--}}
+                                    {{--layer.msg('<span style="font-size: 30px;">'+data.msg+'</span>');--}}
+                                {{--}--}}
+                            {{--});--}}
                     },
                     getSubCatalog:function(hashid){
                         $.get("{{url('shop_item/ajax_sub_catalog')}}", { hash_id: hashid},
@@ -131,7 +133,8 @@
                                 if(data.stat){
                                     shop_item_list.subCatalog = data.catalogs;
                                 }else{
-                                    layer.msg('<span style="font-size: 30px;">'+data.msg+'</span>');
+                                    shop_item_list.subCatalog = '';
+                                    // layer.msg('<span style="font-size: 30px;">'+data.msg+'</span>');
                                 }
                             });
                     },
@@ -139,7 +142,7 @@
                         layerLoad = layer.load();
                         $('._cata_'+hashid).addClass('on').siblings('.catalogs').removeClass('on');
                         shop_item_list.getSubCatalog(hashid);
-                        shop_item_list.getShopItems(hashid);
+                        // shop_item_list.getShopItems(hashid);
                     },
                     sortType:function(type){
                         if(type == 'sell'){
@@ -167,6 +170,9 @@
                     }
                 }
             });
+
+            var $catalog_id = '{{ $catalog_id }}';
+            $('._cata_'+$catalog_id).addClass('on');
 
             $('.f02').addClass('on');
     </script>

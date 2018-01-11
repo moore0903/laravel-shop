@@ -73,8 +73,14 @@ class HomeController extends Controller
         }
         if($request['catalog_id']){
             $catalog_id = Hashids::decode($request['catalog_id']);
-            $catalog_ids = Catalog::where('id','=',$catalog_id)->orWhere('parent_id','=',$catalog_id)->select('id')->get();
-            $shopItemQuery = $shopItemQuery->whereIn('catalog_id',array_flatten($catalog_ids->toArray()));
+            if($request['sub_catalog_id']){
+                $sub_catalog_id = Hashids::decode($request['sub_catalog_id']);
+                $catalog_ids = Catalog::where('id','=',$sub_catalog_id)->orWhere('parent_id','=',$sub_catalog_id)->select('id')->get();
+                $shopItemQuery = $shopItemQuery->whereIn('catalog_id',array_flatten($catalog_ids->toArray()));
+            }else{
+                $catalog_ids = Catalog::where('id','=',$catalog_id)->orWhere('parent_id','=',$catalog_id)->select('id')->get();
+                $shopItemQuery = $shopItemQuery->whereIn('catalog_id',array_flatten($catalog_ids->toArray()));
+            }
         }
         if($request['lowestPrice']){
             $shopItemQuery = $shopItemQuery->where('price','>',$request['lowestPrice']);
@@ -113,7 +119,8 @@ class HomeController extends Controller
             'subCatalogs'=>$subCatalogs,
             'cart'=>collect(['cart_items'=>\Cart::all(),'cart_count'=>\Cart::count(),'cart_price_count'=>\Cart::totalPrice()]),
             'searches' => collect($search),
-            'filter' => collect(['lowestPrice'=>$request['lowestPrice'],'highestPrice'=>$request['highestPrice'],'filterProduction'=>$request['filterProduction']])
+            'filter' => collect(['lowestPrice'=>$request['lowestPrice'],'highestPrice'=>$request['highestPrice'],'filterProduction'=>$request['filterProduction']]),
+            'catalog_id' => $request['catalog_id']
         ];
 
         if(!empty($request['is_api'])) return $returnData;
