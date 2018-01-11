@@ -109,11 +109,12 @@
                     'currentCataHashid':0,
                     'searches':{!! $searches??'{}' !!},
                     'productions':{!! collect(\App\Models\ShopItem::$productions) !!},
-                    'filter':{!! $filter??'{}' !!}
+                    'filter':{!! $filter??'{}' !!},
+                    'catalog_id':'{{ $catalog_id??0 }}'
                 },
                 methods:{
                     getShopItems:function(hashid){
-                        window.location.href="{{ url('shop_item/good_list?catalog_id='.$catalog_id) }}"+"&sub_catalog_id="+hashid;
+                        window.location.href="{{ url('shop_item/good_list?catalog_id=') }}"+shop_item_list.catalog_id+"&sub_catalog_id="+hashid;
 
                         {{--$.get("{{url('shop_item/ajax_shop_item')}}", { hash_id: hashid,sortType: shop_item_list.sortTypeStr},--}}
                             {{--function(data){--}}
@@ -142,6 +143,7 @@
                         layerLoad = layer.load();
                         $('._cata_'+hashid).addClass('on').siblings('.catalogs').removeClass('on');
                         shop_item_list.getSubCatalog(hashid);
+                        shop_item_list.catalog_id = hashid;
                         // shop_item_list.getShopItems(hashid);
                     },
                     sortType:function(type){

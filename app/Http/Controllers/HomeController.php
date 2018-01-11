@@ -77,10 +77,16 @@ class HomeController extends Controller
                 $sub_catalog_id = Hashids::decode($request['sub_catalog_id']);
                 $catalog_ids = Catalog::where('id','=',$sub_catalog_id)->orWhere('parent_id','=',$sub_catalog_id)->select('id')->get();
                 $shopItemQuery = $shopItemQuery->whereIn('catalog_id',array_flatten($catalog_ids->toArray()));
+
             }else{
                 $catalog_ids = Catalog::where('id','=',$catalog_id)->orWhere('parent_id','=',$catalog_id)->select('id')->get();
                 $shopItemQuery = $shopItemQuery->whereIn('catalog_id',array_flatten($catalog_ids->toArray()));
             }
+
+            $subCatalogs = Catalog::where('parent_id','=',$catalog_id)->get()->map(function($item){
+                $item->hashid = \Hashids::encode($item->id);
+                return $item;
+            });
         }
         if($request['lowestPrice']){
             $shopItemQuery = $shopItemQuery->where('price','>',$request['lowestPrice']);
@@ -109,10 +115,6 @@ class HomeController extends Controller
         $search_key = $configs->where('key','search_key')->first();
         $search = [];
         if(!empty($search_key)) $search = explode(',',$search_key->value);
-		$subCatalogs = $catalogs->first()->attr->map(function($item){
-			$item->hashid = \Hashids::encode($item->id);
-            return $item;
-		});
         $returnData = [
             'catalogs' => $catalogs,
             'shopItem' => $shopItem,
