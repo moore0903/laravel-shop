@@ -10,6 +10,7 @@ use App\Models\ShopItem;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Vinkla\Hashids\Facades\Hashids;
+use Illuminate\Support\Facades\Input;
 
 class HomeController extends Controller
 {
@@ -71,6 +72,10 @@ class HomeController extends Controller
         if($request['search']){
             $shopItemQuery = $shopItemQuery->where('title','like','%'.$request['search'].'%')->where('detail','like','%'.$request['search'].'%');
         }
+		$subCatalogs = Catalog::all()->map(function($item){
+                $item->hashid = \Hashids::encode($item->id);
+                return $item;
+            });
         if($request['catalog_id']){
             $catalog_id = Hashids::decode($request['catalog_id']);
             if($request['sub_catalog_id']){
@@ -198,9 +203,15 @@ class HomeController extends Controller
     }
 
     public function imageUpload(Request $request){
-        if(!$request->hasFile('image')) return ['stat'=>0,'msg'=>'没有选中上传文件'];
-        $path = \Storage::putFile('public/comment', $request->file('image'));
-        return ['stat'=>1,'imgUrl'=>\Storage::url($path),'path'=>$path];
+		$file = Input::file('image');
+        $dir = $request->dir;
+        if ($file->isValid()) {
+            $entension = $file->getClientOriginalExtension(); //上传文件的后缀.
+            $newName = date('YmdHis').mt_rand(1000,9999).'.'.$entension;
+            $file->move(base_path().'/public/upload/'.$dir.'/'.date('Ymd').'/',$newName);
+            $filepath = '/upload/'.$dir.'/'.date('Ymd').'/'.$newName;
+            return ['stat'=>1,'imgUrl'=>asset($filepath),'path'=>$filepath];
+        }
     }
 
 

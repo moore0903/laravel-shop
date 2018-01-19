@@ -73,11 +73,8 @@
                     <ul class="lifl clear" v-for="(comment,index) in comments">
                         <li v-if="index < 1">
                             <div class="debtkuai">
-                                <dl class="lifl fr clear" v-for="star in comment.pivot.star">
-                                    <dd></dd>
-                                </dl>
-                                <p class="tu fl"><img
-                                            :src="comment.headimage?comment.headimage:'{{ asset('/packages/admin/AdminLTE/dist/img/user2-160x160.jpg') }}'"/>
+                                <p class="tu fl">
+								<img :src="comment.headimage?comment.headimage:'{{ asset('/packages/admin/AdminLTE/dist/img/user2-160x160.jpg') }}'"/>
                                 </p>
                                 <p class="name">@{{ comment.name }}</p>
                             </div>
@@ -113,9 +110,6 @@
                     <ul class="lifl clear" v-for="(comment,index) in comments">
                         <li>
                             <div class="debtkuai">
-                                <dl class="lifl fr clear" v-for="star in comment.pivot.star">
-                                    <dd></dd>
-                                </dl>
                                 <p class="tu fl"><img
                                             :src="comment.headimage?comment.headimage:'{{ asset('/packages/admin/AdminLTE/dist/img/user2-160x160.jpg') }}'"/>
                                 </p>

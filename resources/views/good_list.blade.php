@@ -133,8 +133,10 @@
                                 layer.close(layerLoad);
                                 if(data.stat){
                                     shop_item_list.subCatalog = data.catalogs;
+									shop_item_list.getShopItems(hashid);
                                 }else{
                                     shop_item_list.subCatalog = '';
+									shop_item_list.shopItems = '';
                                     // layer.msg('<span style="font-size: 30px;">'+data.msg+'</span>');
                                 }
                             });

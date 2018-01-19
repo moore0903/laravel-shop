@@ -36,7 +36,7 @@ class ThirdUser extends Model
                 'o6GH4v9DZZlHm3fGYpo0DjXPYQvQ',  //cc
                 'o6GH4v31rMIrpXiOglrFhWu6r4qA',  //胡雅琪
             ],
-            'url'=>'https://www.jcj979.com/'
+            'url'=>'http://www.jcj979.com/'
         ]
     ];
 
